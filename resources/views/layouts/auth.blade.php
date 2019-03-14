@@ -12,10 +12,9 @@
     <link rel="manifest" href="/images/icon/site.webmanifest">
 
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 </head>
 
 @yield('content')
-<script src="{{ asset('js/bootstrap.js') }}" defer></script>
+<script src="{{ asset('js/bootstrap.js') }}"></script>
+@yield('custom_scripts')
 </html>

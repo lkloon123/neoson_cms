@@ -1,78 +1,78 @@
 @extends('layouts.auth')
 
 @section('content')
-    <body class="fp-page">
-    <div class="fp-box">
-        <div class="logo">
-            <a href="#">NeoSon<b>CMS</b></a>
-        </div>
-        <div class="card">
-            <div class="body">
-                <form method="POST" action="{{ route('password.update') }}">
-                    @csrf
-                    <div class="msg">{{ __('Reset Password') }}</div>
-
-                    <input type="hidden" name="token" value="{{ $token }}">
-
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="material-icons">email</i>
-                        </span>
-
-                        <div class="form-line{{ $errors->has('email') ? ' error' : '' }}">
-                            <input id="email" type="email"
-                                   class="form-control" name="email"
-                                   value="{{ $email ?? old('email') }}" placeholder="Email" required>
-                        </div>
-
-                        @if ($errors->has('email'))
-                            <label for="email" class="error">
-                                {{ $errors->first('email') }}
-                            </label>
-                        @endif
+    <body>
+    <section class="section">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+                    <div class="login-brand">
+                        NeoSon<strong>CMS</strong>
                     </div>
 
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="material-icons">lock</i>
-                        </span>
+                    <div class="card card-primary">
+                        <div class="card-header"><h4>{{ __('Reset Password') }}</h4></div>
 
-                        <div class="form-line{{ $errors->has('password') ? ' error' : '' }}">
-                            <input id="password" type="password"
-                                   class="form-control" placeholder="Password"
-                                   name="password" required>
+                        <div class="card-body">
+                            <form method="POST" action="{{ route('password.update') }}">
+                                @csrf
+
+                                <input type="hidden" name="token" value="{{ $token }}">
+
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input id="email" type="email" name="email"
+                                           class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                           value="{{ $email ?? old('email') }}" tabindex="1" required autofocus>
+
+                                    @if ($errors->has('email'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('email') }}
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password" class="control-label">Password</label>
+                                    <input id="password" type="password" name="password"
+                                           class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                           tabindex="2" required>
+
+                                    @if ($errors->has('password'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('password') }}
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password-confirm" class="control-label">Confirm Password</label>
+                                    <input id="password-confirm" type="password" name="password_confirmation"
+                                           class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
+                                           tabindex="3" required>
+
+                                    @if ($errors->has('password_confirmation'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('password_confirmation') }}
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                                        {{ __('Reset Password') }}
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-
-                        @if ($errors->has('password'))
-                            <label for="password" class="error">
-                                {{ $errors->first('password') }}
-                            </label>
-                        @endif
                     </div>
 
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="material-icons">lock</i>
-                        </span>
-
-                        <div class="form-line{{ $errors->has('password_confirmation') ? ' error' : '' }}">
-                            <input id="password-confirm" type="password" class="form-control"
-                                   name="password_confirmation" placeholder="Confirm Password" required>
-                        </div>
-
-                        @if ($errors->has('password_confirmation'))
-                            <label for="password-confirm" class="error">
-                                {{ $errors->first('password_confirmation') }}
-                            </label>
-                        @endif
+                    <div class="simple-footer">
+                        Copyright &copy; NeoSon 2019
                     </div>
-
-                    <button type="submit" class="btn btn-primary btn-block btn-lg waves-effect">
-                        {{ __('Reset Password') }}
-                    </button>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
     </body>
 @endsection

@@ -11,11 +11,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
     <link rel="manifest" href="/images/icon/site.webmanifest">
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 </head>
-<body class="theme-red">
+<body>
 <div id="app">
     <app-init></app-init>
 </div>

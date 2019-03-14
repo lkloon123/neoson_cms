@@ -1,81 +1,81 @@
 @extends('layouts.auth')
 
 @section('content')
-    <body class="fp-page">
-    <div class="fp-box">
-        <div class="logo">
-            <a href="#">NeoSon<b>CMS</b></a>
-        </div>
-        <div class="card">
-            <div class="body">
-                <form method="POST" action="{{ route('password.email') }}">
-                    @csrf
+    <body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+                <div class="login-brand">
+                    NeoSon<strong>CMS</strong>
+                </div>
 
-                    <div class="msg">{{ __('Reset Password') }}</div>
+                <div class="card card-primary">
+                    <div class="card-header"><h4>{{ __('Reset Password') }}</h4></div>
 
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="material-icons">email</i>
-                        </span>
+                    <div class="card-body">
+                        <p class="text-muted">We will send a link to reset your password</p>
+                        <form method="POST" action="{{ route('password.email') }}">
+                            @csrf
 
-                        <div class="form-line{{ $errors->has('email') ? ' error' : '' }}">
-                            <input id="email" type="email"
-                                   class="form-control" name="email" placeholder="Email"
-                                   value="{{ old('email') }}" required>
-                        </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input id="email" type="email" name="email"
+                                       class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                       value="{{ old('email') }}" tabindex="1" required autofocus>
 
-                        @if ($errors->has('email'))
-                            <label for="email" class="error">
-                                {{ $errors->first('email') }}
-                            </label>
-                        @endif
+                                @if ($errors->has('email'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('email') }}
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="2">
+                                    {{ __('Send Password Reset Link') }}
+                                </button>
+                            </div>
+                        </form>
                     </div>
+                </div>
 
-                    <button type="submit" class="btn btn-primary btn-block btn-lg waves-effect">
-                        {{ __('Send Password Reset Link') }}
-                    </button>
-
-                    <div class="row m-t-20 m-b--5 align-center">
+                <div class="mt-5 text-muted text-center">
+                    @if (Route::has('register'))
                         <a href="{{ route('login') }}">Back to login</a>
-                    </div>
-                </form>
+                    @endif
+                </div>
+                <div class="simple-footer">
+                    Copyright &copy; NeoSon 2019
+                </div>
             </div>
         </div>
     </div>
 
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Success</h5>
+                </div>
+                <div class="modal-body">
+                    <p>{{ session('status') }}</p>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+@endsection
+
+@section('custom_scripts')
     @if (session('status'))
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                $.notify({
-                        message: '{{ session('status') }}'
-                    },
-                    {
-                        type: 'alert-success',
-                        allow_dismiss: true,
-                        newest_on_top: true,
-                        timer: 1000,
-                        placement: {
-                            from: 'bottom',
-                            align: 'center'
-                        },
-                        animate: {
-                            enter: 'animated fadeInUp',
-                            exit: 'animated fadeOutDown'
-                        },
-                        template: '<div data-notify="container" class="bootstrap-notify-container alert alert-dismissible {0} p-r-35" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-                            '<span data-notify="icon"></span> ' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span data-notify="message">{2}</span>' +
-                            '<div class="progress" data-notify="progressbar">' +
-                            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
-                            '</div>' +
-                            '<a href="{3}" target="{4}" data-notify="url"></a>' +
-                            '</div>'
-                    });
+            $(document).ready(function () {
+                $('#messageModal').modal({show: true});
             });
         </script>
     @endif
-
-    </body>
 @endsection
