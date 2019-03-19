@@ -89,6 +89,13 @@ return [
             'driver' => 'errorlog',
             'level' => 'debug',
         ],
+
+        'requestlog' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/request/http-request.log'),
+            'level' => 'info',
+            'days' => 14,
+        ]
     ],
 
 ];

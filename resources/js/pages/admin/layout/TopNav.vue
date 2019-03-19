@@ -1,54 +1,42 @@
 <template>
-    <nav class="navbar">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="#" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
-                <a href="#" class="bars"></a>
-                <a class="navbar-brand" href="#">NeoSon CMS</a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- notification -->
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <i class="material-icons">notifications</i>
-                            <span class="label-count">7</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">NOTIFICATIONS</li>
-                            <li class="body">
-                                <ul class="menu">
-                                    <li>
-                                        <a href="#">
-                                            <div class="icon-circle bg-light-green">
-                                                <i class="material-icons">person_add</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4>12 new members joined</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 14 mins ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="javascript:void(0);">View All Notifications</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- end notification -->
-                    <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
-                </ul>
-            </div>
+    <nav class="navbar navbar-expand-lg main-navbar">
+        <div class="form-inline mr-auto">
+            <ul class="navbar-nav mr-3">
+                <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+            </ul>
         </div>
+        <ul class="navbar-nav navbar-right">
+            <li class="dropdown dropdown-list-toggle">
+                <a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep">
+                    <i class="far fa-bell"></i>
+                </a>
+                <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                    <div class="dropdown-header">Notifications
+                        <div class="float-right">
+                            <a href="#">Mark All As Read</a>
+                        </div>
+                    </div>
+                    <div class="dropdown-list-content dropdown-list-icons">
+                    </div>
+                    <div class="dropdown-footer text-center">
+                        <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </li>
+            <li class="dropdown">
+                <user-box></user-box>
+            </li>
+        </ul>
     </nav>
 </template>
 
 <script>
+    import UserBox from './UserBox';
+
     export default {
-        name: "TopNav"
+        components: {
+            UserBox
+        }
     }
 </script>
 

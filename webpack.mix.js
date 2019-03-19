@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const webpackConfigurations = require('./webpack.config');
 
 /*
  |--------------------------------------------------------------------------
@@ -14,7 +15,8 @@ const mix = require('laravel-mix');
 mix
     .js('resources/js/app.js', 'public/js')
     .extract([
-        'jquery', 'vue', 'axios', 'lodash', 'adminbsb-materialdesign', 'vee-validate'
+        'jquery', 'vue', 'vue-router', 'vuex', 'axios', 'lodash', 'vee-validate', 'popper.js', 'tooltip.js', 'bootstrap', 'jquery.nicescroll', 'moment', '@fortawesome/fontawesome-free',
+        'bootstrap-daterangepicker', 'izitoast'
     ])
     .autoload({
         'jquery': ['jQuery', 'jquery', '$']
@@ -22,12 +24,11 @@ mix
     .sass('resources/sass/app.scss', 'public/css')
     // .js('resources/js/bootstrap.js', 'public/js')
     // .sass('resources/sass/bootstrap.scss', 'public/css')
-    .webpackConfig({
-        output: {
-            chunkFilename: 'js/chunks/[name].[chunkhash].js',
-        },
-    })
-    .disableNotifications();
+    .disableNotifications()
+    .webpackConfig(webpackConfigurations)
+    .copyDirectory('node_modules/tinymce/skins', 'public/css/tinymce/skins')
+    .copyDirectory('resources/icons', 'public/images/icon')
+    .copyDirectory('resources/img', 'public/images');
 
 if (mix.inProduction()) {
     mix.version();

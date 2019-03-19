@@ -19,3 +19,11 @@ Auth::routes(['verify' => true]);
 
 Route::get('/admin', 'AdminController@index')->name('admin');
 Route::get('/admin/{any}', 'AdminController@index')->where('any', '.*');
+
+Route::prefix('api')->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('me', 'UserController@getMe');
+
+        Route::resource('page', 'PageController')->except(['create', 'edit']);
+    });
+});

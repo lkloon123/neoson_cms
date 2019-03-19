@@ -8,12 +8,12 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
     public function getMe()
     {
-        return Auth::user()->makeHidden('last_login_ip');
+        return new UserResource(\Auth::user());
     }
 }

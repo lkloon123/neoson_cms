@@ -46,6 +46,12 @@ use Silber\Bouncer\Database\HasRolesAndAbilities;
  * @property-read \Illuminate\Database\Eloquent\Collection|\OwenIt\Auditing\Models\Audit[] $audits
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Page[] $pages
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User whereDeletedAt($value)
+ * @property \Illuminate\Support\Carbon|null $last_login_at
+ * @property string|null $last_login_ip
+ * @property \Illuminate\Support\Carbon|null $last_logout_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User whereLastLoginAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User whereLastLoginIp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User whereLastLogoutAt($value)
  */
 class User extends BaseModel implements MustVerifyEmail, AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
@@ -71,14 +77,14 @@ class User extends BaseModel implements MustVerifyEmail, AuthenticatableContract
 
     public function __construct(array $attributes = [])
     {
-        parent::__construct($attributes);
-
         $this->dates[] = 'last_login_at';
         $this->dates[] = 'last_logout_at';
 
         $this->auditExclude[] = 'last_login_at';
         $this->auditExclude[] = 'last_login_ip';
         $this->auditExclude[] = 'last_logout_at';
+
+        parent::__construct($attributes);
     }
 
     public function pages()

@@ -2,13 +2,13 @@ window._ = require('lodash');
 
 window.$ = window.jQuery = require('jquery');
 
+window.moment = require('moment');
+
 require('bootstrap');
 
-require('node-waves');
+require('jquery.nicescroll');
 
-require('adminbsb-materialdesign');
-
-require('bootstrap-notify');
+require('./stisla/stisla');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

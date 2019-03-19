@@ -3,7 +3,10 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class Handler extends ExceptionHandler
 {
@@ -29,7 +32,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param  \Exception $exception
      * @return void
      */
     public function report(Exception $exception)
@@ -40,12 +43,43 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
     {
+        if ($request->wantsJson()) {
+            $statusCode = 500;
+            if ($exception instanceof ValidationException) {
+                $statusCode = $exception->status;
+            } else if ($exception instanceof HttpExceptionInterface) {
+                $statusCode = $exception->getStatusCode();
+            } else if ($exception instanceof AuthenticationException) {
+                return parent::render($request, $exception);
+            }
+
+            $response = [
+                'message' => $exception->getMessage(),
+                'status_code' => $statusCode,
+            ];
+
+            if ($exception instanceof ValidationException) {
+                $response['errors'] = $exception->errors();
+            }
+
+            if (config('app.debug')) {
+                $response['debug'] = [
+                    'line' => $exception->getLine(),
+                    'file' => $exception->getFile(),
+                    'class' => \get_class($exception),
+                    'trace' => explode("\n", $exception->getTraceAsString())
+                ];
+            }
+
+            return response()->json($response, $statusCode);
+        }
+
         return parent::render($request, $exception);
     }
 }

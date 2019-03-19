@@ -1,2 +1,26 @@
+@import "~bootstrap-daterangepicker/daterangepicker.css";
 @import "bootstrap";
-@import "~adminbsb-materialdesign/css/themes/theme-red.min.css";
+@import "~vue-multiselect/dist/vue-multiselect.min.css";
+@import "~izitoast/dist/css/iziToast.css";
+
+.card .card-header {
+  border-bottom-color: #dcdfe6;
+}
+
+.form-control[readonly]:focus, .input-group-text[readonly]:focus, .custom-select[readonly]:focus, .custom-file-label[readonly]:focus {
+  background-color: #e9ecef;
+  border-color: #95a0f4;
+}
+
+.vgt-responsive > table > tbody > tr {
+  line-height: 2;
+}
+
+.section .section-header .section-header-back .btn:hover {
+  background-color: #e9ecef;
+  color: #191d21;
+}
+
+.should-hide {
+  display: none
+}

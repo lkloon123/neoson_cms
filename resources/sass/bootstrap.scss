@@ -1,4 +1,11 @@
-@import "~bootstrap/dist/css/bootstrap.min.css";
-@import "~node-waves/dist/waves.min.css";
-@import "~animate.css/animate.min.css";
-@import "~adminbsb-materialdesign/css/style.min.css";
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~@fortawesome/fontawesome-free/css/all.css";
+@import "stisla/css/style.css";
+@import "stisla/css/components.css";
+
+//fixes
+@import "form_x_mark_fix";
+
+body {
+  background-color: #f3f3f4;
+}

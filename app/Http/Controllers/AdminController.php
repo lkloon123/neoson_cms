@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BaseRequest;
+
 class AdminController extends Controller
 {
     /**
@@ -18,9 +20,10 @@ class AdminController extends Controller
     /**
      * Show the application dashboard.
      *
+     * @param BaseRequest $request
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(BaseRequest $request)
     {
         return view('layouts.admin');
     }
