@@ -40,7 +40,7 @@
                                                :class="{'is-invalid': errors.first('Publish From')}"
                                                :options="publishFromDatePickerOptions"
                                                v-model="publishFromDate"
-                                               v-validate="'required|date_format:YYYY-MM-DD hh:mm:ss a'"></date-range-picker>
+                                               v-validate="'required'"></date-range-picker>
 
                             <div class="invalid-feedback">
                                 {{errors.first('Publish From')}}
@@ -52,7 +52,7 @@
                                                :class="{'is-invalid': errors.first('Publish To')}"
                                                :options="publishToDatePickerOptions"
                                                v-model="publishToDate"
-                                               v-validate="'required|date_format:YYYY-MM-DD hh:mm:ss a'"></date-range-picker>
+                                               v-validate="'required'"></date-range-picker>
 
                             <div class="invalid-feedback">
                                 {{errors.first('Publish To')}}
