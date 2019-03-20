@@ -1,5 +1,4 @@
 import iziToast from "izitoast";
-import 'izitoast/dist/css/iziToast.min.css';
 
 export default function (Vue) {
     Vue.Toast = {

@@ -3,7 +3,8 @@
         <button type="button"
                 :class="triggerBtnClass"
                 @click="copyCurrentState = 'show'"
-                v-if="showBtn && !isBtnHtml">
+                v-if="showBtn && !isBtnHtml"
+                :title="triggerBtnTooltip">
             {{triggerBtnText}}
         </button>
 
@@ -11,7 +12,8 @@
                 :class="triggerBtnClass"
                 @click="copyCurrentState = 'show'"
                 v-if="showBtn && isBtnHtml"
-                v-html="triggerBtnText">
+                v-html="triggerBtnText"
+                :title="triggerBtnTooltip">
         </button>
 
         <BaseModal :current-state="copyCurrentState" @hidden="handleHidden" @shown="$emit('shown', $event)">
@@ -90,6 +92,10 @@
                         'btn-primary': true
                     }
                 }
+            },
+            triggerBtnTooltip:{
+                type: String,
+                default: null
             },
             //inherit props from base modal
             showXOnHeader: {

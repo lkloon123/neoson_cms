@@ -15,27 +15,31 @@
                         :search-options="{enabled: true}"
                         :selectOptions="{enabled: true, selectOnCheckboxOnly: true}"
                         :pagination-options="{enabled: true}"
-                        styleClass="vgt-table bordered table-hover"
+                        styleClass="vgt-table table-hover condensed"
                         v-else>
             <template slot="table-row" slot-scope="props">
-                <span v-if="props.column.field === 'action'">
-                    <button class="btn btn-icon btn-info" @click="gotoEdit(props.row.id)">
-                        <i class="fas fa-edit fa-fw"></i>
-                    </button>
-                    <!-- delete button -->
-                    <confirm-modal :body="`Confirm Delete Page [${props.row.title}] ?`"
-                                   :cfm-btn-class="{btn: true, 'btn-danger': true}"
-                                   :is-btn-html="true"
-                                   :show-btn="true"
-                                   :trigger-btn-class="{btn: true, 'btn-icon': true, 'btn-danger': true}"
-                                   :trigger-btn-text="deleteBtnIcon"
-                                   @confirm="deletePage(props.row.id, props.row.title)"
-                                   title="Confirmation">
-                    </confirm-modal>
-                    <!-- #delete button -->
-                </span>
-                <span v-else-if="props.column.field === 'updated_at'">
+                <span v-if="props.column.field === 'updated_at'">
                     {{formatToAgoDate(props.formattedRow[props.column.field])}}
+                </span>
+                <span v-else-if="props.column.field === 'action'">
+                    <span class="table-actions">
+                        <button class="btn btn-icon btn-info btn-sm" @click="gotoEdit(props.row.id)" title="Edit">
+                            <i class="fas fa-edit fa-fw"></i>
+                        </button>
+                        <!-- delete button -->
+                        <confirm-modal :body="`Confirm Delete Page [${props.row.title}] ?`"
+                                       :cfm-btn-class="{btn: true, 'btn-danger': true}"
+                                       :is-btn-html="true"
+                                       :show-btn="true"
+                                       :trigger-btn-class="{btn: true, 'btn-icon': true, 'btn-sm': true, 'btn-danger': true}"
+                                       :trigger-btn-text="deleteBtnIcon"
+                                       trigger-btn-tooltip="Delete"
+                                       @confirm="deletePage(props.row.id, props.row.title)"
+                                       title="Confirmation">
+                        </confirm-modal>
+                        <!-- #delete button -->
+                    </span>
+                    <i class="fas fa-ellipsis-v text-muted show-action-icon"></i>
                 </span>
                 <span v-else-if="props.column.field === 'status'">
                     <span class="badge badge-success" v-if="props.formattedRow[props.column.field] === 'Publish'">{{props.formattedRow[props.column.field]}}</span>
@@ -71,25 +75,22 @@
                 {
                     label: 'Status',
                     field: 'status',
-                    tdClass: 'text-center',
-                    width: '15%'
+                    width: '19%'
                 },
                 {
                     label: 'Last edited',
                     field: 'updated_at',
-                    tdClass: 'text-center',
-                    width: '15%'
+                    width: '20%'
                 },
                 {
-                    label: 'Action',
+                    label: '',
                     field: 'action',
-                    thClass: 'text-center',
-                    tdClass: 'text-center',
-                    width: '10%'
+                    tdClass: 'text-center show-action',
+                    width: '1%'
                 }
             ],
             rows: [],
-            isLoading: true,
+            isLoading: true
         }),
         computed: {
             deleteBtnIcon() {
