@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5fcce7ee3e88453bfa85b566abacf1e6",
+    "content-hash": "d231537e0ab56a47804e32431741c809",
     "packages": [
         {
             "name": "bensampo/laravel-enum",
@@ -2794,6 +2794,61 @@
                 "dump"
             ],
             "time": "2019-02-23T15:17:42+00:00"
+        },
+        {
+            "name": "talevskiigor/composer-bump",
+            "version": "1.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/talevskiigor/composer-bump.git",
+                "reference": "253be880dcdf87c367c9229cad829675f9598f1f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/talevskiigor/composer-bump/zipball/253be880dcdf87c367c9229cad829675f9598f1f",
+                "reference": "253be880dcdf87c367c9229cad829675f9598f1f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "~1.4",
+                "mikey179/vfsstream": "^1.6",
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "~4.0",
+                "symfony/css-selector": "2.8.*|3.0.*",
+                "symfony/dom-crawler": "2.8.*|3.0.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Talevskiigor\\ComposerBump\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Igor T.",
+                    "email": "igor.talevski@gmail.com"
+                }
+            ],
+            "description": "Laravel artisan command to increment composer.json version.",
+            "keywords": [
+                "artisan",
+                "bump",
+                "composer",
+                "laravel"
+            ],
+            "time": "2016-03-02T23:17:16+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
