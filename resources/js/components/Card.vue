@@ -15,19 +15,26 @@
             <!-- #header action -->
         </div>
 
-        <!-- body -->
-        <div class="collapse show" :id="collapsibleId" v-if="isCollapsible">
+        <!-- collapsible -->
+        <div class="collapse" :class="{show: !defaultCollapse}" :id="collapsibleId" v-if="isCollapsible">
             <div class="card-body">
                 <slot></slot>
             </div>
-        </div>
-        <div class="card-body" v-else>
-            <slot></slot>
-        </div>
-        <!-- #body -->
 
-        <div class="card-footer" v-if="hasFooter">
-            <slot name="footer"></slot>
+            <div class="card-footer" v-if="hasFooter">
+                <slot name="footer"></slot>
+            </div>
+        </div>
+        <!-- #collapsible -->
+
+        <div v-else>
+            <div class="card-body">
+                <slot></slot>
+            </div>
+
+            <div class="card-footer" v-if="hasFooter">
+                <slot name="footer"></slot>
+            </div>
         </div>
     </div>
 </template>
@@ -36,6 +43,10 @@
     export default {
         props: {
             isCollapsible: {
+                type: Boolean,
+                default: false
+            },
+            defaultCollapse: {
                 type: Boolean,
                 default: false
             },
@@ -89,6 +100,10 @@
         created() {
             if (this.isCollapsible) {
                 this.collapsibleId = this.$Utils.getRandomId();
+
+                if (this.defaultCollapse) {
+                    this.collapsibleIcon = '<i class="fas fa-plus"></i>';
+                }
             }
         }
     }

@@ -34,6 +34,11 @@ axios.interceptors.response.use(null,
                 window.location = '/login';
                 return;
             }
+
+            if(error.response.status === 422) {
+                error.response.data.message = _.values(error.response.data.errors)[0];
+                return Promise.reject(error);
+            }
         }
 
         return Promise.reject(error);

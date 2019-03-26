@@ -29,7 +29,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class BaseModel extends Model implements Auditable
 {
-    use SoftDeletes, \OwenIt\Auditing\Auditable;
+    use SoftDeletes, \OwenIt\Auditing\Auditable, \Askedio\SoftCascade\Traits\SoftCascadeTrait;
 
     protected $dates = ['deleted_at'];
     protected $guarded = ['id'];

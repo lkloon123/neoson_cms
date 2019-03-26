@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Page;
+namespace App\Http\Requests\Menu;
 
 use App\Http\Requests\BaseRequest;
-use App\Model\Page;
+use App\Model\Menu;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class DeleteRequest extends BaseRequest
+class ViewRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,17 +15,17 @@ class DeleteRequest extends BaseRequest
      */
     public function authorize()
     {
-        $page = Page::find($this->route('page'));
+        $menu = Menu::find($this->route('menu'));
 
-        if (!$page) {
-            throw new NotFoundHttpException('page not found');
+        if (!$menu) {
+            throw new NotFoundHttpException('menu not found');
         }
 
         $this->attributes->add([
-            'page' => $page
+            'menu' => $menu
         ]);
 
-        return $this->user()->can('delete', $page);
+        return $this->user()->can('view', $menu);
     }
 
     /**

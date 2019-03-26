@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Enums\PageStatus;
 use App\Http\Requests\Page\CreateRequest;
 use App\Http\Requests\Page\DeleteRequest;
+use App\Http\Requests\Page\SearchRequest;
 use App\Http\Requests\Page\UpdateRequest;
 use App\Http\Requests\Page\ViewAllRequest;
 use App\Http\Requests\Page\ViewRequest;
 use App\Http\Resources\PageResource;
 use App\Model\Page;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageController extends Controller
 {
@@ -127,5 +129,29 @@ class PageController extends Controller
         }
 
         return response()->json([], 204);
+    }
+
+    public function search(SearchRequest $request)
+    {
+        $searchTitle = $request->get('title');
+
+        if (\Auth::user()->isAn('superadmin', 'admin')) {
+            $queryBuilder = Page::with('author');
+        } else {
+            $queryBuilder = \Auth::user()->pages()->with('author');
+        }
+
+        if ($searchTitle) {
+            $queryBuilder
+                ->where('title', 'like', "%{$searchTitle}%");
+        }
+
+        $pages = $queryBuilder->get();
+
+        if ($pages->isEmpty()) {
+            throw new NotFoundHttpException('no result found');
+        }
+
+        return PageResource::collection($pages);
     }
 }

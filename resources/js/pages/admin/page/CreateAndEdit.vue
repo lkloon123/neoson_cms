@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div>
         <div class="row">
             <div class="col-md-9">
@@ -7,10 +7,16 @@
                         <h4>Content</h4>
                     </template>
                     <template v-slot:header-action>
-                        <button class="btn btn-light" @click="validateAndSave('Draft')" :disabled="isLoading">
+                        <button :class="{disabled: isLoading}"
+                                :disabled="isLoading"
+                                @click="validateAndSave('Draft')"
+                                class="btn btn-light">
                             Save Draft
                         </button>
-                        <button class="btn btn-primary" @click="validateAndSave('Publish')" :disabled="isLoading">
+                        <button :class="{disabled: isLoading}"
+                                :disabled="isLoading"
+                                @click="validateAndSave('Publish')"
+                                class="btn btn-primary">
                             Publish
                         </button>
                     </template>
@@ -141,7 +147,6 @@
             description: '',
             publishFromDate: moment().format('YYYY-MM-DD hh:mm:ss a'),
             publishToDate: moment().add(1, 'week').format('YYYY-MM-DD hh:mm:ss a'),
-            id: null,
             isLoading: true
         }),
         watch: {
@@ -213,7 +218,7 @@
                         title: 'Updating...'
                     });
 
-                    axios.put(`/api/page/${this.id}`, params)
+                    axios.put(`/api/page/${this.$route.params.id}`, params)
                         .then(response => {
                             this.$Toast.show({
                                 type: 'success',
@@ -247,7 +252,6 @@
                         this.publishFromDate = moment(response.data.publish_from_date).format('YYYY-MM-DD hh:mm:ss a');
                         this.publishToDate = moment(response.data.publish_to_date).format('YYYY-MM-DD hh:mm:ss a');
                         this.content = response.data.content;
-                        this.id = response.data.id;
 
                         this.isLoading = false;
                     })

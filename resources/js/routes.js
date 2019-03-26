@@ -66,6 +66,48 @@ const routes = [
                 ]
             },
             {
+                path: 'menu',
+                component: () => import('./pages/admin/menu/Index.vue'),
+                children: [
+                    {
+                        path: '/',
+                        component: () => import('./pages/admin/menu/ShowAll.vue'),
+                        name: 'menu.showall',
+                        meta: {
+                            breadcrumb: [
+                                {name: 'Dashboard', link: '/dashboard'},
+                                {name: 'Menu'}
+                            ]
+                        }
+                    },
+                    {
+                        path: 'create',
+                        component: () => import('./pages/admin/menu/CreateAndEdit.vue'),
+                        name: 'menu.create',
+                        meta: {
+                            breadcrumb: [
+                                {name: 'Dashboard', link: '/dashboard'},
+                                {name: 'Menu', link: '/menu'},
+                                {name: 'Create new menu'}
+                            ]
+                        }
+                    },
+                    {
+                        path: 'edit/:id',
+                        component: () => import('./pages/admin/menu/CreateAndEdit.vue'),
+                        props: {mode: 'edit'},
+                        name: 'menu.edit',
+                        meta: {
+                            breadcrumb: [
+                                {name: 'Dashboard', link: '/dashboard'},
+                                {name: 'Menu', link: '/menu'},
+                                {name: 'Edit menu'}
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
                 path: '*',
                 component: () => import('./pages/NotFound.vue'),
                 name: 'error.notfound'

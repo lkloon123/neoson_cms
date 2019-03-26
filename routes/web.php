@@ -25,6 +25,9 @@ Route::prefix('api')->group(function () {
         Route::options('version', 'AdminController@version');
         Route::get('me', 'UserController@getMe');
 
+        Route::get('page/search', 'PageController@search');
         Route::resource('page', 'PageController')->except(['create', 'edit']);
+
+        Route::resource('menu', 'MenuController')->except(['create', 'edit']);
     });
 });

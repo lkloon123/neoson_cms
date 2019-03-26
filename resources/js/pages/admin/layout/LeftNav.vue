@@ -15,13 +15,32 @@
                 <router-link to="/pages" tag="li">
                     <a><i class="far fa-file"></i><span>Pages</span></a>
                 </router-link>
+                <li class="dropdown" :class="{active: subIsActive('/menu')}">
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                        <i class="fas fa-paint-brush"></i> <span>Appearance</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <router-link to="/menu" tag="li">
+                            <a><i class="fas fa-compass"></i> <span>Menu</span></a>
+                        </router-link>
+                    </ul>
+                </li>
             </ul>
         </aside>
     </div>
 </template>
 
 <script>
-    export default {}
+    export default {
+        methods: {
+            subIsActive(input) {
+                const paths = Array.isArray(input) ? input : [input];
+                return paths.some(path => {
+                    return this.$route.path.indexOf(path) === 0
+                })
+            }
+        }
+    }
 </script>
 
 <style scoped>
