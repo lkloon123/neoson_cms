@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\PageStatus;
+use App\Enums\PageType;
 use App\Http\Requests\Page\CreateRequest;
 use App\Http\Requests\Page\DeleteRequest;
 use App\Http\Requests\Page\SearchRequest;
@@ -11,6 +12,7 @@ use App\Http\Requests\Page\ViewAllRequest;
 use App\Http\Requests\Page\ViewRequest;
 use App\Http\Resources\PageResource;
 use App\Model\Page;
+use App\Views\Builder;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageController extends Controller
@@ -153,5 +155,21 @@ class PageController extends Controller
         }
 
         return PageResource::collection($pages);
+    }
+
+    public function home()
+    {
+        Builder::setPage(PageType::Homepage);
+        return view('themes.BlackrockDigital.templates.index');
+    }
+
+    public function getPage($slug)
+    {
+        $page = Page::where('slug', '=', $slug)
+            ->where('status', '=', PageStatus::Publish)
+            ->firstOrFail();
+
+        Builder::setPage($page);
+        return view('themes.BlackrockDigital.templates.index');
     }
 }

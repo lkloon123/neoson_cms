@@ -28,7 +28,13 @@ mix
     .webpackConfig(webpackConfigurations)
     .copyDirectory('node_modules/tinymce/skins', 'public/css/tinymce/skins')
     .copyDirectory('resources/icons', 'public/images/icon')
-    .copyDirectory('resources/img', 'public/images');
+    .copyDirectory('resources/img', 'public/images')
+    .copy('node_modules/bootstrap/dist/js/bootstrap.min.js', 'public/core/bootstrap/js/bootstrap.min.js')
+    .copy('node_modules/bootstrap/dist/css/bootstrap.min.css', 'public/core/bootstrap/css/bootstrap.min.css')
+    .copy('node_modules/jquery/dist/jquery.min.js', 'public/core/jquery/js/jquery.min.js')
+    .copy('node_modules/@fortawesome/fontawesome-free/css/all.min.css', 'public/core/fontawesome/css/fontawesome.min.css')
+    .copy('node_modules/@fortawesome/fontawesome-free/js/all.min.js', 'public/core/fontawesome/js/fontawesome.min.js')
+    .copyDirectory('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/core/fontawesome/webfonts');
 
 if (mix.inProduction()) {
     mix.version();

@@ -175,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Talevskiigor\ComposerBump\ComposerBumpServiceProvider::class,
+        App\Providers\PageContentServiceProvider::class
     ],
 
     /*
@@ -226,6 +227,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'PageContent' => \App\Facade\PageContentFacade::class,
     ],
 
 ];

@@ -25,7 +25,7 @@
                        placeholder="http://"
                        type="text"
                        v-model="url"
-                       v-validate="{required: true, url:{require_protocol: true}}"/>
+                       v-validate="{required: true, url:{require_host: false}}"/>
 
                 <div class="invalid-feedback">
                     {{errors.first('Url')}}

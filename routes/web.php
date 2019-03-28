@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes(['verify' => true]);
 
 Route::get('/admin', 'AdminController@index')->name('admin');
@@ -31,3 +27,6 @@ Route::prefix('api')->group(function () {
         Route::resource('menu', 'MenuController')->except(['create', 'edit']);
     });
 });
+
+Route::get('/', 'PageController@home');
+Route::get('{slug}', 'PageController@getPage')->where('slug', '([A-Za-z0-9\-\/]+)');

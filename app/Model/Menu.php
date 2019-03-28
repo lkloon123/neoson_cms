@@ -30,6 +30,7 @@ use Illuminate\Support\Arr;
 class Menu extends BaseModel
 {
     protected $softCascade = ['menuItems'];
+    public $updatedMenuItemMetaId = [];
 
     public function user()
     {
@@ -53,7 +54,10 @@ class Menu extends BaseModel
                     'display_order' => $displayOrder,
                     'meta_id' => $item['id'],
                     'meta' => Arr::except($item, ['id', 'children']),
-                ]);
+                ]
+            );
+
+            $this->updatedMenuItemMetaId[] = $menuItem->meta_id;
 
             if ($item['children'] && \count($item['children']) > 0) {
                 //this object has children
