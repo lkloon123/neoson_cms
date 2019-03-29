@@ -15,6 +15,16 @@
                 <router-link to="/pages" tag="li">
                     <a><i class="fas fa-file"></i><span>Pages</span></a>
                 </router-link>
+                <li class="dropdown" :class="{active: subIsActive('/post')}">
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                        <i class="fas fa-highlighter"></i> <span>Blogging</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <router-link to="/posts" tag="li">
+                            <a><i class="fas fa-align-left"></i> <span>Posts</span></a>
+                        </router-link>
+                    </ul>
+                </li>
                 <router-link to="/file-manager" tag="li">
                     <a><i class="fas fa-folder-open"></i><span>File Manager</span></a>
                 </router-link>

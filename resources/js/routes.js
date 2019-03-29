@@ -76,6 +76,48 @@ const routes = [
                 ]
             },
             {
+                path: 'posts',
+                component: () => import('./pages/admin/post/Index.vue'),
+                children: [
+                    {
+                        path: '/',
+                        component: () => import('./pages/admin/post/ShowAll.vue'),
+                        name: 'post.showall',
+                        meta: {
+                            breadcrumb: [
+                                {name: 'Dashboard', link: '/dashboard'},
+                                {name: 'Posts'}
+                            ]
+                        }
+                    },
+                    {
+                        path: 'create',
+                        component: () => import('./pages/admin/post/CreateAndEdit.vue'),
+                        name: 'post.create',
+                        meta: {
+                            breadcrumb: [
+                                {name: 'Dashboard', link: '/dashboard'},
+                                {name: 'Posts', link: '/posts'},
+                                {name: 'Create new post'}
+                            ]
+                        }
+                    },
+                    {
+                        path: 'edit/:id',
+                        component: () => import('./pages/admin/post/CreateAndEdit.vue'),
+                        props: {mode: 'edit'},
+                        name: 'post.edit',
+                        meta: {
+                            breadcrumb: [
+                                {name: 'Dashboard', link: '/dashboard'},
+                                {name: 'Posts', link: '/posts'},
+                                {name: 'Edit post'}
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
                 path: 'menu',
                 component: () => import('./pages/admin/menu/Index.vue'),
                 children: [

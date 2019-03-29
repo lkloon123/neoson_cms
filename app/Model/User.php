@@ -53,6 +53,7 @@ use Silber\Bouncer\Database\HasRolesAndAbilities;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User whereLastLoginIp($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User whereLastLogoutAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Menu[] $menus
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Page[] $posts
  */
 class User extends BaseModel implements MustVerifyEmail, AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
@@ -91,6 +92,11 @@ class User extends BaseModel implements MustVerifyEmail, AuthenticatableContract
     public function pages()
     {
         return $this->hasMany(Page::class, 'author_id');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'author_id');
     }
 
     public function menus()

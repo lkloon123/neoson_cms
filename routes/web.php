@@ -24,6 +24,8 @@ Route::prefix('api')->group(function () {
         Route::get('page/search', 'PageController@search');
         Route::resource('page', 'PageController')->except(['create', 'edit']);
 
+        Route::resource('post', 'PostController')->except(['create', 'edit']);
+
         Route::resource('menu', 'MenuController')->except(['create', 'edit']);
     });
 });

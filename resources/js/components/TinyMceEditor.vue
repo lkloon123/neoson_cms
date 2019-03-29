@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="padding-right: 2px">
         <box-content-loading v-if="isLoading || isContentLoading"></box-content-loading>
 
         <div :class="{'should-hide': isLoading || isContentLoading}">
@@ -24,7 +24,7 @@
     import 'tinymce/plugins/advlist/plugin';
     import 'tinymce/plugins/image/plugin';
     import 'tinymce/plugins/media/plugin';
-    import 'tinymce/plugins/autoresize/plugin';
+    import '../plugins/tinymce-charactercount';
     import TinyMce from '@tinymce/tinymce-vue';
 
     import BoxContentLoading from '@components/content_loading/BoxContentLoading'
@@ -46,10 +46,10 @@
                 relative_urls : false,
                 remove_script_host : false,
                 menubar: false,
-                statusbar: false,
+                branding: false,
                 nonbreaking_force_tab: true,
                 image_advtab: true,
-                autoresize_bottom_margin: 10,
+                theme_advanced_resizing: true,
                 min_height: 350,
                 file_browser_callback_types: 'image, media',
                 file_browser_callback(field_name, url, type, win) {
@@ -67,7 +67,7 @@
                     );
                 },
             },
-            tinymcePlugin: 'help link code nonbreaking lists advlist image media autoresize',
+            tinymcePlugin: 'help link code nonbreaking lists advlist image media charactercount',
             tinymceToolbar: 'undo redo | formatselect fontsizeselect | bold italic strikethrough forecolor | link image media | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat | code',
             isLoading: true
         }),
