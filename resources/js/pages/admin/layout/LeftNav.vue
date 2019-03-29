@@ -13,7 +13,10 @@
                     <a><i class="fas fa-fire"></i><span>Dashboard</span></a>
                 </router-link>
                 <router-link to="/pages" tag="li">
-                    <a><i class="far fa-file"></i><span>Pages</span></a>
+                    <a><i class="fas fa-file"></i><span>Pages</span></a>
+                </router-link>
+                <router-link to="/file-manager" tag="li">
+                    <a><i class="fas fa-folder-open"></i><span>File Manager</span></a>
                 </router-link>
                 <li class="dropdown" :class="{active: subIsActive('/menu')}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">

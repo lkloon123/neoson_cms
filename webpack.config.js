@@ -4,9 +4,6 @@ module.exports = {
     output: {
         chunkFilename: 'js/chunks/[name].[chunkhash].js',
     },
-    plugins: [
-        new webpack.IgnorePlugin(/^codemirror$/)
-    ],
     resolve: {
         extensions: ['.js', '.vue', '.json'],
         alias: {

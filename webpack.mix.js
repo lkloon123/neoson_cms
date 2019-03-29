@@ -29,6 +29,8 @@ mix
     .copyDirectory('node_modules/tinymce/skins', 'public/css/tinymce/skins')
     .copyDirectory('resources/icons', 'public/images/icon')
     .copyDirectory('resources/img', 'public/images')
+    .copy('vendor/alexusmai/laravel-file-manager/resources/assets/css/file-manager.css', 'public/css/file-manager')
+    .copy('vendor/alexusmai/laravel-file-manager/resources/assets/js/file-manager.js', 'public/js/file-manager')
     .copy('node_modules/bootstrap/dist/js/bootstrap.min.js', 'public/core/bootstrap/js/bootstrap.min.js')
     .copy('node_modules/bootstrap/dist/css/bootstrap.min.css', 'public/core/bootstrap/css/bootstrap.min.css')
     .copy('node_modules/jquery/dist/jquery.min.js', 'public/core/jquery/js/jquery.min.js')

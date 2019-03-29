@@ -16,7 +16,8 @@ class SearchRequest extends ViewAllRequest
     public function rules()
     {
         return [
-            'title' => 'string'
+            'title' => 'string',
+            'include' => 'string|integer'
         ];
     }
 }

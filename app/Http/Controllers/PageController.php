@@ -49,7 +49,7 @@ class PageController extends Controller
         $validated = $request->validated();
 
         //purify content
-        $validated['content'] = \Purifier::clean($validated['content']);
+        $validated['content'] = \Purifier::clean($validated['content'], 'youtube');
 
         /** @var Page $page */
         $page = \Auth::user()->pages()->create([
@@ -92,7 +92,7 @@ class PageController extends Controller
         $validated = $request->validated();
 
         //purify content
-        $validated['content'] = \Purifier::clean($validated['content']);
+        $validated['content'] = \Purifier::clean($validated['content'], 'youtube');
 
         /** @var Page $page */
         $page = $request->get('page');
@@ -136,6 +136,7 @@ class PageController extends Controller
     public function search(SearchRequest $request)
     {
         $searchTitle = $request->get('title');
+        $include = $request->get('include');
 
         if (\Auth::user()->isAn('superadmin', 'admin')) {
             $queryBuilder = Page::with('author');
@@ -144,8 +145,13 @@ class PageController extends Controller
         }
 
         if ($searchTitle) {
-            $queryBuilder
-                ->where('title', 'like', "%{$searchTitle}%");
+            $queryBuilder->where('title', 'like', "%{$searchTitle}%");
+        }
+
+        if ($include) {
+            $queryBuilder->where('status', $include);
+        } else {
+            $queryBuilder->where('status', PageStatus::Publish);
         }
 
         $pages = $queryBuilder->get();

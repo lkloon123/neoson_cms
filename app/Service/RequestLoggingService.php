@@ -11,7 +11,6 @@ namespace App\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Spatie\HttpLogger\LogWriter;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class RequestLoggingService implements LogWriter
 {
@@ -24,17 +23,12 @@ class RequestLoggingService implements LogWriter
 
         $body = $request->except(config('http-logger.except'));
 
-        $files = array_map(function (UploadedFile $file) {
-            return $file->getClientOriginalName();
-        }, iterator_to_array($request->files));
-
         $message = [
             'ip' => $ip,
             'method' => $method,
             'uri' => $uri,
             'header' => $header,
-            'body' => $body,
-            'files' => $files
+            'body' => $body
         ];
 
         Log::channel('requestlog')->info(json_encode($message, JSON_UNESCAPED_SLASHES));

@@ -24,6 +24,16 @@ const routes = [
                 }
             },
             {
+                path: 'file-manager',
+                component: () => import('./pages/admin/file_manager/Index.vue'),
+                meta: {
+                    breadcrumb: [
+                        {name: 'Dashboard', link: '/dashboard'},
+                        {name: 'File Manager'}
+                    ]
+                }
+            },
+            {
                 path: 'pages',
                 component: () => import('./pages/admin/page/Index.vue'),
                 children: [
