@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use App\Enums\PostStatus;
+
 /**
  * App\Model\Post
  *
@@ -35,6 +37,7 @@ namespace App\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post published()
  */
 class Post extends BaseModel
 {
@@ -44,6 +47,11 @@ class Post extends BaseModel
         $this->dates[] = 'expired_at';
 
         parent::__construct($attributes);
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('status', PostStatus::Publish);
     }
 
     public function author()

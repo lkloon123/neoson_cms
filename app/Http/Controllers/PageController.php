@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use anlutro\LaravelSettings\SettingStore;
 use App\Enums\PageStatus;
 use App\Enums\PageType;
 use App\Http\Requests\Page\CreateRequest;
@@ -12,11 +13,27 @@ use App\Http\Requests\Page\ViewAllRequest;
 use App\Http\Requests\Page\ViewRequest;
 use App\Http\Resources\PageResource;
 use App\Model\Page;
+use App\Model\Post;
 use App\Views\Builder;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageController extends Controller
 {
+    public function __construct(SettingStore $setting)
+    {
+        if ($setting->get('minify_output', false)) {
+            $this->middleware([
+                \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
+                \RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
+                \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
+                \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
+                \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes::class,
+                \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
+            ]);
+        }
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -165,17 +182,27 @@ class PageController extends Controller
 
     public function home()
     {
-        Builder::setPage(PageType::Homepage);
+        Builder::setPage(null, PageType::Homepage);
         return view('themes.BlackrockDigital.templates.index');
     }
 
     public function getPage($slug)
     {
-        $page = Page::where('slug', '=', $slug)
-            ->where('status', '=', PageStatus::Publish)
-            ->firstOrFail();
+        $page = Page::where('slug', $slug)
+            ->published()
+            ->first();
 
-        Builder::setPage($page);
+        if ($page === null) {
+            //try to find from post
+            $post = Post::where('slug', $slug)
+                ->published()
+                ->firstOrFail();
+
+            Builder::setPage($post, PageType::Post);
+        } else {
+            Builder::setPage($page);
+        }
+
         return view('themes.BlackrockDigital.templates.index');
     }
 }

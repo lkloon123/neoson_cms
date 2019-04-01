@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Clean Blog - Start Bootstrap Theme</title>
+    <title>{{ PageContent::block('title') }}</title>
 
     <link href="{{ PageContent::css('bootstrap') }}" rel="stylesheet">
     <link href="{{ PageContent::css('fontawesome') }}" rel="stylesheet" type="text/css">

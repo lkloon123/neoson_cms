@@ -10,7 +10,7 @@ namespace App\Views\Blocks;
 
 class BlockFactory
 {
-    public static function make($name, $currentPage)
+    public static function make($name, $additionalData, $currentPage, $currentPageType)
     {
         if (!$name) {
             return null;
@@ -19,7 +19,7 @@ class BlockFactory
         $className = __NAMESPACE__ . '\\' . ucfirst($name);
 
         if (class_exists($className)) {
-            return new $className($currentPage);
+            return new $className($additionalData, $currentPage, $currentPageType);
         }
 
         return null;

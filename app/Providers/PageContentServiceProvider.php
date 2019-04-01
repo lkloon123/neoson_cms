@@ -25,7 +25,7 @@ class PageContentServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('pageContent', function ($app) {
-            $builder = new Builder($app['asset'], $app['setting']->get('activated_theme'));
+            $builder = new Builder($app['setting']->get('activated_theme'));
             $view = $app['view'];
             $view->share('builder', $builder);
             return $builder;

@@ -8,8 +8,6 @@
 
 namespace App\Views\Blocks;
 
-
-use App\Enums\PageType;
 use App\Views\AbstractClass\AbstractBlock;
 
 class Content extends AbstractBlock
@@ -18,13 +16,8 @@ class Content extends AbstractBlock
     {
         if ($this->isHomepage()) {
             //homepage, return post
-            return '<p>post here, will be implement later</p>';
+            return \PageContent::block('PostItemList');
         }
         return $this->currentPage->content;
-    }
-
-    protected function isHomepage()
-    {
-        return $this->currentPage === PageType::Homepage;
     }
 }
