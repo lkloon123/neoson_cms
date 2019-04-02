@@ -6,6 +6,7 @@ import * as getters from './store/getters';
 import * as mutations from './store/mutations';
 
 import menu from './store/modules/menu';
+import form from './store/modules/form';
 
 Vue.use(Vuex);
 
@@ -13,7 +14,8 @@ export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
 
     modules: {
-        menu
+        menu,
+        form
     },
     state: {
         currentPageTitle: '',

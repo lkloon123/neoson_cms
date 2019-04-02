@@ -34,6 +34,48 @@ const routes = [
                 }
             },
             {
+                path: 'forms',
+                component: () => import ('./pages/admin/form/Index.vue'),
+                children: [
+                    {
+                        path: '/',
+                        component: () => import('./pages/admin/form/ShowAll.vue'),
+                        name: 'form.showall',
+                        meta: {
+                            breadcrumb: [
+                                {name: 'Dashboard', link: '/dashboard'},
+                                {name: 'Forms'}
+                            ]
+                        }
+                    },
+                    {
+                        path: 'create',
+                        component: () => import('./pages/admin/form/CreateAndEdit.vue'),
+                        name: 'form.create',
+                        meta: {
+                            breadcrumb: [
+                                {name: 'Dashboard', link: '/dashboard'},
+                                {name: 'Forms', link: '/forms'},
+                                {name: 'Create new form'}
+                            ]
+                        }
+                    },
+                    {
+                        path: 'edit/:id',
+                        component: () => import('./pages/admin/form/CreateAndEdit.vue'),
+                        props: {mode: 'edit'},
+                        name: 'form.edit',
+                        meta: {
+                            breadcrumb: [
+                                {name: 'Dashboard', link: '/dashboard'},
+                                {name: 'Forms', link: '/forms'},
+                                {name: 'Edit form'}
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
                 path: 'pages',
                 component: () => import('./pages/admin/page/Index.vue'),
                 children: [

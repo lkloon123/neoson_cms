@@ -54,6 +54,7 @@ use Silber\Bouncer\Database\HasRolesAndAbilities;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User whereLastLogoutAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Menu[] $menus
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Page[] $posts
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Form[] $forms
  */
 class User extends BaseModel implements MustVerifyEmail, AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
@@ -102,5 +103,10 @@ class User extends BaseModel implements MustVerifyEmail, AuthenticatableContract
     public function menus()
     {
         return $this->hasMany(Menu::class);
+    }
+
+    public function forms()
+    {
+        return $this->hasMany(Form::class);
     }
 }

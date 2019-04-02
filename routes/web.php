@@ -27,6 +27,8 @@ Route::prefix('api')->group(function () {
         Route::resource('post', 'PostController')->except(['create', 'edit']);
 
         Route::resource('menu', 'MenuController')->except(['create', 'edit']);
+
+        Route::resource('form', 'FormController')->except(['create', 'edit']);
     });
 });
 

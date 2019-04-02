@@ -25,6 +25,9 @@
                         </router-link>
                     </ul>
                 </li>
+                <router-link to="/forms" tag="li">
+                    <a><i class="fas fa-file-signature"></i><span>Forms</span></a>
+                </router-link>
                 <router-link to="/file-manager" tag="li">
                     <a><i class="fas fa-folder-open"></i><span>File Manager</span></a>
                 </router-link>
