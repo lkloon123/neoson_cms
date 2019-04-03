@@ -5,18 +5,14 @@ import * as actions from './store/actions';
 import * as getters from './store/getters';
 import * as mutations from './store/mutations';
 
-import menu from './store/modules/menu';
-import form from './store/modules/form';
+import modules from './store/modules/index';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
 
-    modules: {
-        menu,
-        form
-    },
+    modules: modules,
     state: {
         currentPageTitle: '',
         pageBackLink: null,
