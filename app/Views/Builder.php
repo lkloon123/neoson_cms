@@ -37,9 +37,9 @@ class Builder extends AbstractBuilder
         return app('asset')->getJs($name, $isMinified);
     }
 
-    public function layout($name, $additionalData = [])
+    public function section($name, $additionalData = [])
     {
-        return $this->renderView(".layouts.$name", $additionalData);
+        return $this->renderView(".sections.$name", $additionalData);
     }
 
     public function menu($name)

@@ -1,4 +1,4 @@
-{!! PageContent::layout('header') !!}
+{!! PageContent::section('header') !!}
 
   <!-- Navigation -->
   {!! PageContent::menu('Main Menu') !!}
@@ -28,4 +28,4 @@
 
   <hr>
 
-{!! PageContent::layout('footer') !!}
+{!! PageContent::section('footer') !!}
