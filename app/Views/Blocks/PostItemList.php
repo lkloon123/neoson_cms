@@ -27,14 +27,14 @@ class PostItemList extends AbstractBlock
             ->take(5)
             ->get();
 
-        $renderedPostItems = [];
+        $renderedPostItems = '';
 
         foreach ($postList as $post) {
-            $renderedPostItems[] = $this->buildPostItem($post);
+            $renderedPostItems .= $this->buildPostItem($post);
         }
 
         return $this->renderView('.blogs.postlist', [
-            'postItems' => \View::make('postItems', ['dataItems' => $renderedPostItems])
+            'postItems' => $renderedPostItems
         ]);
     }
 

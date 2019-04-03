@@ -56,7 +56,7 @@ class Builder extends AbstractBuilder
         return app('setting')->get($name, $default);
     }
 
-    public function block($name, $additionalData = [])
+    public function block($name, array $additionalData = [])
     {
         /** @var AbstractBlock $block */
         $block = BlockFactory::make($name, $additionalData, self::$currentPage, self::$currentPageType);

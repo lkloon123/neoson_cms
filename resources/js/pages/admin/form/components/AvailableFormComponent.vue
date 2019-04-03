@@ -26,7 +26,7 @@
         mixins: [Mixin],
         data: () => ({
             availableFormList: [
-                {id: '1', type: 'text_box', label: 'Text', componentLabel: 'Text', isRequired: false},
+                {id: '1', type: 'text', label: 'Text', componentLabel: 'Text', isRequired: false},
                 {id: '2', type: 'text_area', label: 'Text Area', componentLabel: 'Text Area', isRequired: false},
                 {id: '3', type: 'submit_button', label: 'Submit', componentLabel: 'Submit'}
             ]

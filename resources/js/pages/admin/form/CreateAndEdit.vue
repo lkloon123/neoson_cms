@@ -61,7 +61,7 @@
                                     </div>
 
                                     <!-- display form types -->
-                                    <div v-if="field.type === 'text_box'">
+                                    <div v-if="field.type === 'text'">
                                         <label>
                                             {{field.label}}
                                             <span v-if="field.isRequired" class="text-danger ml-1">*</span>

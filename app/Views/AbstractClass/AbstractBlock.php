@@ -12,17 +12,21 @@ namespace App\Views\AbstractClass;
 use App\Enums\PageType;
 use App\Model\Page;
 use App\Model\Post;
+use Illuminate\Support\Collection;
 
 abstract class AbstractBlock extends AbstractBuilder
 {
     /* @var Page|Post $currentPage */
-    protected $additionalData;
     protected $currentPage;
+    protected $additionalData;
     protected $currentPageType;
 
     public function __construct($additionalData, $currentPage, $currentPageType)
     {
         parent::__construct(app('setting')->get('activated_theme'));
+        if (!($additionalData instanceof Collection)) {
+            $additionalData = Collection::make($additionalData);
+        }
         $this->additionalData = $additionalData;
         $this->currentPage = $currentPage;
         $this->currentPageType = $currentPageType;
