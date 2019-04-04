@@ -72,6 +72,18 @@ const routes = [
                                 {name: 'Edit form'}
                             ]
                         }
+                    },
+                    {
+                        path: 'responses/:id',
+                        component: () => import('./pages/admin/form/Responses.vue'),
+                        name: 'form.responses',
+                        meta: {
+                            breadcrumb: [
+                                {name: 'Dashboard', link: '/dashboard'},
+                                {name: 'Forms', link: '/forms'},
+                                {name: 'Form responses'}
+                            ]
+                        }
                     }
                 ]
             },

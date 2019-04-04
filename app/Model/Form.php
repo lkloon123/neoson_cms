@@ -26,6 +26,7 @@ use Illuminate\Support\Arr;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Form whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Form whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Form whereUserId($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\FormResponse[] $formResponses
  */
 class Form extends BaseModel
 {
@@ -40,6 +41,11 @@ class Form extends BaseModel
     public function formItems()
     {
         return $this->hasMany(FormItem::class);
+    }
+
+    public function formResponses()
+    {
+        return $this->hasMany(FormResponse::class);
     }
 
     public function insertFormItem($items)

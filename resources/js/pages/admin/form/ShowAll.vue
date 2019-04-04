@@ -21,6 +21,16 @@
                 <span v-if="props.column.field === 'updated_at' || props.column.field === 'created_at'">
                     {{formatToAgoDate(props.formattedRow[props.column.field])}}
                 </span>
+                <span v-else-if="props.column.field === 'responses'">
+                    <router-link :to="`/forms/responses/${props.row.id}`"
+                                 class="badge badge-info"
+                                 v-if="props.row.responses > 0">
+                        {{props.formattedRow[props.column.field]}}
+                    </router-link>
+                    <span class="badge badge-info" v-else>
+                        {{props.formattedRow[props.column.field]}}
+                    </span>
+                </span>
                 <span v-else-if="props.column.field === 'action'">
                     <span class="table-actions">
                         <button class="btn btn-icon btn-info btn-sm" @click="gotoEdit(props.row.id)" title="Edit">
@@ -61,7 +71,12 @@
                 {
                     label: 'Name',
                     field: 'name',
-                    width: '60%'
+                    width: '40%'
+                },
+                {
+                    label: 'Responses',
+                    field: 'responses',
+                    width: '20%'
                 },
                 {
                     label: 'Created At',
@@ -155,4 +170,8 @@
 <style scoped>
     @import '~vue-good-table/dist/vue-good-table.css';
     @import '~@css/vue_good_table_fix.scss';
+
+    .badge-info[href]:focus, .badge-info[href]:hover {
+        background-color: #0da8ee !important;
+    }
 </style>

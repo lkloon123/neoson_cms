@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Illuminate\Support\Str;
+
 /**
  * App\Model\FormItem
  *
@@ -27,6 +29,10 @@ namespace App\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\FormItem whereMeta($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\FormItem whereMetaId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\FormItem whereUpdatedAt($value)
+ * @property-read mixed $is_required
+ * @property-read mixed $label
+ * @property-read mixed $type
+ * @property-read mixed $name
  */
 class FormItem extends BaseModel
 {
@@ -39,5 +45,33 @@ class FormItem extends BaseModel
     public function form()
     {
         return $this->belongsTo(Form::class);
+    }
+
+    public function getTypeAttribute()
+    {
+        return $this->meta['type'];
+    }
+
+    public function getIsRequiredAttribute()
+    {
+        if (isset($this->meta['isRequired']) && $this->meta['isRequired']) {
+            return $this->meta['isRequired'];
+        }
+
+        return null;
+    }
+
+    public function getLabelAttribute()
+    {
+        if ($this->is_required) {
+            return $this->meta['label'] . '&nbsp;<span style="color: #ff0000;">*</span>';
+        }
+
+        return $this->meta['label'];
+    }
+
+    public function getNameAttribute()
+    {
+        return Str::snake($this->meta['label']);
     }
 }

@@ -46,3 +46,11 @@ table.vgt-table > tbody > tr th {
 .vgt-table > tbody > tr > td.show-action:hover .table-actions {
   display: block;
 }
+
+.vgt-table > tbody > tr td {
+  padding-left: .75em !important;
+}
+
+.vgt-wrap .vgt-global-search__actions {
+  margin-right: 10px;
+}

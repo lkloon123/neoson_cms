@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Form\CreateRequest;
 use App\Http\Requests\Form\DeleteRequest;
+use App\Http\Requests\Form\FormSubmitRequest;
 use App\Http\Requests\Form\UpdateRequest;
 use App\Http\Requests\Form\ViewAllRequest;
+use App\Http\Requests\Form\ViewFormResponseRequest;
 use App\Http\Requests\Form\ViewRequest;
 use App\Http\Resources\FormItemsResource;
 use App\Http\Resources\FormResource;
+use App\Http\Resources\FormResponsesResource;
 use App\Model\Form;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class FormController extends Controller
 {
@@ -22,9 +27,9 @@ class FormController extends Controller
     public function index(ViewAllRequest $request)
     {
         if (\Auth::user()->isAn('superadmin', 'admin')) {
-            $forms = Form::all();
+            $forms = Form::withCount('formResponses')->get();
         } else {
-            $forms = \Auth::user()->forms()->get();
+            $forms = \Auth::user()->forms()->withCount('formResponses')->get();
         }
 
         if ($forms->isEmpty()) {
@@ -65,7 +70,7 @@ class FormController extends Controller
      * Display the specified resource.
      *
      * @param ViewRequest $request
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function show(ViewRequest $request, $id)
@@ -85,7 +90,7 @@ class FormController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateRequest $request
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRequest $request, $id)
@@ -117,7 +122,7 @@ class FormController extends Controller
      * Remove the specified resource from storage.
      *
      * @param DeleteRequest $request
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
@@ -132,5 +137,37 @@ class FormController extends Controller
         }
 
         return response()->json([], 204);
+    }
+
+    public function formSubmit(FormSubmitRequest $request)
+    {
+        $validated = Arr::except($request->validated(), 'formId');
+
+        /** @var Form $form */
+        $form = $request->get('form');
+        $form->formResponses()->create([
+            'meta' => $validated
+        ]);
+
+        \Session::flash('flash-message', 'The form data has been recorded');
+        return back();
+    }
+
+    public function formResponse(ViewFormResponseRequest $request, $id)
+    {
+        /** @var Form $form */
+        $form = $request->get('form');
+
+        if ($form->formResponses->isEmpty()) {
+            return response()->json([], 204);
+        }
+
+        $lastResponse = $form->formResponses->first();
+
+        return FormResponsesResource::collection($form->formResponses)
+            ->additional(array_merge(
+                $lastResponse->buildColumns(),
+                ['form_name' => Str::title(str_replace('_', ' ', $form->name))]
+            ));
     }
 }

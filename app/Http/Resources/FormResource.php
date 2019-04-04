@@ -17,7 +17,8 @@ class FormResource extends BaseResource
     {
         return array_merge([
             'id' => $this->id,
-            'name' => $this->name
+            'name' => $this->name,
+            'responses' => $this->form_responses_count
         ], $this->dateTimeData());
     }
 }

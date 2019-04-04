@@ -28,9 +28,11 @@ Route::prefix('api')->group(function () {
 
         Route::resource('menu', 'MenuController')->except(['create', 'edit']);
 
+        Route::get('form/response/{form}', 'FormController@formResponse');
         Route::resource('form', 'FormController')->except(['create', 'edit']);
     });
 });
 
 Route::get('/', 'PageController@home');
+Route::post('form-submit', 'FormController@formSubmit');
 Route::get('{slug}', 'PageController@getPage')->where('slug', '([A-Za-z0-9\-\/]+)');
