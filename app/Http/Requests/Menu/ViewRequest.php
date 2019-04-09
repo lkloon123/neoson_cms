@@ -15,17 +15,28 @@ class ViewRequest extends BaseRequest
      */
     public function authorize()
     {
-        $menu = Menu::find($this->route('menu'));
+        if ($this->route('menu')) {
+            $menu = Menu::find($this->route('menu'));
 
-        if (!$menu) {
-            throw new NotFoundHttpException('menu not found');
+            if (!$menu) {
+                throw new NotFoundHttpException('menu not found');
+            }
+
+            $this->attributes->add([
+                'menu' => $menu
+            ]);
+
+            return $this->user()->canAndOwns('menu-view-own', $menu, ['requireAll' => true]) || $this->user()->ability('superadmin', 'menu-view');
         }
 
-        $this->attributes->add([
-            'menu' => $menu
-        ]);
+        if ($this->user()->can('menu-view-own')) {
+            $this->attributes->add([
+                'only_own' => true
+            ]);
+            return true;
+        }
 
-        return $this->user()->can('view', $menu);
+        return $this->user()->ability('superadmin', 'menu-view');
     }
 
     /**

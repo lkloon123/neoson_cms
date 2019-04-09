@@ -17,6 +17,8 @@ export default new Vuex.Store({
         currentPageTitle: '',
         pageBackLink: null,
         currentUserInfo: null,
+        currentUserRole: null,
+        currentUserPermission: [],
     },
     getters,
     mutations,

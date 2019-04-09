@@ -25,7 +25,7 @@ class DeleteRequest extends BaseRequest
             'post' => $post
         ]);
 
-        return $this->user()->can('delete', $post);
+        return $this->user()->canAndOwns('post-delete-own', $post, ['requireAll' => true, 'foreignKeyName' => 'author_id']) || $this->user()->ability('superadmin', 'post-delete');
     }
 
     /**

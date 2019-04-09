@@ -15,7 +15,7 @@ class CreateRequest extends BaseRequest
      */
     public function authorize()
     {
-        return $this->user()->can('create', Post::class);
+        return $this->user()->ability('superadmin', 'post-create');
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Form;
 
 use App\Http\Requests\BaseRequest;
-use App\Model\Form;
 
 class CreateRequest extends BaseRequest
 {
@@ -14,7 +13,7 @@ class CreateRequest extends BaseRequest
      */
     public function authorize()
     {
-        return $this->user()->can('create', Form::class);
+        return $this->user()->ability('superadmin', 'form-create');
     }
 
     /**

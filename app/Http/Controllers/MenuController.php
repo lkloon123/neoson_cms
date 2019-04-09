@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Menu\CreateRequest;
 use App\Http\Requests\Menu\DeleteRequest;
 use App\Http\Requests\Menu\UpdateRequest;
-use App\Http\Requests\Menu\ViewAllRequest;
 use App\Http\Requests\Menu\ViewRequest;
 use App\Http\Resources\MenuItemsResource;
 use App\Http\Resources\MenuResource;
@@ -16,15 +15,15 @@ class MenuController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param ViewAllRequest $request
+     * @param ViewRequest $request
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index(ViewAllRequest $request)
+    public function index(ViewRequest $request)
     {
-        if (\Auth::user()->isAn('superadmin', 'admin')) {
-            $menus = Menu::all();
-        } else {
+        if ($request->get('only_own')) {
             $menus = \Auth::user()->menus()->get();
+        } else {
+            $menus = Menu::all();
         }
 
         if ($menus->isEmpty()) {

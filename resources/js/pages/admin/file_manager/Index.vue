@@ -5,7 +5,11 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+        created() {
+            this.$store.commit('SET_CURRENT_PAGE_TITLE', 'File Manager');
+        }
+    }
 </script>
 
 <style>

@@ -30,7 +30,7 @@ class ViewFormResponseRequest extends BaseRequest
             'form' => $form
         ]);
 
-        return $this->user()->can('view', $form);
+        return $this->user()->canAndOwns('form-view-own', $form, ['requireAll' => true]) || $this->user()->ability('superadmin', 'form-view');
     }
 
     /**

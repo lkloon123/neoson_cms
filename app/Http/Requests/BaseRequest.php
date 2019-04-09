@@ -15,7 +15,7 @@ class BaseRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can('login_admin');
+        return $this->user()->ability('superadmin', 'login_admin-view');
     }
 
     public function rules()

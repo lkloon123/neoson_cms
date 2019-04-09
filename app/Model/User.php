@@ -7,11 +7,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Silber\Bouncer\Database\HasRolesAndAbilities;
+use Laratrust\Traits\LaratrustUserTrait;
 
 /**
  * App\User
@@ -24,9 +23,7 @@ use Silber\Bouncer\Database\HasRolesAndAbilities;
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Silber\Bouncer\Database\Ability[] $abilities
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read \Illuminate\Database\Eloquent\Collection|\Silber\Bouncer\Database\Role[] $roles
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User query()
@@ -55,10 +52,16 @@ use Silber\Bouncer\Database\HasRolesAndAbilities;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Menu[] $menus
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Page[] $posts
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Form[] $forms
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Permission[] $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Role[] $roles
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User orWherePermissionIs($permission = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User orWhereRoleIs($role = '', $team = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User wherePermissionIs($permission = '', $boolean = 'and')
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\User whereRoleIs($role = '', $team = null, $boolean = 'and')
  */
 class User extends BaseModel implements MustVerifyEmail, AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-    use Notifiable, HasRolesAndAbilities, Authenticatable, Authorizable, CanResetPassword, MustVerifyEmailTrait;
+    use Notifiable, Authenticatable, CanResetPassword, MustVerifyEmailTrait, LaratrustUserTrait;
 
     /**
      * The attributes that should be hidden for arrays.

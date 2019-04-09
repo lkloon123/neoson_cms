@@ -20,6 +20,7 @@ Route::prefix('api')->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::options('version', 'AdminController@version');
         Route::get('me', 'UserController@getMe');
+        Route::get('rbac', 'RoleController@getPermissions');
 
         Route::get('page/search', 'PageController@search');
         Route::resource('page', 'PageController')->except(['create', 'edit']);
@@ -30,6 +31,15 @@ Route::prefix('api')->group(function () {
 
         Route::get('form/response/{form}', 'FormController@formResponse');
         Route::resource('form', 'FormController')->except(['create', 'edit']);
+
+        Route::get('setting/{setting}', 'SettingController@get');
+        Route::match(['put', 'patch'], 'setting/{setting}', 'SettingController@save');
+
+        Route::resource('role', 'RoleController')->except(['create', 'edit']);
+        Route::options('role', 'RoleController@getRolesOptions');
+        Route::options('abilities', 'RoleController@abilities');
+
+        Route::resource('user', 'UserController')->except(['create', 'edit']);
     });
 });
 

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Form;
+namespace App\Http\Requests\Role;
 
 use App\Http\Requests\BaseRequest;
-use App\Model\Form;
 
-class ViewAllRequest extends BaseRequest
+class CreateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class ViewAllRequest extends BaseRequest
      */
     public function authorize()
     {
-        return $this->user()->can('viewall', Form::class);
+        return $this->user()->ability('superadmin', 'acl_setting-create');
     }
 
     /**
@@ -25,7 +24,8 @@ class ViewAllRequest extends BaseRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string',
+            'abilities' => 'required|array'
         ];
     }
 }

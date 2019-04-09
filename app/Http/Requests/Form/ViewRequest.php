@@ -15,17 +15,28 @@ class ViewRequest extends BaseRequest
      */
     public function authorize()
     {
-        $form = Form::find($this->route('form'));
+        if ($this->route('form')) {
+            $form = Form::find($this->route('form'));
 
-        if (!$form) {
-            throw new NotFoundHttpException('form not found');
+            if (!$form) {
+                throw new NotFoundHttpException('form not found');
+            }
+
+            $this->attributes->add([
+                'form' => $form
+            ]);
+
+            return $this->user()->canAndOwns('form-view-own', $form, ['requireAll' => true]) || $this->user()->ability('superadmin', 'form-view');
         }
 
-        $this->attributes->add([
-            'form' => $form
-        ]);
+        if ($this->user()->can('form-view-own')) {
+            $this->attributes->add([
+                'only_own' => true
+            ]);
+            return true;
+        }
 
-        return $this->user()->can('view', $form);
+        return $this->user()->ability('superadmin', 'form-view');
     }
 
     /**

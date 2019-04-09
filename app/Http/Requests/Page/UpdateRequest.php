@@ -26,7 +26,7 @@ class UpdateRequest extends BaseRequest
             'page' => $page
         ]);
 
-        return $this->user()->can('update', $page);
+        return $this->user()->canAndOwns('page-update-own', $page, ['requireAll' => true, 'foreignKeyName' => 'author_id']) || $this->user()->ability('superadmin', 'page-update');
     }
 
     /**

@@ -6,7 +6,6 @@ use App\Http\Requests\Form\CreateRequest;
 use App\Http\Requests\Form\DeleteRequest;
 use App\Http\Requests\Form\FormSubmitRequest;
 use App\Http\Requests\Form\UpdateRequest;
-use App\Http\Requests\Form\ViewAllRequest;
 use App\Http\Requests\Form\ViewFormResponseRequest;
 use App\Http\Requests\Form\ViewRequest;
 use App\Http\Resources\FormItemsResource;
@@ -21,15 +20,15 @@ class FormController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param ViewAllRequest $request
+     * @param ViewRequest $request
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index(ViewAllRequest $request)
+    public function index(ViewRequest $request)
     {
-        if (\Auth::user()->isAn('superadmin', 'admin')) {
-            $forms = Form::withCount('formResponses')->get();
-        } else {
+        if ($request->get('only_own')) {
             $forms = \Auth::user()->forms()->withCount('formResponses')->get();
+        } else {
+            $forms = Form::withCount('formResponses')->get();
         }
 
         if ($forms->isEmpty()) {

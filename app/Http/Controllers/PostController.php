@@ -6,7 +6,6 @@ use App\Enums\PostStatus;
 use App\Http\Requests\Post\CreateRequest;
 use App\Http\Requests\Post\DeleteRequest;
 use App\Http\Requests\Post\UpdateRequest;
-use App\Http\Requests\Post\ViewAllRequest;
 use App\Http\Requests\Post\ViewRequest;
 use App\Http\Resources\PostResource;
 use App\Model\Post;
@@ -16,15 +15,15 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param ViewAllRequest $request
+     * @param ViewRequest $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Http\Response
      */
-    public function index(ViewAllRequest $request)
+    public function index(ViewRequest $request)
     {
-        if (\Auth::user()->isAn('superadmin', 'admin')) {
-            $posts = Post::with('author')->get();
-        } else {
+        if ($request->get('only_own')) {
             $posts = \Auth::user()->posts()->with('author')->get();
+        } else {
+            $posts = Post::with('author')->get();
         }
 
         if ($posts->isEmpty()) {

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Post;
+namespace App\Http\Requests\User;
 
 use App\Http\Requests\BaseRequest;
-use App\Model\Post;
+use Illuminate\Validation\Rule;
 
-class ViewAllRequest extends BaseRequest
+class CreateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class ViewAllRequest extends BaseRequest
      */
     public function authorize()
     {
-        return $this->user()->can('viewall', Post::class);
+        return $this->user()->ability('superadmin', 'user_manage-create');
     }
 
     /**
@@ -25,7 +25,6 @@ class ViewAllRequest extends BaseRequest
     public function rules()
     {
         return [
-            //
         ];
     }
 }

@@ -15,17 +15,28 @@ class ViewRequest extends BaseRequest
      */
     public function authorize()
     {
-        $post = Post::with('author')->find($this->route('post'));
+        if ($this->route('post')) {
+            $post = Post::with('author')->find($this->route('post'));
 
-        if (!$post) {
-            throw new NotFoundHttpException('post not found');
+            if (!$post) {
+                throw new NotFoundHttpException('post not found');
+            }
+
+            $this->attributes->add([
+                'post' => $post
+            ]);
+
+            return $this->user()->canAndOwns('post-view-own', $post, ['requireAll' => true, 'foreignKeyName' => 'author_id']) || $this->user()->ability('superadmin', 'post-view');
         }
 
-        $this->attributes->add([
-            'post' => $post
-        ]);
+        if ($this->user()->can('post-view-own')) {
+            $this->attributes->add([
+                'only_own' => true
+            ]);
+            return true;
+        }
 
-        return $this->user()->can('view', $post);
+        return $this->user()->ability('superadmin', 'post-view');
     }
 
     /**

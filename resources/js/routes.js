@@ -45,7 +45,9 @@ const routes = [
                             breadcrumb: [
                                 {name: 'Dashboard', link: '/dashboard'},
                                 {name: 'Forms'}
-                            ]
+                            ],
+                            module: 'form',
+                            permission: 'view'
                         }
                     },
                     {
@@ -57,7 +59,9 @@ const routes = [
                                 {name: 'Dashboard', link: '/dashboard'},
                                 {name: 'Forms', link: '/forms'},
                                 {name: 'Create new form'}
-                            ]
+                            ],
+                            module: 'form',
+                            permission: 'create'
                         }
                     },
                     {
@@ -70,7 +74,9 @@ const routes = [
                                 {name: 'Dashboard', link: '/dashboard'},
                                 {name: 'Forms', link: '/forms'},
                                 {name: 'Edit form'}
-                            ]
+                            ],
+                            module: 'form',
+                            permission: 'update'
                         }
                     },
                     {
@@ -82,7 +88,9 @@ const routes = [
                                 {name: 'Dashboard', link: '/dashboard'},
                                 {name: 'Forms', link: '/forms'},
                                 {name: 'Form responses'}
-                            ]
+                            ],
+                            module: 'form',
+                            permission: 'view'
                         }
                     }
                 ]
@@ -99,7 +107,9 @@ const routes = [
                             breadcrumb: [
                                 {name: 'Dashboard', link: '/dashboard'},
                                 {name: 'Pages'}
-                            ]
+                            ],
+                            module: 'page',
+                            permission: 'view'
                         }
                     },
                     {
@@ -111,7 +121,9 @@ const routes = [
                                 {name: 'Dashboard', link: '/dashboard'},
                                 {name: 'Pages', link: '/pages'},
                                 {name: 'Create new page'}
-                            ]
+                            ],
+                            module: 'page',
+                            permission: 'create'
                         }
                     },
                     {
@@ -124,7 +136,9 @@ const routes = [
                                 {name: 'Dashboard', link: '/dashboard'},
                                 {name: 'Pages', link: '/pages'},
                                 {name: 'Edit page'}
-                            ]
+                            ],
+                            module: 'page',
+                            permission: 'update'
                         }
                     }
                 ]
@@ -141,7 +155,9 @@ const routes = [
                             breadcrumb: [
                                 {name: 'Dashboard', link: '/dashboard'},
                                 {name: 'Posts'}
-                            ]
+                            ],
+                            module: 'post',
+                            permission: 'view'
                         }
                     },
                     {
@@ -153,7 +169,9 @@ const routes = [
                                 {name: 'Dashboard', link: '/dashboard'},
                                 {name: 'Posts', link: '/posts'},
                                 {name: 'Create new post'}
-                            ]
+                            ],
+                            module: 'post',
+                            permission: 'create'
                         }
                     },
                     {
@@ -166,7 +184,9 @@ const routes = [
                                 {name: 'Dashboard', link: '/dashboard'},
                                 {name: 'Posts', link: '/posts'},
                                 {name: 'Edit post'}
-                            ]
+                            ],
+                            module: 'post',
+                            permission: 'update'
                         }
                     }
                 ]
@@ -183,7 +203,9 @@ const routes = [
                             breadcrumb: [
                                 {name: 'Dashboard', link: '/dashboard'},
                                 {name: 'Menu'}
-                            ]
+                            ],
+                            module: 'menu',
+                            permission: 'view'
                         }
                     },
                     {
@@ -195,7 +217,9 @@ const routes = [
                                 {name: 'Dashboard', link: '/dashboard'},
                                 {name: 'Menu', link: '/menu'},
                                 {name: 'Create new menu'}
-                            ]
+                            ],
+                            module: 'menu',
+                            permission: 'create'
                         }
                     },
                     {
@@ -208,10 +232,119 @@ const routes = [
                                 {name: 'Dashboard', link: '/dashboard'},
                                 {name: 'Menu', link: '/menu'},
                                 {name: 'Edit menu'}
-                            ]
+                            ],
+                            module: 'menu',
+                            permission: 'update'
                         }
                     }
                 ]
+            },
+            {
+                path: 'settings',
+                component: () => import('./pages/admin/setting/Index.vue'),
+                children: [
+                    {
+                        path: '/',
+                        component: () => import('./pages/admin/setting/ShowAll.vue'),
+                        name: 'setting.showall',
+                        meta: {
+                            breadcrumb: [
+                                {name: 'Dashboard', link: '/dashboard'},
+                                {name: 'Settings'}
+                            ]
+                        }
+                    },
+                    {
+                        path: 'general',
+                        component: () => import('./pages/admin/setting/General.vue'),
+                        name: 'setting.general',
+                        meta: {
+                            breadcrumb: [
+                                {name: 'Dashboard', link: '/dashboard'},
+                                {name: 'Settings', link: '/settings'},
+                                {name: 'General'}
+                            ],
+                            module: 'general_setting',
+                            permission: 'view'
+                        }
+                    },
+                    {
+                        path: 'roles',
+                        component: () => import('./pages/admin/role/Index.vue'),
+                        children: [
+                            {
+                                path: '/',
+                                component: () => import('./pages/admin/role/ShowAll.vue'),
+                                name: 'setting.role.showall',
+                                meta: {
+                                    breadcrumb: [
+                                        {name: 'Dashboard', link: '/dashboard'},
+                                        {name: 'Settings', link: '/settings'},
+                                        {name: 'Roles'}
+                                    ],
+                                    module: 'acl_setting',
+                                    permission: 'view'
+                                },
+                            },
+                            {
+                                path: 'create',
+                                component: () => import('./pages/admin/role/CreateAndEdit.vue'),
+                                name: 'setting.role.create',
+                                meta: {
+                                    breadcrumb: [
+                                        {name: 'Dashboard', link: '/dashboard'},
+                                        {name: 'Settings', link: '/settings'},
+                                        {name: 'Roles', link: '/settings/roles'},
+                                        {name: 'Create new role'}
+                                    ],
+                                    module: 'acl_setting',
+                                    permission: 'create'
+                                }
+                            },
+                            {
+                                path: 'edit/:id',
+                                component: () => import('./pages/admin/role/CreateAndEdit.vue'),
+                                props: {mode: 'edit'},
+                                name: 'setting.role.edit',
+                                meta: {
+                                    breadcrumb: [
+                                        {name: 'Dashboard', link: '/dashboard'},
+                                        {name: 'Settings', link: '/settings'},
+                                        {name: 'Roles', link: '/settings/roles'},
+                                        {name: 'Edit role'}
+                                    ],
+                                    module: 'acl_setting',
+                                    permission: 'update'
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        path: 'users',
+                        component: () => import('./pages/admin/user/Index.vue'),
+                        children: [
+                            {
+                                path: '/',
+                                component: () => import('./pages/admin/user/ShowAll.vue'),
+                                name: 'setting.user.showall',
+                                meta: {
+                                    breadcrumb: [
+                                        {name: 'Dashboard', link: '/dashboard'},
+                                        {name: 'Settings', link: '/settings'},
+                                        {name: 'Users'}
+                                    ],
+                                    module: 'user_manage',
+                                    permission: 'view'
+                                },
+                            },
+                        ]
+                    }
+                ]
+            },
+            {
+                path: 'unauthorized',
+                component: () => import('./pages/Unauthorized.vue'),
+                name: 'error.unauthorized'
             },
             {
                 path: '*',

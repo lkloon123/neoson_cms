@@ -19,6 +19,10 @@ class MenuBuilder extends AbstractBuilder
     public function build($menuName)
     {
         $menuTree = $this->loadMenuTree($menuName);
+        if (!$menuTree) {
+            return [];
+        }
+
         return $this->buildMenu($menuTree);
     }
 
@@ -26,6 +30,9 @@ class MenuBuilder extends AbstractBuilder
     {
         /** @var Menu $menu */
         $menu = Menu::where('name', $menuName)->first();
+        if (!$menu) {
+            return null;
+        }
 
         return $menu->getTree();
     }

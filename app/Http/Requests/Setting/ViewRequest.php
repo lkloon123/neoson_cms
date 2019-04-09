@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Menu;
+namespace App\Http\Requests\Setting;
 
 use App\Http\Requests\BaseRequest;
-use App\Model\Menu;
 
-class ViewAllRequest extends BaseRequest
+class ViewRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class ViewAllRequest extends BaseRequest
      */
     public function authorize()
     {
-        return $this->user()->can('viewall', Menu::class);
+        return $this->user()->ability('superadmin', $this->route('setting') . '_setting-view');
     }
 
     /**

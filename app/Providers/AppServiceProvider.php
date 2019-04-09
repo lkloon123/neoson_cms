@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Model\Page;
 use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use OwenIt\Auditing\Models\Audit;
 use Schema;
@@ -17,7 +18,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Collection::macro('recursive', function () {
+            return $this->map(function ($value) {
+                if (is_array($value) || is_object($value)) {
+                    return (new Collection($value))->recursive();
+                }
+                return $value;
+            });
+        });
     }
 
     /**
@@ -39,8 +47,5 @@ class AppServiceProvider extends ServiceProvider
 
         //dont append data on api resources
         Resource::withoutWrapping();
-
-        //authorization setup
-        \Bouncer::ownedVia(Page::class, 'author_id');
     }
 }

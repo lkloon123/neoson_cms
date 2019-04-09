@@ -9,7 +9,6 @@ use App\Http\Requests\Page\CreateRequest;
 use App\Http\Requests\Page\DeleteRequest;
 use App\Http\Requests\Page\SearchRequest;
 use App\Http\Requests\Page\UpdateRequest;
-use App\Http\Requests\Page\ViewAllRequest;
 use App\Http\Requests\Page\ViewRequest;
 use App\Http\Resources\PageResource;
 use App\Model\Page;
@@ -40,12 +39,12 @@ class PageController extends Controller
      * @param ViewRequest $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Http\Response
      */
-    public function index(ViewAllRequest $request)
+    public function index(ViewRequest $request)
     {
-        if (\Auth::user()->isAn('superadmin', 'admin')) {
-            $pages = Page::with('author')->get();
-        } else {
+        if ($request->get('only_own')) {
             $pages = \Auth::user()->pages()->with('author')->get();
+        } else {
+            $pages = Page::with('author')->get();
         }
 
         if ($pages->isEmpty()) {
@@ -155,10 +154,10 @@ class PageController extends Controller
         $searchTitle = $request->get('title');
         $include = $request->get('include');
 
-        if (\Auth::user()->isAn('superadmin', 'admin')) {
-            $queryBuilder = Page::with('author');
-        } else {
+        if ($request->get('only_own')) {
             $queryBuilder = \Auth::user()->pages()->with('author');
+        } else {
+            $queryBuilder = Page::with('author');
         }
 
         if ($searchTitle) {

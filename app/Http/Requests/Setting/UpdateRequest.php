@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Page;
+namespace App\Http\Requests\Setting;
 
 use App\Http\Requests\BaseRequest;
-use App\Model\Page;
 
-class ViewAllRequest extends BaseRequest
+class UpdateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class ViewAllRequest extends BaseRequest
      */
     public function authorize()
     {
-        return $this->user()->can('viewall', Page::class);
+        return $this->user()->ability('superadmin', $this->route('setting') . '_setting-update');
     }
 
     /**
@@ -25,7 +24,7 @@ class ViewAllRequest extends BaseRequest
     public function rules()
     {
         return [
-            //
+            'data' => 'array|required'
         ];
     }
 }

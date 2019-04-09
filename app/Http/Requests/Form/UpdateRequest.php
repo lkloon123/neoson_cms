@@ -25,7 +25,7 @@ class UpdateRequest extends BaseRequest
             'form' => $form
         ]);
 
-        return $this->user()->can('update', $form);
+        return $this->user()->canAndOwns('form-update-own', $form, ['requireAll' => true]) || $this->user()->ability('superadmin', 'form-update');
     }
 
     /**
