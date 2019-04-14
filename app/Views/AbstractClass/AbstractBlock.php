@@ -12,11 +12,12 @@ namespace App\Views\AbstractClass;
 use App\Enums\PageType;
 use App\Model\Page;
 use App\Model\Post;
+use App\Model\Tag;
 use Illuminate\Support\Collection;
 
 abstract class AbstractBlock extends AbstractBuilder
 {
-    /* @var Page|Post $currentPage */
+    /* @var Page|Post|Tag $currentPage */
     protected $currentPage;
     protected $additionalData;
     protected $currentPageType;
@@ -35,6 +36,11 @@ abstract class AbstractBlock extends AbstractBuilder
     protected function isHomepage()
     {
         return $this->currentPageType === PageType::Homepage;
+    }
+
+    protected function isTag()
+    {
+        return $this->currentPageType === PageType::Tag;
     }
 
     abstract public function display();

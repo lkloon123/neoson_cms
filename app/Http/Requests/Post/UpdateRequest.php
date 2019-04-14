@@ -43,6 +43,7 @@ class UpdateRequest extends BaseRequest
             'publish_to_date' => 'required|date_format:Y-m-d H:i:s|after_or_equal:publish_from_date',
             'slug' => 'required|string',
             'title' => 'required|string',
+            'tags' => 'array',
             'status' => ['required', Rule::in(['Draft', 'Publish'])]
         ];
     }

@@ -1,10 +1,8 @@
 <template>
     <card>
         <template v-slot:header>
-            <h4>All Posts&nbsp;
-                <router-link to="/posts/create" class="btn btn-icon icon-left btn-primary">
-                    <i class="fas fa-plus"></i>Create
-                </router-link>
+            <h4>All Tags&nbsp;
+                <create-and-edit-form @input="loadTags"></create-and-edit-form>
             </h4>
         </template>
 
@@ -18,35 +16,27 @@
                         styleClass="vgt-table table-hover condensed"
                         v-else>
             <template slot="table-row" slot-scope="props">
-                <span v-if="props.column.field === 'updated_at'">
-                    {{formatToAgoDate(props.formattedRow[props.column.field])}}
-                </span>
-                <span v-else-if="props.column.field === 'action'">
+                <span v-if="props.column.field === 'action'">
                     <span class="table-actions">
-                        <button class="btn btn-icon btn-info btn-sm" @click="gotoEdit(props.row.id)" title="Edit">
-                            <i class="fas fa-edit fa-fw"></i>
-                        </button>
+                        <!-- edit form button -->
+                            <create-and-edit-form :value="props.row"
+                                                  mode="edit"
+                                                  @input="save($event, props.index)"></create-and-edit-form>
+                        <!-- #edit form button -->
                         <!-- delete button -->
-                        <confirm-modal :body="`Confirm Delete Post [${props.row.title}] ?`"
+                        <confirm-modal :body="`Confirm Delete Tag [${props.row.name}] ?`"
                                        :cfm-btn-class="{btn: true, 'btn-danger': true}"
                                        :is-btn-html="true"
                                        :show-btn="true"
                                        :trigger-btn-class="{btn: true, 'btn-icon': true, 'btn-sm': true, 'btn-danger': true}"
                                        :trigger-btn-text="deleteBtnIcon"
                                        trigger-btn-tooltip="Delete"
-                                       @confirm="deletePost(props.row.id, props.row.title)"
+                                       @confirm="deleteTag(props.row.id, props.row.name)"
                                        title="Confirmation">
                         </confirm-modal>
                         <!-- #delete button -->
                     </span>
                     <i class="fas fa-ellipsis-v text-muted show-action-icon"></i>
-                </span>
-                <span v-else-if="props.column.field === 'status'">
-                    <span class="badge badge-success" v-if="props.formattedRow[props.column.field] === 'Publish'">{{props.formattedRow[props.column.field]}}</span>
-                    <span class="badge badge-warning" v-else>{{props.formattedRow[props.column.field]}}</span>
-                </span>
-                <span v-else-if="!props.formattedRow[props.column.field]">
-                    &mdash;
                 </span>
                 <span v-else>
                     {{props.formattedRow[props.column.field]}}
@@ -61,34 +51,28 @@
     import Card from '@components/Card';
     import {VclTable} from 'vue-content-loading';
     import ConfirmModal from '@components/modal/ConfirmModal';
+    import CreateAndEditForm from './components/CreateAndEditForm';
 
     export default {
         data: () => ({
             columns: [
                 {
-                    label: 'Title',
-                    field: 'title',
-                    width: '32%'
+                    label: 'Name',
+                    field: 'name',
+                    width: '50%'
                 },
                 {
-                    label: 'Author',
-                    field: 'author.name',
-                    width: '20%'
+                    label: 'Slug',
+                    field: 'slug',
+                    width: '35%'
                 },
                 {
-                    label: 'Tags',
-                    field: (row) => row.tags.map(tag => tag.name).join(', '),
-                    width: '20%'
-                },
-                {
-                    label: 'Status',
-                    field: 'status',
-                    width: '10%'
-                },
-                {
-                    label: 'Last edited',
-                    field: 'updated_at',
-                    width: '17%'
+                    label: 'Count',
+                    field: 'count',
+                    type: 'number',
+                    thClass: 'text-left',
+                    tdClass: 'text-left',
+                    width: '14%'
                 },
                 {
                     label: '',
@@ -98,7 +82,7 @@
                 }
             ],
             rows: [],
-            isLoading: true
+            isLoading: true,
         }),
         computed: {
             deleteBtnIcon() {
@@ -106,9 +90,9 @@
             }
         },
         methods: {
-            loadPosts() {
+            loadTags() {
                 this.resetState();
-                axios.get('/api/post')
+                axios.get('/api/tag')
                     .then(response => {
                         if (response.status === 200) {
                             this.rows = response.data;
@@ -128,23 +112,23 @@
             formatToAgoDate(inputDateTime) {
                 return moment(inputDateTime).fromNow();
             },
-            gotoEdit(id) {
-                this.$router.push(`/posts/edit/${id}`);
+            save(data, index) {
+                this.rows[index] = Object.assign(this.rows[index], data);
             },
-            deletePost(id, title) {
+            deleteTag(id, name) {
                 this.isLoading = true;
                 this.$Toast.showLoading({
                     title: 'Deleting...'
                 });
 
-                axios.delete(`/api/post/${id}`)
+                axios.delete(`/api/tag/${id}`)
                     .then(response => {
                         this.$Toast.show({
                             type: 'success',
-                            message: `Successfully deleted post [${title}]`
+                            message: `Successfully deleted tag [${name}]`
                         });
 
-                        this.loadPosts();
+                        this.loadTags();
                     })
                     .catch(err => {
                         this.isLoading = false;
@@ -160,11 +144,11 @@
             }
         },
         components: {
-            VueGoodTable, Card, VclTable, ConfirmModal
+            VueGoodTable, Card, VclTable, ConfirmModal, CreateAndEditForm
         },
         created() {
-            this.loadPosts();
-            this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Posts');
+            this.loadTags();
+            this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Tags');
         }
     }
 </script>

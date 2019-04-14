@@ -33,7 +33,7 @@
                 </card>
             </div>
             <div class="col-md-3">
-                <card :is-collapsible="true">
+                <card :is-collapsible="true" class="mb-1">
                     <template v-slot:header>
                         <h4>Schedule</h4>
                     </template>
@@ -67,7 +67,7 @@
                     </div>
                 </card>
 
-                <card :is-collapsible="true">
+                <card :is-collapsible="true" class="mb-1">
                     <template v-slot:header>
                         <h4>Config</h4>
                     </template>
@@ -115,6 +115,8 @@
                         </div>
                     </div>
                 </card>
+
+                <tag v-model="tags"></tag>
             </div>
         </div>
     </div>
@@ -126,6 +128,7 @@
     import sluggable from 'slug';
     import Card from '@components/Card';
     import FormContentLoading from '@components/content_loading/FormContentLoading';
+    import Tag from './components/Tag';
 
     export default {
         props: {
@@ -145,6 +148,7 @@
             title: '',
             slug: '',
             description: '',
+            tags: [],
             publishFromDate: moment().format('YYYY-MM-DD hh:mm:ss a'),
             publishToDate: moment().add(1, 'week').format('YYYY-MM-DD hh:mm:ss a'),
             isLoading: true
@@ -185,6 +189,7 @@
                     title: this.title,
                     slug: this.slug,
                     description: this.description,
+                    tags: this.tags,
                     publish_from_date: moment(this.publishFromDate, 'YYYY-MM-DD hh:mm:ss a').format('YYYY-MM-DD HH:mm:ss'),
                     publish_to_date: moment(this.publishToDate, 'YYYY-MM-DD hh:mm:ss a').format('YYYY-MM-DD HH:mm:ss')
                 };
@@ -238,7 +243,7 @@
             }
         },
         components: {
-            TinyMceEditor, DateRangePicker, Card, FormContentLoading
+            TinyMceEditor, DateRangePicker, Card, FormContentLoading, Tag
         },
         created() {
             if (this.mode === 'edit') {
@@ -252,6 +257,7 @@
                         this.publishFromDate = moment(response.data.publish_from_date).format('YYYY-MM-DD hh:mm:ss a');
                         this.publishToDate = moment(response.data.publish_to_date).format('YYYY-MM-DD hh:mm:ss a');
                         this.content = response.data.content;
+                        this.tags = response.data.tags;
 
                         this.isLoading = false;
                     })

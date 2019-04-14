@@ -57,7 +57,7 @@ class PageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateRequest $request)
@@ -88,7 +88,7 @@ class PageController extends Controller
      * Display the specified resource.
      *
      * @param ViewRequest $request
-     * @param  int $id
+     * @param int $id
      * @return Page|Page[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null
      */
     public function show(ViewRequest $request, $id)
@@ -99,8 +99,8 @@ class PageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateRequest $request
-     * @param  int $id
+     * @param UpdateRequest $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRequest $request, $id)
@@ -132,7 +132,7 @@ class PageController extends Controller
      * Remove the specified resource from storage.
      *
      * @param DeleteRequest $request
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
@@ -187,14 +187,16 @@ class PageController extends Controller
 
     public function getPage($slug)
     {
-        $page = Page::where('slug', $slug)
-            ->published()
+        $page = Page::published()
+            ->withinSchedule()
+            ->where('slug', $slug)
             ->first();
 
         if ($page === null) {
             //try to find from post
-            $post = Post::where('slug', $slug)
-                ->published()
+            $post = Post::published()
+                ->withinSchedule()
+                ->where('slug', $slug)
                 ->firstOrFail();
 
             Builder::setPage($post, PageType::Post);

@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Enums\PageStatus;
+use App\Traits\PageScopes;
 
 /**
  * App\Model\Page
@@ -40,20 +40,18 @@ use App\Enums\PageStatus;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Page whereUpdatedAt($value)
  * @mixin \Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Page published()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Page withinSchedule()
  */
 class Page extends BaseModel
 {
+    use PageScopes;
+
     public function __construct(array $attributes = [])
     {
         $this->dates[] = 'start_at';
         $this->dates[] = 'expired_at';
 
         parent::__construct($attributes);
-    }
-
-    public function scopePublished($query)
-    {
-        return $query->where('status', PageStatus::Publish);
     }
 
     public function author()

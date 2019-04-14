@@ -40,9 +40,13 @@ Route::prefix('api')->group(function () {
         Route::options('abilities', 'RoleController@abilities');
 
         Route::resource('user', 'UserController')->except(['create', 'edit']);
+
+        Route::get('tag/search', 'TagController@search');
+        Route::resource('tag', 'TagController')->except(['create', 'edit']);
     });
 });
 
 Route::get('/', 'PageController@home');
 Route::post('form-submit', 'FormController@formSubmit');
+Route::get('tag/{slug}', 'TagController@getTag')->where('slug', '([A-Za-z0-9\-\/]+)');
 Route::get('{slug}', 'PageController@getPage')->where('slug', '([A-Za-z0-9\-\/]+)');

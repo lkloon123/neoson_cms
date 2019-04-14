@@ -1,20 +1,42 @@
 <template>
-    <html-modal v-bind="getPropsForTransfer">
-        {{body}}
-    </html-modal>
+    <span>
+        <button type="button"
+                :class="triggerBtnClass"
+                @click="copyCurrentState = 'show'"
+                v-if="showBtn && !isBtnHtml"
+                :title="triggerBtnTooltip">
+            {{triggerBtnText}}
+        </button>
+
+        <button type="button"
+                :class="triggerBtnClass"
+                @click="copyCurrentState = 'show'"
+                v-if="showBtn && isBtnHtml"
+                v-html="triggerBtnText"
+                :title="triggerBtnTooltip">
+        </button>
+
+        <BaseModal :current-state="copyCurrentState" @hidden="handleHidden" @shown="$emit('shown', $event)">
+            <template v-slot:header>
+                <h5 class="modal-title">{{title}}</h5>
+            </template>
+            <slot></slot>
+            <template v-slot:footer v-if="showFooter">
+                <button :class="cfmBtnClass" data-dismiss="modal" @click="$emit('confirm', $event)">
+                    {{cfmBtnText}}
+                </button>
+            </template>
+        </BaseModal>
+    </span>
 </template>
 
 <script>
-    import HtmlModal from './HtmlModal';
+    import BaseModal from './BaseModal';
 
     export default {
         props: {
             title: {
                 type: String
-            },
-            body: {
-                type: String,
-                required: true
             },
             cfmBtnClass: {
                 type: Object,
@@ -68,13 +90,6 @@
                 type: String,
                 default: 'hide',
                 validator: (value) => ['show', 'hide'].includes(value)
-            },
-        },
-        computed: {
-            getPropsForTransfer() {
-                let clonedProps = Object.assign({}, this.$props);
-                delete clonedProps.body;
-                return clonedProps;
             }
         },
         watch: {
@@ -92,7 +107,7 @@
             }
         },
         components: {
-            HtmlModal
+            BaseModal
         },
         created() {
             this.copyCurrentState = this.currentState;

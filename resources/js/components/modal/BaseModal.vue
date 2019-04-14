@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" :id="id" tabindex="-1" role="dialog" :aria-hidden="currentState === 'hide'">
+    <div class="modal fade" :id="id" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" v-if="hasHeader">
@@ -50,7 +50,11 @@
         watch: {
             currentState(newValue, oldValue) {
                 if (newValue !== oldValue) {
-                    $(`#${this.id}`).appendTo('body').modal(newValue);
+                    if (newValue === 'hide') {
+                        $(`#${this.id}`).modal(newValue);
+                    } else {
+                        $(`#${this.id}`).appendTo('body').modal(newValue);
+                    }
                 }
             }
         },
@@ -58,7 +62,6 @@
             let vm = this;
 
             $(`#${this.id}`).on('hidden.bs.modal', (event) => {
-                this.copyCurrentState = 'hide';
                 vm.$emit('hidden', event);
             });
 

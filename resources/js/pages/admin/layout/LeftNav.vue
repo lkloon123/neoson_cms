@@ -15,13 +15,16 @@
                 <router-link to="/pages" tag="li" v-if="hasPermission('view', 'page')">
                     <a><i class="fas fa-file"></i><span>Pages</span></a>
                 </router-link>
-                <li class="dropdown" :class="{active: subIsActive('/post')}" v-if="hasPermission('view', 'post')">
+                <li class="dropdown" :class="{active: subIsActive('/post') || subIsActive('/tags')}" v-if="hasPermission('view', 'post')">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                         <i class="fas fa-highlighter"></i> <span>Blogging</span>
                     </a>
                     <ul class="dropdown-menu">
                         <router-link to="/posts" tag="li" v-if="hasPermission('view', 'post')">
                             <a><i class="fas fa-align-left"></i> <span>Posts</span></a>
+                        </router-link>
+                        <router-link to="/tags" tag="li" v-if="hasPermission('view', 'post')">
+                            <a><i class="fas fa-tags"></i> <span>Tags</span></a>
                         </router-link>
                     </ul>
                 </li>

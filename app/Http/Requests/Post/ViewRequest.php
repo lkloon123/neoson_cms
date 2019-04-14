@@ -16,7 +16,7 @@ class ViewRequest extends BaseRequest
     public function authorize()
     {
         if ($this->route('post')) {
-            $post = Post::with('author')->find($this->route('post'));
+            $post = Post::with(['author', 'tags'])->find($this->route('post'));
 
             if (!$post) {
                 throw new NotFoundHttpException('post not found');

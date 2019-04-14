@@ -8,8 +8,10 @@
 
 namespace App\Views\Blocks;
 
+use App\Enums\PageType;
 use App\Model\Post;
 use App\Views\AbstractClass\AbstractBlock;
+use Illuminate\Support\Arr;
 
 class PostItemList extends AbstractBlock
 {
@@ -21,12 +23,17 @@ class PostItemList extends AbstractBlock
 
     protected function buildPostItemList()
     {
-        $postList = Post::with('author')
+        $postBuilder = Post::with('author')
             ->published()
+            ->withinSchedule()
             ->orderBy('created_at', 'desc')
-            ->take(5)
-            ->get();
+            ->take(5);
 
+        if ($this->isTag()) {
+            $postBuilder->withAllTags(Arr::wrap($this->currentPage->name));
+        }
+
+        $postList = $postBuilder->get();
         $renderedPostItems = '';
 
         foreach ($postList as $post) {

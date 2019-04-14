@@ -2,7 +2,8 @@
 
 namespace App\Model;
 
-use App\Enums\PostStatus;
+use App\Traits\PageScopes;
+use Spatie\Tags\HasTags;
 
 /**
  * App\Model\Post
@@ -38,9 +39,17 @@ use App\Enums\PostStatus;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post whereUpdatedAt($value)
  * @mixin \Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post published()
+ * @property \Illuminate\Database\Eloquent\Collection|\App\Model\Tag[] $tags
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post withAllTags($tags, $type = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post withAllTagsOfAnyType($tags)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post withAnyTags($tags, $type = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post withAnyTagsOfAnyType($tags)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post withinSchedule()
  */
 class Post extends BaseModel
 {
+    use HasTags, PageScopes;
+
     public function __construct(array $attributes = [])
     {
         $this->dates[] = 'start_at';
@@ -49,9 +58,9 @@ class Post extends BaseModel
         parent::__construct($attributes);
     }
 
-    public function scopePublished($query)
+    public static function getTagClassName()
     {
-        return $query->where('status', PostStatus::Publish);
+        return Tag::class;
     }
 
     public function author()

@@ -12,6 +12,7 @@ module.exports = {
             '@pages': __dirname + '/resources/js/pages',
             '@css': __dirname + '/resources/sass',
             '@stisla': __dirname + '/resources/js/stisla'
-        }
+        },
+        symlinks: false
     }
 };

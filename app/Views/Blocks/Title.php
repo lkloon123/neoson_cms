@@ -16,6 +16,10 @@ class Title extends AbstractBlock
             return 'Home';
         }
 
+        if ($this->isTag()) {
+            return $this->currentPage->name;
+        }
+
         return $this->currentPage->title;
     }
 }

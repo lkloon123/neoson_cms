@@ -192,6 +192,25 @@ const routes = [
                 ]
             },
             {
+                path: 'tags',
+                component: () => import ('./pages/admin/tag/Index.vue'),
+                children: [
+                    {
+                        path: '/',
+                        component: () => import('./pages/admin/tag/ShowAll.vue'),
+                        name: 'tag.showall',
+                        meta: {
+                            breadcrumb: [
+                                {name: 'Dashboard', link: '/dashboard'},
+                                {name: 'Tags'}
+                            ],
+                            module: 'post',
+                            permission: 'view'
+                        }
+                    }
+                ]
+            },
+            {
                 path: 'menu',
                 component: () => import('./pages/admin/menu/Index.vue'),
                 children: [
@@ -336,6 +355,21 @@ const routes = [
                                     module: 'user_manage',
                                     permission: 'view'
                                 },
+                            },
+                            {
+                                path: 'create',
+                                component: () => import('./pages/admin/user/CreateAndEdit.vue'),
+                                name: 'setting.user.create',
+                                meta: {
+                                    breadcrumb: [
+                                        {name: 'Dashboard', link: '/dashboard'},
+                                        {name: 'Settings', link: '/settings'},
+                                        {name: 'Users', link: '/settings/roles'},
+                                        {name: 'Create new user'}
+                                    ],
+                                    module: 'user_manage',
+                                    permission: 'create'
+                                }
                             },
                         ]
                     }

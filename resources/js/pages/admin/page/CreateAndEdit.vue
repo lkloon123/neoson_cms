@@ -33,7 +33,7 @@
                 </card>
             </div>
             <div class="col-md-3">
-                <card :is-collapsible="true">
+                <card :is-collapsible="true" class="mb-1">
                     <template v-slot:header>
                         <h4>Schedule</h4>
                     </template>
@@ -67,7 +67,7 @@
                     </div>
                 </card>
 
-                <card :is-collapsible="true">
+                <card :is-collapsible="true" class="mb-1">
                     <template v-slot:header>
                         <h4>Config</h4>
                     </template>

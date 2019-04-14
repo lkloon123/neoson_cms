@@ -9,6 +9,7 @@ final class PageType extends Enum
     const Homepage = 0;
     const Page = 1;
     const Post = 2;
-    const Error404 = 3;
-    const Error500 = 4;
+    const Tag = 3;
+    const Error404 = 4;
+    const Error500 = 5;
 }

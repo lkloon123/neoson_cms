@@ -1,0 +1,1 @@
+<a href="{{$link}}" class="badge badge-primary tag-link mr-2 mb-2"><i class="fas fa-tag"></i> {{$name}}</a>

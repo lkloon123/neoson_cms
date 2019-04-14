@@ -10,13 +10,16 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\Role\CreateRequest;
+use App\Http\Requests\Role\DeleteRequest;
 use App\Http\Requests\Role\UpdateRequest;
 use App\Http\Requests\Role\ViewRequest;
 use App\Http\Resources\PermissionResource;
 use App\Http\Resources\RoleResource;
 use App\Model\Permission;
 use App\Model\Role;
+use App\Model\User;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 
 class RoleController extends Controller
 {
@@ -72,6 +75,24 @@ class RoleController extends Controller
             'id' => $role->id,
             'updated_at' => $role->updated_at->format('Y-m-d H:i:s')
         ]);
+    }
+
+    public function destroy(DeleteRequest $request, $id)
+    {
+        /** @var Role $role */
+        $role = $request->get('role');
+        $usersInRole = User::whereRoleIs($role->name)->exists();
+        if ($usersInRole === true) {
+            throw new NotAcceptableHttpException("Unable to delete due to there's user belongs to this role");
+        }
+
+        $result = $role->delete();
+
+        if (!$result) {
+            throw new \Exception('Unable to delete role, please try again');
+        }
+
+        return response()->json([], 204);
     }
 
     public function getPermissions()

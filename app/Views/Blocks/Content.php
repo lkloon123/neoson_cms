@@ -19,6 +19,11 @@ class Content extends AbstractBlock
             return \PageContent::block('PostItemList');
         }
 
+        if ($this->isTag()) {
+            //tag page, return post with tag
+            return \PageContent::block('PostItemList');
+        }
+
         $formTemplates = $this->extractFormTemplateFromContent();
         if ($formTemplates !== null) {
             $this->renderFormTemplates($formTemplates);
@@ -42,6 +47,8 @@ class Content extends AbstractBlock
             //get form template name
             $formName = substr($formTemplate, 7, -2);
             $formView = \PageContent::block('form', ['name' => $formName]);
+            //remove wrapping p tag
+            $this->currentPage->content = str_replace('<p>[[form:' . $formName . ']]</p>', '[[form:' . $formName . ']]', $this->currentPage->content);
             $this->currentPage->content = str_replace('[[form:' . $formName . ']]', $formView, $this->currentPage->content);
         }
 

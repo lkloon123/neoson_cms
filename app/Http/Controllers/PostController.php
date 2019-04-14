@@ -9,6 +9,7 @@ use App\Http\Requests\Post\UpdateRequest;
 use App\Http\Requests\Post\ViewRequest;
 use App\Http\Resources\PostResource;
 use App\Model\Post;
+use Illuminate\Support\Arr;
 
 class PostController extends Controller
 {
@@ -21,9 +22,9 @@ class PostController extends Controller
     public function index(ViewRequest $request)
     {
         if ($request->get('only_own')) {
-            $posts = \Auth::user()->posts()->with('author')->get();
+            $posts = \Auth::user()->posts()->with(['author', 'tags'])->get();
         } else {
-            $posts = Post::with('author')->get();
+            $posts = Post::with(['author', 'tags'])->get();
         }
 
         if ($posts->isEmpty()) {
@@ -36,7 +37,7 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateRequest $request)
@@ -57,6 +58,9 @@ class PostController extends Controller
             'status' => PostStatus::getValue($validated['status'])
         ]);
 
+        $tags = Arr::pluck($validated['tags'], 'name');
+        $post->syncTags($tags);
+
         return response()->json([
             'id' => $post->id,
             'created_at' => $post->created_at->format('Y-m-d H:i:s')
@@ -67,7 +71,7 @@ class PostController extends Controller
      * Display the specified resource.
      *
      * @param ViewRequest $request
-     * @param  int $id
+     * @param int $id
      * @return Post|Post[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null
      */
     public function show(ViewRequest $request, $id)
@@ -78,8 +82,8 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateRequest $request
-     * @param  int $id
+     * @param UpdateRequest $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRequest $request, $id)
@@ -101,6 +105,9 @@ class PostController extends Controller
             'status' => PostStatus::getValue($validated['status'])
         ]);
 
+        $tags = Arr::pluck($validated['tags'], 'name');
+        $post->syncTags($tags);
+
         return response()->json([
             'id' => $post->id,
             'updated_at' => $post->updated_at->format('Y-m-d H:i:s')
@@ -111,7 +118,7 @@ class PostController extends Controller
      * Remove the specified resource from storage.
      *
      * @param DeleteRequest $request
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
