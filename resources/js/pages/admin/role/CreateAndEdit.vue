@@ -205,8 +205,24 @@
     }
 </script>
 
-<style scoped>
-    @import '~vue-good-table/dist/vue-good-table.css';
-    @import '~@css/vue_good_table_fix.scss';
-    @import '~@css/acl_select_color.scss';
+<style>
+    .multiselect.allow .multiselect__tags,
+    .multiselect.allow .multiselect__tags span,
+    .multiselect.allow .multiselect__tags input {
+        color: #fff;
+        background: #28a745;
+    }
+
+    .multiselect.disallow .multiselect__tags,
+    .multiselect.disallow .multiselect__tags span,
+    .multiselect.disallow .multiselect__tags input {
+        color: #fff;
+        background: #dc3545;
+    }
+
+    .multiselect.own .multiselect__tags,
+    .multiselect.own .multiselect__tags span,
+    .multiselect.own .multiselect__tags input {
+        background: #ffc107;
+    }
 </style>

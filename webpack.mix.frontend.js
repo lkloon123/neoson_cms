@@ -16,12 +16,14 @@ mix
     .autoload({
         'jquery': ['jQuery', 'jquery', '$']
     })
-    .js('resources/js/bootstrap.js', 'public/js')
-    .sass('resources/sass/bootstrap.scss', 'public/css')
+    .js('resources/frontend/js/boot.js', 'public/js')
+    .sass('resources/frontend/sass/boot.scss', 'public/css')
+    .js('resources/js/bootscript.js', 'public/js/bootscript.js')
     .disableNotifications()
     .webpackConfig(webpackConfigurations)
     .copyDirectory('resources/icons', 'public/images/icon')
     .copyDirectory('resources/img', 'public/images')
+    //core assets
     .copy('node_modules/bootstrap/dist/js/bootstrap.min.js', 'public/core/bootstrap/js/bootstrap.min.js')
     .copy('node_modules/bootstrap/dist/css/bootstrap.min.css', 'public/core/bootstrap/css/bootstrap.min.css')
     .copy('node_modules/jquery/dist/jquery.min.js', 'public/core/jquery/js/jquery.min.js')

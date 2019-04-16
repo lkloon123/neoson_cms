@@ -21,6 +21,7 @@ class RoleResource extends BaseResource
             'id' => $this->id,
             'name' => $this->name,
             'title' => $this->display_name,
+            'users_count' => $this->users_count,
             'abilities' => PermissionResource::collection($this->whenLoaded('permissions')),
         ], $this->dateTimeData());
     }

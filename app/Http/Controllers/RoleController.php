@@ -25,7 +25,9 @@ class RoleController extends Controller
 {
     public function index(ViewRequest $request)
     {
-        $roles = Role::where('name', '!=', 'superadmin')->get();
+        $roles = Role::withCount('users')
+            ->where('name', '!=', 'superadmin')
+            ->get();
 
         if ($roles->isEmpty()) {
             return response()->json([], 204);

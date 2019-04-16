@@ -70,9 +70,6 @@
 </script>
 
 <style scoped>
-    @import '~vue-good-table/dist/vue-good-table.css';
-    @import '~@css/vue_good_table_fix.scss';
-
     .btn-refresh {
         margin-top: 2px;
     }

@@ -4,7 +4,7 @@
  * trailing and leading whitespaces from count.
  */
 
-import '@css/tinymce_charactercount_plugin.scss';
+import '@css/tinymce_charactercount_plugin.css';
 
 tinymce.PluginManager.add('charactercount', function (editor) {
     var _self = this;

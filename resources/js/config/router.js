@@ -3,6 +3,7 @@ import store from '../store';
 import Vue from 'vue';
 
 router.beforeEach(async (to, from, next) => {
+    store.commit('UPDATE_LOADER', true);
     store.commit('SET_PAGE_BACK_LINK', null);
 
     let hasPermission = async () => {
@@ -20,4 +21,10 @@ router.beforeEach(async (to, from, next) => {
     } else {
         next('unauthorized')
     }
+});
+
+router.afterEach(() => {
+    setTimeout(() => {
+        store.commit('UPDATE_LOADER', false);
+    }, 500);
 });

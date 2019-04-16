@@ -11,10 +11,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
     <link rel="manifest" href="/images/icon/site.webmanifest">
 
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/boot.css') }}" rel="stylesheet">
 </head>
 
 @yield('content')
-<script src="{{ asset('js/bootstrap.js') }}"></script>
+<script src="{{ asset('js/boot.js') }}"></script>
 @yield('custom_scripts')
 </html>

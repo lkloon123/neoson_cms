@@ -16,9 +16,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SettingController extends Controller
 {
-    public function get(ViewRequest $request)
+    public function get(ViewRequest $request, $key)
     {
-        $setting = Setting::find($request->route('setting'));
+        $setting = Setting::find($key);
 
         if ($setting === null) {
             throw new NotFoundHttpException('Setting not found');
@@ -27,11 +27,11 @@ class SettingController extends Controller
         return $setting->get();
     }
 
-    public function save(UpdateRequest $request)
+    public function save(UpdateRequest $request, $key)
     {
         $validated = $request->validated();
 
-        $setting = Setting::find($request->route('setting'));
+        $setting = Setting::find($key);
 
         if ($setting === null) {
             throw new NotFoundHttpException('Setting not found');

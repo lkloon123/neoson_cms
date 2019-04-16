@@ -56,9 +56,6 @@ class FormController extends Controller
 
         $form->insertFormItem($validated['formItems']);
 
-        //reset updatedFormItem
-        $form->updatedFormItemMetaId = [];
-
         return response()->json([
             'id' => $form->id,
             'created_at' => $form->created_at->format('Y-m-d H:i:s')
@@ -107,9 +104,6 @@ class FormController extends Controller
         $form->formItems()
             ->whereNotIn('meta_id', $form->updatedFormItemMetaId)
             ->delete();
-
-        //reset updatedFormItem
-        $form->updatedFormItemMetaId = [];
 
         return response()->json([
             'id' => $form->id,

@@ -1,4 +1,10 @@
-require('./bootstrap');
+window._ = require('lodash');
+window.$ = window.jQuery = require('jquery');
+window.moment = require('moment');
+window.axios = require('axios');
+import 'bootstrap';
+import 'jquery.nicescroll';
+import './stisla/stisla';
 import Vue from 'vue';
 import router from './routes';
 import store from './store';
@@ -19,6 +25,12 @@ Vue.use(FileManager, {store});
 
 require('./config/interceptors');
 require('./config/router');
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+const token = document.head.querySelector('meta[name="csrf-token"]');
+if (token) {
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+}
 
 const app = new Vue({
     el: '#app',

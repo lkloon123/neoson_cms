@@ -36,7 +36,7 @@ class UpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'role' => 'string'
+            'role' => 'string|exists:roles,name'
         ];
     }
 }

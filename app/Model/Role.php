@@ -63,4 +63,9 @@ class Role extends LaratrustRole
 
         $this->syncPermissions($allPermissions);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'role_user');
+    }
 }

@@ -51,9 +51,6 @@ class MenuController extends Controller
 
         $menu->insertMenuItem($validated['menuItems']);
 
-        //reset updatedMenuItem
-        $menu->updatedMenuItemMetaId = [];
-
         return response()->json([
             'id' => $menu->id,
             'created_at' => $menu->created_at->format('Y-m-d H:i:s')
@@ -97,9 +94,6 @@ class MenuController extends Controller
         $menu->menuItems()
             ->whereNotIn('meta_id', $menu->updatedMenuItemMetaId)
             ->delete();
-
-        //reset updatedMenuItem
-        $menu->updatedMenuItemMetaId = [];
 
         return response()->json([
             'id' => $menu->id,

@@ -19,6 +19,7 @@ export default new Vuex.Store({
         currentUserInfo: null,
         currentUserRole: null,
         currentUserPermission: [],
+        showLoader: false
     },
     getters,
     mutations,

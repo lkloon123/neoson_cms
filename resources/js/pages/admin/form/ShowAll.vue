@@ -168,9 +168,6 @@
 </script>
 
 <style scoped>
-    @import '~vue-good-table/dist/vue-good-table.css';
-    @import '~@css/vue_good_table_fix.scss';
-
     .badge-info[href]:focus, .badge-info[href]:hover {
         background-color: #0da8ee !important;
     }

@@ -15,8 +15,28 @@ const webpackConfigurations = require('./webpack.config');
 mix
     .js('resources/js/app.js', 'public/js')
     .extract([
-        'jquery', 'vue', 'vue-router', 'vuex', 'axios', 'lodash', 'vee-validate', 'popper.js', 'tooltip.js', 'bootstrap', 'jquery.nicescroll', 'moment', '@fortawesome/fontawesome-free',
-        'bootstrap-daterangepicker', 'izitoast'
+        '@fortawesome/fontawesome-free',
+        'axios',
+        'bootstrap',
+        'bootstrap-daterangepicker',
+        'epic-spinners',
+        'izitoast',
+        'jquery',
+        'jquery.nicescroll',
+        'lodash',
+        'moment',
+        'popper.js',
+        'slug',
+        'tooltip.js',
+        'vee-validate',
+        'vue',
+        'vue-content-loading',
+        'vue-good-table',
+        'vue-js-toggle-button',
+        'vue-multiselect',
+        'vue-router',
+        'vue2-transitions',
+        'vuex',
     ])
     .autoload({
         'jquery': ['jQuery', 'jquery', '$']

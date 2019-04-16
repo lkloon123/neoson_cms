@@ -237,7 +237,7 @@
 </script>
 
 <style scoped>
-    @import '~@css/nestable.scss';
+    @import '~@css/nestable.css';
 
     .menu-item-label {
         display: block;

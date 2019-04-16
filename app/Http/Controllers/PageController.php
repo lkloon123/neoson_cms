@@ -151,26 +151,24 @@ class PageController extends Controller
 
     public function search(SearchRequest $request)
     {
-        $searchTitle = $request->get('title');
-        $include = $request->get('include');
-
         if ($request->get('only_own')) {
             $queryBuilder = \Auth::user()->pages()->with('author');
         } else {
             $queryBuilder = Page::with('author');
         }
 
-        if ($searchTitle) {
-            $queryBuilder->where('title', 'like', "%{$searchTitle}%");
-        }
-
-        if ($include) {
-            $queryBuilder->where('status', $include);
-        } else {
-            $queryBuilder->where('status', PageStatus::Publish);
-        }
-
-        $pages = $queryBuilder->get();
+        $pages = $queryBuilder
+            ->when($request->get('title'), function (\Illuminate\Database\Eloquent\Builder $query, $searchTitle) {
+                $query->where('title', 'like', "%{$searchTitle}%");
+            })
+            ->when($request->get('include'),
+                function (\Illuminate\Database\Eloquent\Builder $query, $include) {
+                    $query->where('status', $include);
+                },
+                function (\Illuminate\Database\Eloquent\Builder $query) {
+                    $query->where('status', PageStatus::Publish);
+                })
+            ->get();
 
         if ($pages->isEmpty()) {
             throw new NotFoundHttpException('no result found');

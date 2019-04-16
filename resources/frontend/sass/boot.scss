@@ -1,0 +1,11 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~@css/stisla/css/style.css";
+@import "~@css/stisla/css/components.css";
+
+.form-control.is-invalid, .was-validated .form-control:invalid {
+    background-image: initial;
+}
+
+body {
+    background-color: #f3f3f4;
+}

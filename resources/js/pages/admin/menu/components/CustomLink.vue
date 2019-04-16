@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <card :is-collapsible="true">
+    <card :is-collapsible="true" class="mb-1">
         <template v-slot:header>
             <h4>Custom Link</h4>
         </template>

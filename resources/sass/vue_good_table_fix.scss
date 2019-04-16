@@ -1,4 +1,4 @@
-.table-hover > tbody > tr:hover {
+.table-hover tbody tr:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -10,45 +10,53 @@
   opacity: initial;
 }
 
-.vgt-table th.vgt-checkbox-col {
-  border-right: initial;
-}
+.vgt-table {
+  th.vgt-checkbox-col {
+    border-right: initial;
+  }
 
-.vgt-table > tbody > tr th.vgt-checkbox-col {
-  border-right: initial;
-  background: initial;
-}
+  tbody {
+    tr {
+      th.vgt-checkbox-col {
+        border-right: initial;
+        background: initial;
+      }
 
-table.vgt-table > tbody > tr th {
-  border-bottom: 1px solid #dcdfe6;
-}
+      th {
+        border-bottom: 1px solid #dcdfe6;
+      }
 
-.table-actions {
-  display: none;
-  position: absolute;
-  white-space: nowrap;
-  z-index: 1;
-  left: 0;
-  right: 0;
-  margin-bottom: -33px;
-  padding-right: 30px;
-  text-align: right !important;
-}
+      td {
+        padding-left: .75em !important;
 
-.vgt-table > tbody > tr > td.show-action {
-  cursor: pointer;
-}
+        .table-actions {
+          display: none;
+          position: absolute;
+          white-space: nowrap;
+          z-index: 1;
+          left: 0;
+          right: 0;
+          margin-bottom: -33px;
+          padding-right: 30px;
+          text-align: right !important;
+        }
 
-.vgt-table > tbody > tr > td.show-action:hover .show-action-icon {
-  color: #606266 !important;
-}
+        &.show-action {
+          cursor: pointer;
 
-.vgt-table > tbody > tr > td.show-action:hover .table-actions {
-  display: block;
-}
+          &:hover {
+            .show-action-icon {
+              color: #606266 !important;
+            }
 
-.vgt-table > tbody > tr td {
-  padding-left: .75em !important;
+            .table-actions {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .vgt-wrap .vgt-global-search__actions {
@@ -57,4 +65,8 @@ table.vgt-table > tbody > tr th {
 
 .vgt-responsive {
   overflow-x: initial;
+
+  table tbody tr {
+    line-height: 2;
+  }
 }

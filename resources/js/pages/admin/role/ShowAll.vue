@@ -61,7 +61,12 @@
                 {
                     label: 'Title',
                     field: 'title',
-                    width: '60%'
+                    width: '40%'
+                },
+                {
+                    label: 'Users',
+                    field: 'users_count',
+                    width: '20%'
                 },
                 {
                     label: 'Created At',
@@ -71,7 +76,7 @@
                 {
                     label: 'Last edited',
                     field: 'updated_at',
-                    width: '20%'
+                    width: '19%'
                 },
                 {
                     label: '',
@@ -154,6 +159,4 @@
 </script>
 
 <style scoped>
-    @import '~vue-good-table/dist/vue-good-table.css';
-    @import '~@css/vue_good_table_fix.scss';
 </style>

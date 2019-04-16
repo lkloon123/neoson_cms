@@ -1,7 +1,17 @@
 @import "~bootstrap-daterangepicker/daterangepicker.css";
-@import "bootstrap";
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~@fortawesome/fontawesome-free/css/all.css";
+@import "stisla/css/style.css";
+@import "stisla/css/components.css";
 @import "~vue-multiselect/dist/vue-multiselect.min.css";
 @import "~izitoast/dist/css/iziToast.css";
+@import '~vue-good-table/dist/vue-good-table.css';
+//custom
+@import 'vue_good_table_fix';
+
+body {
+  background-color: #f3f3f4;
+}
 
 .card .card-header {
   border-bottom-color: #dcdfe6;
@@ -12,8 +22,8 @@
   border-color: #95a0f4;
 }
 
-.vgt-responsive > table > tbody > tr {
-  line-height: 2;
+.form-control.is-invalid, .was-validated .form-control:invalid{
+  background-image: initial;
 }
 
 .section .section-header .section-header-back .btn:hover {
