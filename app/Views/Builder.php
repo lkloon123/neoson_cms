@@ -67,4 +67,9 @@ class Builder extends AbstractBuilder
         //display the content
         return $block->display();
     }
+
+    public function is($pageType)
+    {
+        return self::$currentPageType === $pageType;
+    }
 }

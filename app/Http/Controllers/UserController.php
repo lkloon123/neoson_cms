@@ -55,4 +55,9 @@ class UserController extends Controller
     {
         return new UserResource(\Auth::user());
     }
+
+    public function count(ViewRequest $request)
+    {
+        return response()->json(User::count());
+    }
 }

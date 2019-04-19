@@ -75,7 +75,8 @@ class PageController extends Controller
             'start_at' => $validated['publish_from_date'],
             'expired_at' => $validated['publish_to_date'],
             'content' => $validated['content'],
-            'status' => PageStatus::getValue($validated['status'])
+            'status' => PageStatus::getValue($validated['status']),
+            'featured_img' => $validated['featuredImg']
         ]);
 
         return response()->json([
@@ -119,7 +120,8 @@ class PageController extends Controller
             'start_at' => $validated['publish_from_date'],
             'expired_at' => $validated['publish_to_date'],
             'content' => $validated['content'],
-            'status' => PageStatus::getValue($validated['status'])
+            'status' => PageStatus::getValue($validated['status']),
+            'featured_img' => $validated['featuredImg']
         ]);
 
         return response()->json([
@@ -175,6 +177,11 @@ class PageController extends Controller
         }
 
         return PageResource::collection($pages);
+    }
+
+    public function count(ViewRequest $request)
+    {
+        return response()->json(Page::published()->withinSchedule()->count());
     }
 
     public function home()

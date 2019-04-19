@@ -2,7 +2,7 @@
     <span>
         <button type="button"
                 :class="triggerBtnClass"
-                @click="copyCurrentState = 'show'"
+                @click="triggerBtnClicked"
                 v-if="showBtn && !isBtnHtml"
                 :title="triggerBtnTooltip">
             {{triggerBtnText}}
@@ -10,13 +10,13 @@
 
         <button type="button"
                 :class="triggerBtnClass"
-                @click="copyCurrentState = 'show'"
+                @click="triggerBtnClicked"
                 v-if="showBtn && isBtnHtml"
                 v-html="triggerBtnText"
                 :title="triggerBtnTooltip">
         </button>
 
-        <BaseModal :current-state="copyCurrentState" @hidden="handleHidden" @shown="$emit('shown', $event)">
+        <BaseModal :current-state="copyCurrentState" @hidden="handleHidden" @shown="$emit('shown', $event)" :size="size">
             <template v-slot:header>
                 <h5 class="modal-title">{{title}}</h5>
             </template>
@@ -81,6 +81,10 @@
                 type: String,
                 default: null
             },
+            triggerBtnCallback: {
+                type: Function,
+                default: null
+            },
             //inherit props from base modal
             showXOnHeader: {
                 type: Boolean,
@@ -90,6 +94,10 @@
                 type: String,
                 default: 'hide',
                 validator: (value) => ['show', 'hide'].includes(value)
+            },
+            size: {
+                type: String,
+                default: 'default'
             }
         },
         watch: {
@@ -104,6 +112,12 @@
             handleHidden(event) {
                 this.copyCurrentState = 'hide';
                 this.$emit('hidden', event)
+            },
+            triggerBtnClicked() {
+                if(this.triggerBtnCallback !== null){
+                    this.triggerBtnCallback();
+                }
+                this.copyCurrentState = 'show';
             }
         },
         components: {

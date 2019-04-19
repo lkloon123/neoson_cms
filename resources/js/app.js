@@ -14,6 +14,7 @@ import Utils from './plugins/utils';
 import Toast from './plugins/toast';
 import FileManager from 'laravel-file-manager';
 import Rbac from './plugins/rbac';
+import VueLazyLoad from 'vue-lazyload';
 
 window.Vue = Vue;
 
@@ -22,6 +23,7 @@ Vue.use(Toast);
 Vue.use(Utils);
 Vue.use(Rbac);
 Vue.use(FileManager, {store});
+Vue.use(VueLazyLoad);
 
 require('./config/interceptors');
 require('./config/router');

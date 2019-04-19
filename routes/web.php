@@ -23,8 +23,10 @@ Route::prefix('api')->group(function () {
         Route::get('rbac', 'RoleController@getPermissions');
 
         Route::get('page/search', 'PageController@search');
+        Route::get('page/count', 'PageController@count');
         Route::resource('page', 'PageController')->except(['create', 'edit']);
 
+        Route::get('post/count', 'PostController@count');
         Route::resource('post', 'PostController')->except(['create', 'edit']);
 
         Route::resource('menu', 'MenuController')->except(['create', 'edit']);
@@ -39,6 +41,7 @@ Route::prefix('api')->group(function () {
         Route::options('role', 'RoleController@getRolesOptions');
         Route::options('abilities', 'RoleController@abilities');
 
+        Route::get('user/count', 'UserController@count');
         Route::resource('user', 'UserController')->except(['create', 'edit']);
 
         Route::get('tag/search', 'TagController@search');

@@ -22,7 +22,7 @@ body {
   border-color: #95a0f4;
 }
 
-.form-control.is-invalid, .was-validated .form-control:invalid{
+.form-control.is-invalid, .was-validated .form-control:invalid {
   background-image: initial;
 }
 
@@ -33,4 +33,12 @@ body {
 
 .should-hide {
   display: none
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.section {
+  z-index: initial;
 }

@@ -45,6 +45,8 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post withAnyTags($tags, $type = null)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post withAnyTagsOfAnyType($tags)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post withinSchedule()
+ * @property string|null $featured_img
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post whereFeaturedImg($value)
  */
 class Post extends BaseModel
 {

@@ -44,6 +44,7 @@ class UpdateRequest extends BaseRequest
             'slug' => 'required|string',
             'title' => 'required|string',
             'tags' => 'array',
+            'featuredImg' => 'nullable|string',
             'status' => ['required', Rule::in(['Draft', 'Publish'])]
         ];
     }

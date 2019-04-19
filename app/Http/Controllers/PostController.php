@@ -55,7 +55,8 @@ class PostController extends Controller
             'start_at' => $validated['publish_from_date'],
             'expired_at' => $validated['publish_to_date'],
             'content' => $validated['content'],
-            'status' => PostStatus::getValue($validated['status'])
+            'status' => PostStatus::getValue($validated['status']),
+            'featured_img' => $validated['featuredImg']
         ]);
 
         $tags = Arr::pluck($validated['tags'], 'name');
@@ -102,7 +103,8 @@ class PostController extends Controller
             'start_at' => $validated['publish_from_date'],
             'expired_at' => $validated['publish_to_date'],
             'content' => $validated['content'],
-            'status' => PostStatus::getValue($validated['status'])
+            'status' => PostStatus::getValue($validated['status']),
+            'featured_img' => $validated['featuredImg']
         ]);
 
         $tags = Arr::pluck($validated['tags'], 'name');
@@ -133,5 +135,10 @@ class PostController extends Controller
         }
 
         return response()->json([], 204);
+    }
+
+    public function count(ViewRequest $request)
+    {
+        return response()->json(Post::published()->withinSchedule()->count());
     }
 }

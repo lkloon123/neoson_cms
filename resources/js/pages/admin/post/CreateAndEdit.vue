@@ -117,6 +117,8 @@
                 </card>
 
                 <tag v-model="tags"></tag>
+
+                <featured-image v-model="featuredImg"></featured-image>
             </div>
         </div>
     </div>
@@ -129,6 +131,7 @@
     import Card from '@components/Card';
     import FormContentLoading from '@components/content_loading/FormContentLoading';
     import Tag from './components/Tag';
+    import FeaturedImage from '../page/components/FeaturedImage';
 
     export default {
         props: {
@@ -149,6 +152,7 @@
             slug: '',
             description: '',
             tags: [],
+            featuredImg: '',
             publishFromDate: moment().format('YYYY-MM-DD hh:mm:ss a'),
             publishToDate: moment().add(1, 'week').format('YYYY-MM-DD hh:mm:ss a'),
             isLoading: true
@@ -190,6 +194,7 @@
                     slug: this.slug,
                     description: this.description,
                     tags: this.tags,
+                    featuredImg: this.featuredImg,
                     publish_from_date: moment(this.publishFromDate, 'YYYY-MM-DD hh:mm:ss a').format('YYYY-MM-DD HH:mm:ss'),
                     publish_to_date: moment(this.publishToDate, 'YYYY-MM-DD hh:mm:ss a').format('YYYY-MM-DD HH:mm:ss')
                 };
@@ -243,7 +248,7 @@
             }
         },
         components: {
-            TinyMceEditor, DateRangePicker, Card, FormContentLoading, Tag
+            TinyMceEditor, DateRangePicker, Card, FormContentLoading, Tag, FeaturedImage
         },
         created() {
             if (this.mode === 'edit') {
@@ -258,6 +263,7 @@
                         this.publishToDate = moment(response.data.publish_to_date).format('YYYY-MM-DD hh:mm:ss a');
                         this.content = response.data.content;
                         this.tags = response.data.tags;
+                        this.featuredImg = response.data.featuredImg;
 
                         this.isLoading = false;
                     })

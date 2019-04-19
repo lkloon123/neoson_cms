@@ -4,7 +4,7 @@
   {!! PageContent::menu('Main Menu') !!}
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('img/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('{{ PageContent::block('FeaturedImage', ['urlOnly' => true]) }}')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -23,7 +23,9 @@
       <div class="col-lg-8 col-md-10 mx-auto">
         {!! PageContent::block('content') !!}
       </div>
-      {!! PageContent::block('tags') !!}
+      @if(!PageContent::is(PageType::Post))
+        {!! PageContent::block('tags') !!}
+      @endif
     </div>
   </div>
 

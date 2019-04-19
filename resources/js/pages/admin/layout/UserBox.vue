@@ -9,9 +9,6 @@
             <a href="#" class="dropdown-item has-icon">
                 <i class="far fa-user"></i> Profile
             </a>
-            <a href="#" class="dropdown-item has-icon">
-                <i class="fas fa-cog"></i> Settings
-            </a>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item has-icon text-danger" @click.prevent="logoutModalState = 'show'">
                 <i class="fas fa-sign-out-alt"></i> Logout

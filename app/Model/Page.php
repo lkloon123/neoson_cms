@@ -41,6 +41,8 @@ use App\Traits\PageScopes;
  * @mixin \Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Page published()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Page withinSchedule()
+ * @property string|null $featured_img
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Page whereFeaturedImg($value)
  */
 class Page extends BaseModel
 {

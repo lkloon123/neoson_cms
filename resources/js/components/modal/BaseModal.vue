@@ -1,6 +1,8 @@
 <template>
     <div class="modal fade" :id="id" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog"
+             :class="{'modal-sm': size === 'small', 'modal-lg': size === 'large', 'modal-xl': size === 'extra_large'}"
+             role="document">
             <div class="modal-content">
                 <div class="modal-header" v-if="hasHeader">
                     <slot name="header"></slot>
@@ -34,6 +36,10 @@
             showXOnHeader: {
                 type: Boolean,
                 default: true
+            },
+            size: {
+                type: String,
+                default: 'default'
             }
         },
         data: () => ({

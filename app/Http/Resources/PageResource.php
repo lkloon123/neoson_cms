@@ -24,6 +24,7 @@ class PageResource extends BaseResource
             'description' => $this->description ?? '',
             'content' => $this->content,
             'author' => new UserResource($this->whenLoaded('author')),
+            'featuredImg' => $this->featured_img,
             'status' => PageStatus::getKey($this->status),
             'publish_from_date' => $this->start_at !== null ? $this->start_at->format('Y-m-d H:i:s') : null,
             'publish_to_date' => $this->expired_at !== null ? $this->expired_at->format('Y-m-d H:i:s') : null
