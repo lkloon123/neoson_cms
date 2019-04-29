@@ -24,7 +24,7 @@ abstract class AbstractBlock extends AbstractBuilder
 
     public function __construct($additionalData, $currentPage, $currentPageType)
     {
-        parent::__construct(app('setting')->get('activated_theme'));
+        parent::__construct(app('activatedTheme'));
         if (!($additionalData instanceof Collection)) {
             $additionalData = Collection::make($additionalData);
         }
@@ -41,6 +41,11 @@ abstract class AbstractBlock extends AbstractBuilder
     protected function isTag()
     {
         return $this->currentPageType === PageType::Tag;
+    }
+
+    protected function isPost()
+    {
+        return $this->currentPageType === PageType::Post;
     }
 
     abstract public function display();

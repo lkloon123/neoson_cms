@@ -25,6 +25,9 @@ class AppServiceProvider extends ServiceProvider
                 return $value;
             });
         });
+
+        $this->app->register(\Talevskiigor\ComposerBump\ComposerBumpServiceProvider::class);
+        $this->app->register(\App\Providers\PageContentServiceProvider::class);
     }
 
     /**

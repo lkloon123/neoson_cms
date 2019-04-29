@@ -9,6 +9,6 @@
     </a>
     <p class="post-meta">Posted by
         <a href="#">{{ $author }}</a>
-        on {{ $created_at }}</p>
+        on {{ $posted_at->format('F j, Y g:ia') }}</p>
 </div>
 <hr/>

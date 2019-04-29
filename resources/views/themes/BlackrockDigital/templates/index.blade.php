@@ -10,7 +10,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
-            <h1>Clean Blog</h1>
+            <h1>{{ PageContent::block('title') }}</h1>
           </div>
         </div>
       </div>
@@ -23,7 +23,7 @@
       <div class="col-lg-8 col-md-10 mx-auto">
         {!! PageContent::block('content') !!}
       </div>
-      @if(!PageContent::is(PageType::Post))
+      @if(PageContent::is(PageType::Homepage))
         {!! PageContent::block('tags') !!}
       @endif
     </div>

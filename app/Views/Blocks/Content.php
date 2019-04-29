@@ -24,6 +24,10 @@ class Content extends AbstractBlock
             return \PageContent::block('PostItemList');
         }
 
+        if ($this->isPost()) {
+            return \PageContent::block('Post');
+        }
+
         $formTemplates = $this->extractFormTemplateFromContent();
         if ($formTemplates !== null) {
             $this->renderFormTemplates($formTemplates);

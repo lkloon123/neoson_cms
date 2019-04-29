@@ -14,7 +14,7 @@ class Asset
     protected $coreAsset = [];
     protected $theme;
 
-    public function __construct($theme)
+    public function __construct(Theme $theme)
     {
         $this->coreAsset = array_merge($this->coreAsset,
             [

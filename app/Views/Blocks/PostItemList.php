@@ -57,7 +57,7 @@ class PostItemList extends AbstractBlock
             'description' => $post->description,
             'content' => $post->content,
             'author' => $post->author->name,
-            'created_at' => $post->created_at,
+            'posted_at' => $post->start_at,
             'url' => '/' . $post->slug
         ];
     }

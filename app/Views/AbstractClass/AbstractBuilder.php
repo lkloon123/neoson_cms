@@ -9,23 +9,34 @@
 namespace App\Views\AbstractClass;
 
 
+use App\Views\Theme;
+
 abstract class AbstractBuilder
 {
     protected $theme;
 
-    public function __construct($theme)
+    public function __construct(Theme $theme)
     {
         $this->theme = $theme;
     }
 
     protected function renderView($path, $additionalData = [], $render = true)
     {
-        $themeViewPath = 'themes.' . $this->theme . ".$path";
-        if (\View::exists($themeViewPath)) {
-            $view = \View::make($themeViewPath, $additionalData);
-            return $render ? $view->render() : $view;
+        if ($render) {
+            $view = $this->theme->getViewAndRender($path, $additionalData);
+        } else {
+            $view = $this->theme->getView($path, $additionalData);
         }
 
-        return 'View not found';
+        if (!$view) {
+            return 'View not found';
+        }
+
+        return $view;
+    }
+
+    protected function getTheme()
+    {
+        return $this->theme;
     }
 }

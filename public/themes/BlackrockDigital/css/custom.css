@@ -5,3 +5,21 @@
 .mt-30 {
     margin-top: 30px;
 }
+
+header.masthead {
+    margin-bottom: 30px;
+}
+
+.post-meta {
+    font-style: italic;
+    font-family: Lora, 'Times New Roman', serif;
+    display: block;
+}
+
+.post-tag-item {
+    text-decoration: none !important;
+}
+
+.post-tag-item:hover {
+    color: #0085a1 !important;
+}
