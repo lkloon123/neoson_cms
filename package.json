@@ -28,7 +28,7 @@
     "jquery": "^3.4.0",
     "jquery.nicescroll": "^3.7.6",
     "laravel-file-manager": "^2.2.2",
-    "laravel-mix": "^3.0.0",
+    "laravel-mix": "^4.0.15",
     "lodash": "^4.17.5",
     "moment": "^2.24.0",
     "please-wait": "0.0.5",
