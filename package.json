@@ -33,7 +33,7 @@
     "moment": "^2.24.0",
     "please-wait": "0.0.5",
     "popper.js": "^1.15.0",
-    "resolve-url-loader": "^2.3.1",
+    "resolve-url-loader": "^3.1.0",
     "sass": "^1.18.0",
     "sass-loader": "^7.1.0",
     "slug": "^1.1.0",
