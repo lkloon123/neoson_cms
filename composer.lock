@@ -166,25 +166,26 @@
         },
         {
             "name": "bensampo/laravel-enum",
-            "version": "1.17.1",
+            "version": "v1.19.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BenSampo/laravel-enum.git",
-                "reference": "612ae4c7a986aaf0e3c4666d48731e1f8e2ee19b"
+                "reference": "455c5c2152b987fde5e82e41335312b130f19f72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/612ae4c7a986aaf0e3c4666d48731e1f8e2ee19b",
-                "reference": "612ae4c7a986aaf0e3c4666d48731e1f8e2ee19b",
+                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/455c5c2152b987fde5e82e41335312b130f19f72",
+                "reference": "455c5c2152b987fde5e82e41335312b130f19f72",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "~5.4",
+                "illuminate/support": "5.4.*|5.5.*|5.6.*|5.7.*|5.8.*",
                 "php": "~7.1"
             },
             "require-dev": {
                 "laravel/framework": "5.8.*",
                 "orchestra/testbench": "3.8.*",
+                "phpstan/phpstan": "^0.11.6",
                 "phpunit/phpunit": "7.5.*",
                 "squizlabs/php_codesniffer": "^3.0"
             },
@@ -224,7 +225,7 @@
                 "package",
                 "validation"
             ],
-            "time": "2019-03-05T10:29:46+00:00"
+            "time": "2019-06-03T10:26:45+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -3225,7 +3226,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "email": "BackEndTea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
