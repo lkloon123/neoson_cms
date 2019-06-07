@@ -34,7 +34,7 @@
     "please-wait": "0.0.5",
     "popper.js": "^1.15.0",
     "resolve-url-loader": "^2.3.1",
-    "sass": "^1.18.0",
+    "sass": "^1.21.0",
     "sass-loader": "^7.1.0",
     "slug": "^1.1.0",
     "tinymce": "^4.9.4",
