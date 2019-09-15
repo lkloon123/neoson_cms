@@ -4,7 +4,11 @@
   {!! PageContent::menu('Main Menu') !!}
 
   <!-- Page Header -->
+@if(PageContent::block('FeaturedImage', ['urlOnly' => true]))
   <header class="masthead" style="background-image: url('{{ PageContent::block('FeaturedImage', ['urlOnly' => true]) }}')">
+@else
+  <header class="masthead">
+@endif
     <div class="overlay"></div>
     <div class="container">
       <div class="row">

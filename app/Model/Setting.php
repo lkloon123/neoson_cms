@@ -8,20 +8,14 @@
 
 namespace App\Model;
 
-
+use Illuminate\Contracts\Config\Repository as ConfigContract;
 use Illuminate\Support\Collection;
 
-class Setting
+class Setting implements ConfigContract
 {
-    protected static $availableGroups = [
-        'general' => [
-            'site-title' => 'app.name',
-            'site-description' => 'app.description',
-            'admin-email' => 'app.admin.email'
-        ]
-    ];
     protected $selectedGroup;
     protected $loadedSettings;
+    protected $loadedSettingForms;
 
     private function __construct($selectedGroup)
     {
@@ -29,61 +23,127 @@ class Setting
             $selectedGroup = collect($selectedGroup);
         }
         $this->selectedGroup = $selectedGroup;
-        $this->loadedSettings = collect([]);
+        $this->loadedSettings = collect();
+        $this->loadedSettingForms = collect();
     }
 
-    public static function find($group)
+    public static function find($group = 'default')
     {
-        $groupCollection = collect(self::$availableGroups);
+        /** @var Collection $groupCollection */
+        $groupCollection = collect(self::availableGroup())->recursive();
 
-        if ($groupCollection->has($group)) {
-            $ins = new self($groupCollection->get($group));
-            $ins->load();
-            return $ins;
+        if (!$groupCollection->has($group)) {
+            return null;
         }
 
-        return null;
+        $ins = new self($groupCollection->get($group));
+        $ins->load();
+
+        return $ins;
     }
 
     protected function load()
     {
-        $this->selectedGroup->each(function ($settingKey, $publicKey) {
-            $this->loadedSettings[$publicKey] = $this->getFromPersistSetting($settingKey);
+        $this->selectedGroup->each(function (Collection $settingData) {
+            $this->loadedSettings->put(
+                $settingData->get('public-key'),
+                config($settingData->get('private-key'))
+            );
+            $this->loadedSettingForms->put(
+                $settingData->get('public-key'),
+                $settingData->get('form')
+            );
         });
     }
 
-    protected function getFromConfig($key)
+    protected static function availableGroup()
     {
-        return config($key);
+        $defaultAvailable = [
+            'default' => [],
+            'general' => [
+                [
+                    'public-key' => 'site-title',
+                    'private-key' => 'app.name',
+                    'form' => [
+                        'label' => 'Site Title',
+                        'type' => 'text'
+                    ]
+                ],
+                [
+                    'public-key' => 'site-description',
+                    'private-key' => 'app.description',
+                    'form' => [
+                        'label' => 'Site Description',
+                        'type' => 'text'
+                    ]
+                ],
+                [
+                    'public-key' => 'admin-email',
+                    'private-key' => 'app.admin.email',
+                    'form' => [
+                        'label' => 'Admin Email',
+                        'type' => 'text',
+                        'desc' => 'This email address for admin usage only'
+                    ]
+                ]
+            ]
+        ];
+
+        $defaultAvailable = \HookManager::applyFilter('setting.group.filter', $defaultAvailable);
+        return $defaultAvailable;
     }
 
-    protected function getFromPersistSetting($key)
+    public function has($key)
     {
-        return setting($key, $this->getFromConfig($key));
+        return $this->loadedSettings->has($key);
     }
 
-    public function get($key = null)
+    public function get($key, $default = null)
     {
-        if ($key === null) {
-            return $this->loadedSettings;
-        }
-        return $this->loadedSettings->get($key);
+        return $this->loadedSettings->get($key, $default);
+    }
+
+    public function all()
+    {
+        return $this->loadedSettings;
     }
 
     public function set($key, $value = null)
     {
+        $keyedSelectedGroup = $this->selectedGroup->keyBy('public-key');
         if (\is_array($key)) {
             foreach ($key as $item => $itemValue) {
-                if ($this->selectedGroup->has($item)) {
-                    setting()->set($this->selectedGroup->get($item), $itemValue);
+                if ($keyedSelectedGroup->has($item)) {
+                    setting()->set(
+                        $keyedSelectedGroup->get($item)->get('private-key'),
+                        $itemValue
+                    );
                 }
             }
         } else {
-            if ($this->selectedGroup->has($key)) {
-                setting()->set($this->selectedGroup->get($key), $value);
+            if ($keyedSelectedGroup->has($key)) {
+                setting()->set(
+                    $keyedSelectedGroup->get($key)->get('private-key'),
+                    $value
+                );
             }
         }
 
         setting()->save();
+    }
+
+    public function prepend($key, $value)
+    {
+        $this->set($key, $value);
+    }
+
+    public function push($key, $value)
+    {
+        $this->set($key, $value);
+    }
+
+    public function getSettingForms()
+    {
+        return $this->loadedSettingForms;
     }
 }

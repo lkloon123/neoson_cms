@@ -259,6 +259,35 @@ const routes = [
                 ]
             },
             {
+                path: 'plugins',
+                component: () => import('./pages/admin/plugin/Index.vue'),
+                children: [
+                    {
+                        path: '/',
+                        component: () => import('./pages/admin/plugin/ShowAll.vue'),
+                        name: 'plugin.showall',
+                        meta: {
+                            breadcrumb: [
+                                {name: 'Dashboard', link: '/dashboard'},
+                                {name: 'Plugins'}
+                            ]
+                        }
+                    },
+                    {
+                        path: 'installer',
+                        component: () => import('./pages/admin/plugin/Installer.vue'),
+                        name: 'plugin.installer',
+                        meta: {
+                            breadcrumb: [
+                                {name: 'Dashboard', link: '/dashboard'},
+                                {name: 'Plugins', link: '/plugins'},
+                                {name: 'Installer'}
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
                 path: 'settings',
                 component: () => import('./pages/admin/setting/Index.vue'),
                 children: [

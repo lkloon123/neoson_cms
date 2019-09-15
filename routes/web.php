@@ -46,6 +46,8 @@ Route::prefix('api')->group(function () {
 
         Route::get('tag/search', 'TagController@search');
         Route::resource('tag', 'TagController')->except(['create', 'edit']);
+
+        Route::resource('/plugin', 'PluginController')->except(['create', 'edit']);
     });
 });
 

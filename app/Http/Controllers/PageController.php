@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use anlutro\LaravelSettings\SettingStore;
 use App\Enums\PageStatus;
 use App\Enums\PageType;
 use App\Http\Requests\Page\CreateRequest;
@@ -18,21 +17,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageController extends Controller
 {
-    public function __construct(SettingStore $setting)
-    {
-        if ($setting->get('minify_output', false)) {
-            $this->middleware([
-                \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
-                \RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
-                \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
-                \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
-                \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes::class,
-                \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
-            ]);
-        }
-    }
-
-
     /**
      * Display a listing of the resource.
      *

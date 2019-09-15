@@ -1,6 +1,7 @@
 export default {
     data: () => ({
         settings: [],
+        forms: [],
         isLoading: true
     }),
     methods: {
@@ -8,7 +9,8 @@ export default {
             this.resetState();
             axios.get(`/api/setting/${group}`)
                 .then(response => {
-                    this.settings = response.data;
+                    this.settings = response.data.settings;
+                    this.forms = response.data.forms;
                 })
                 .finally(() => {
                     this.isLoading = false;

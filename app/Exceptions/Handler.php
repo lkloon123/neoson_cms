@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
@@ -57,6 +58,8 @@ class Handler extends ExceptionHandler
                 $statusCode = $exception->getStatusCode();
             } else if ($exception instanceof AuthenticationException) {
                 return parent::render($request, $exception);
+            } else if ($exception instanceof TokenMismatchException) {
+                $statusCode = 419;
             }
 
             $response = [

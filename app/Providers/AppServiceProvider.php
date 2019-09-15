@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use OwenIt\Auditing\Models\Audit;
@@ -27,7 +28,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->register(\Talevskiigor\ComposerBump\ComposerBumpServiceProvider::class);
-        $this->app->register(\App\Providers\PageContentServiceProvider::class);
+        $this->app->register(HookServiceProvider::class);
+        $this->app->register(PluginServiceProvider::class);
+        $this->app->register(PageContentServiceProvider::class);
     }
 
     /**
@@ -49,5 +52,10 @@ class AppServiceProvider extends ServiceProvider
 
         //dont append data on api resources
         Resource::withoutWrapping();
+
+        //load all persistent setting to config ins
+        foreach (Arr::dot(\Setting::all()) as $key => $value) {
+            \Config::set($key, $value);
+        }
     }
 }

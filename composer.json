@@ -16,17 +16,17 @@
         "anlutro/l4-settings": "^0.8.0",
         "askedio/laravel-soft-cascade": "^5.8",
         "bensampo/laravel-enum": "^1.17",
+        "chumper/zipper": "^1.0",
         "fideloper/proxy": "^4.0",
         "itsgoingd/clockwork": "^3.1",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "mews/purifier": "^2.1",
         "owen-it/laravel-auditing": "^9.0",
-        "renatomarinho/laravel-page-speed": "^1.8",
         "santigarcor/laratrust": "5.2.*",
-        "spatie/laravel-http-logger": "^1.2",
         "spatie/laravel-tags": "^2.4",
-        "talevskiigor/composer-bump": "^1.0"
+        "talevskiigor/composer-bump": "^1.0",
+        "wikimedia/composer-merge-plugin": "dev-master"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -46,6 +46,16 @@
     "extra": {
         "laravel": {
             "dont-discover": []
+        },
+        "merge-plugin": {
+            "include": [
+                "storage/plugins/*/*/composer.json"
+            ],
+            "recurse": true,
+            "replace": false,
+            "merge-dev": false,
+            "merge-extra": true,
+            "merge-extra-deep": true
         }
     },
     "autoload": {
@@ -66,8 +76,8 @@
     "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "App\\Bootstrap\\ComposerScripts::postAutoloadDump",
+            "@php artisan custom:discover --ansi"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -76,7 +86,7 @@
             "@php artisan key:generate --ansi"
         ],
         "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+            "App\\Bootstrap\\ComposerScripts::postUpdate",
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta"
         ]

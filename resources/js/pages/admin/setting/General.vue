@@ -10,27 +10,9 @@
                 <vcl-table v-if="isLoading"></vcl-table>
 
                 <template v-else>
-                    <div class="form-group row align-items-center">
-                        <label class="form-control-label col-md-3" for="site-title">Site Title</label>
-                        <div class="col-md-9">
-                            <input id="site-title" type="text" class="form-control" v-model="settings['site-title']"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group row align-items-center">
-                        <label class="form-control-label col-md-3" for="site-description">Site Description</label>
-                        <div class="col-md-9">
-                            <input id="site-description" type="text" class="form-control"
-                                   v-model="settings['site-description']"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group row align-items-center">
-                        <label class="form-control-label col-md-3" for="admin-email">Admin Email</label>
-                        <div class="col-md-9">
-                            <input id="admin-email" type="text" class="form-control" v-model="settings['admin-email']"/>
-                        </div>
-                    </div>
+                    <template v-for="(setting, key) in settings">
+                        <form-wrapper :form="forms[key]" v-model="settings[key]"></form-wrapper>
+                    </template>
 
                     <div class="text-right">
                         <button type="submit" class="btn btn-primary btn-save" @click="save(group)">Save</button>
@@ -45,6 +27,7 @@
     import Card from '@components/Card';
     import Mixin from './mixin';
     import {VclTable} from 'vue-content-loading';
+    import FormWrapper from "@components/forms_builder/FormWrapper";
 
     export default {
         mixins: [Mixin],
@@ -52,7 +35,7 @@
             group: 'general',
         }),
         components: {
-            Card, VclTable
+            FormWrapper, Card, VclTable
         },
         created() {
             this.loadSetting(this.group);

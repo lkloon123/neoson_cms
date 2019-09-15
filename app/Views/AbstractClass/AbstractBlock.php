@@ -24,7 +24,7 @@ abstract class AbstractBlock extends AbstractBuilder
 
     public function __construct($additionalData, $currentPage, $currentPageType)
     {
-        parent::__construct(app('activatedTheme'));
+        parent::__construct(app('theme.activated'));
         if (!($additionalData instanceof Collection)) {
             $additionalData = Collection::make($additionalData);
         }

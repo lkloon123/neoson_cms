@@ -46,14 +46,14 @@ class Builder extends AbstractBuilder
     {
         return $this->renderView('.menus.menu',
             [
-                'items' => \View::make('menuItems', ['dataItems' => app('menuBuilder')->build($name)])
+                'items' => \View::make('menuItems', ['dataItems' => app('menu.builder')->build($name)])
             ]
         );
     }
 
     public function setting($name, $default = '')
     {
-        return app('setting')->get($name, $default);
+        return app('config')->get($name, $default);
     }
 
     public function block($name, array $additionalData = [])

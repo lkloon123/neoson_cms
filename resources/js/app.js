@@ -15,6 +15,7 @@ import Toast from './plugins/toast';
 import FileManager from 'laravel-file-manager';
 import Rbac from './plugins/rbac';
 import VueLazyLoad from 'vue-lazyload';
+import FormatSizeFilter from './filters/format_size';
 
 window.Vue = Vue;
 
@@ -24,6 +25,8 @@ Vue.use(Utils);
 Vue.use(Rbac);
 Vue.use(FileManager, {store});
 Vue.use(VueLazyLoad);
+
+Vue.filter('formatSize', FormatSizeFilter);
 
 require('./config/interceptors');
 require('./config/router');

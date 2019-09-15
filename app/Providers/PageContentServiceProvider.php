@@ -19,20 +19,20 @@ class PageContentServiceProvider extends ServiceProvider implements DeferrablePr
      */
     public function register()
     {
-        $this->app->singleton('activatedTheme', function ($app) {
-            return new Theme($app['setting']->get('activated_theme'));
+        $this->app->singleton('theme.activated', function ($app) {
+            return new Theme($app['config']->get('activated_theme'));
         });
 
         $this->app->singleton('asset', function ($app) {
-            return new Asset($app['activatedTheme']);
+            return new Asset($app['theme.activated']);
         });
 
-        $this->app->singleton('menuBuilder', function ($app) {
-            return new MenuBuilder($app['activatedTheme']);
+        $this->app->singleton('menu.builder', function ($app) {
+            return new MenuBuilder($app['theme.activated']);
         });
 
-        $this->app->singleton('pageContent', function ($app) {
-            $builder = new Builder($app['activatedTheme']);
+        $this->app->singleton('page.content', function ($app) {
+            $builder = new Builder($app['theme.activated']);
             $view = $app['view'];
             $view->share('builder', $builder);
             return $builder;
@@ -53,7 +53,7 @@ class PageContentServiceProvider extends ServiceProvider implements DeferrablePr
 
     public function provides()
     {
-        return ['activatedTheme', 'asset', 'menuBuilder', 'pageContent'];
+        return ['theme.activated', 'asset', 'menu.builder', 'page.content'];
     }
 
 }

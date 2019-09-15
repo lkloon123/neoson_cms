@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Enums\PermissionType;
+use App\Hook\HookManager;
 use Laratrust\Models\LaratrustPermission;
 
 /**
@@ -66,7 +67,7 @@ class Permission extends LaratrustPermission
 
     public static function displayDataOption()
     {
-        return [
+        $default = [
             [
                 'module' => 'Page',
                 'abilities' => [
@@ -127,5 +128,8 @@ class Permission extends LaratrustPermission
                 ]
             ]
         ];
+
+        $default = \HookManager::applyFilter('permission.filter', $default);
+        return $default;
     }
 }

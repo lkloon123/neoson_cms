@@ -24,7 +24,10 @@ class SettingController extends Controller
             throw new NotFoundHttpException('Setting not found');
         }
 
-        return $setting->get();
+        return [
+            'settings' => $setting->all(),
+            'forms' => $setting->getSettingForms()
+        ];
     }
 
     public function save(UpdateRequest $request, $key)

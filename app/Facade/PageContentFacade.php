@@ -15,6 +15,6 @@ class PageContentFacade extends Facade
 {
     public static function getFacadeAccessor()
     {
-        return 'pageContent';
+        return 'page.content';
     }
 }

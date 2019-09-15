@@ -44,6 +44,9 @@
                         </router-link>
                     </ul>
                 </li>
+                <router-link to="/plugins" tag="li">
+                    <a><i class="fas fa-plug"></i> <span>Plugins</span></a>
+                </router-link>
                 <router-link tag="li"
                              to="/settings"
                              v-if="hasPermission('view', 'general_setting') || hasPermission('view', 'acl_setting')">
