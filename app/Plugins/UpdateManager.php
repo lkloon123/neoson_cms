@@ -11,10 +11,10 @@ namespace App\Plugins;
 
 use App\Bootstrap\Composer;
 use App\Exceptions\PluginInstallException;
-use Chumper\Zipper\Zipper;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use PhpZip\ZipFile;
 
 class UpdateManager
 {
@@ -22,7 +22,7 @@ class UpdateManager
     protected $composer;
     protected $pluginLoader;
 
-    public function __construct(Zipper $zipper, Composer $composer, PluginLoader $pluginLoader)
+    public function __construct(ZipFile $zipper, Composer $composer, PluginLoader $pluginLoader)
     {
         $this->zipper = $zipper;
         $this->composer = $composer;
@@ -31,26 +31,29 @@ class UpdateManager
 
     public function install(UploadedFile $zipFile)
     {
-        $archive = $this->zipper->make($zipFile);
-        if (!$archive->contains('composer.json') || !$archive->contains('Plugin.php')) {
+        $archive = $this->zipper->openFile($zipFile);
+        if (!$archive->hasEntry('composer.json') || !$archive->hasEntry('Plugin.php')) {
             throw new PluginInstallException('plugin must contain composer.json and Plugin.php');
         }
 
-        $composerJson = $archive->getFileContent('composer.json');
+        $composerJson = $archive->getEntryContents('composer.json');
 
         $figuredPluginInstallationDir = $this->getPluginInstallationDir($composerJson);
-
         if (!$figuredPluginInstallationDir) {
             throw new PluginInstallException('plugin has incorrect psr4 namespace');
         }
 
         $isPluginInstalled = $this->isPluginInstalled($figuredPluginInstallationDir[0] . '.' . $figuredPluginInstallationDir[1]);
-
         if ($isPluginInstalled) {
             throw new PluginInstallException('plugin has already installed');
         }
 
-        $archive->extractTo(storage_path() . '/plugins/' . Str::snake($figuredPluginInstallationDir[0]) . '/' . Str::snake($figuredPluginInstallationDir[1]));
+        $pluginInstallationPath = storage_path() . '/plugins/' . Str::snake($figuredPluginInstallationDir[0]) . '/' . Str::snake($figuredPluginInstallationDir[1]);
+        if(!\File::isDirectory($pluginInstallationPath)) {
+            \File::makeDirectory($pluginInstallationPath);
+        }
+
+        $archive->extractTo($pluginInstallationPath);
         $archive->close();
 
         $this->composer->updateAndLock();

@@ -8,6 +8,7 @@ use App\Plugins\PluginManager;
 use App\Plugins\UpdateManager;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use PhpZip\ZipFile;
 
 class PluginServiceProvider extends ServiceProvider
 {
@@ -27,7 +28,7 @@ class PluginServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('update.manager', function ($app) {
-            return new UpdateManager($app['zipper'], $app['composer'], $app['plugin.loader']);
+            return new UpdateManager(new ZipFile(), $app['composer'], $app['plugin.loader']);
         });
 
         $this->app->singleton('plugin.manager', function ($app) {
