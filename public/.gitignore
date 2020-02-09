@@ -3,6 +3,4 @@
 /js
 /fonts
 /images
-*.js
-*.js.map
 mix-manifest.json
