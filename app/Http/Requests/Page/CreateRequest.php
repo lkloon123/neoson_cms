@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Page;
 
 use App\Http\Requests\BaseRequest;
-use App\Model\Page;
 use Illuminate\Validation\Rule;
 
 class CreateRequest extends BaseRequest

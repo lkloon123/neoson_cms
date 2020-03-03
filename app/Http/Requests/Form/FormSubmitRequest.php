@@ -4,6 +4,7 @@ namespace App\Http\Requests\Form;
 
 use App\Http\Requests\BaseRequest;
 use App\Model\Form;
+use App\Model\FormItem;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -26,15 +27,9 @@ class FormSubmitRequest extends BaseRequest
      */
     public function rules()
     {
-        if ($formValidators = $this->getFormValidators()) {
-            return array_merge([
-                'formId' => 'required'
-            ], $formValidators);
-        }
+        $defaultValidator = ['formId' => 'required'];
 
-        return [
-            'formId' => 'required'
-        ];
+        return array_merge($this->getFormValidators(), $defaultValidator);
     }
 
     protected function getFormValidators()
@@ -51,28 +46,33 @@ class FormSubmitRequest extends BaseRequest
                 throw new BadRequestHttpException('Unable to find form id');
             }
 
-            $validators = [];
+            $rules = [];
 
+            /** @var FormItem $formItem */
             foreach ($form->formItems as $formItem) {
                 if (strpos($formItem->type, 'button') !== false) {
                     continue;
                 }
 
                 $currentElementValidator = [];
-                if ($formItem->is_required) {
-                    $currentElementValidator[] = 'required';
+                if ($validators = $formItem->validators) {
+                    foreach ($validators as $validatorRule => $validatorValue) {
+                        if ($validatorValue) {
+                            $currentElementValidator[] = $validatorRule;
+                        }
+                    }
                 }
 
-                $validators[$formItem->name] = implode('|', $currentElementValidator);
+                $rules[$formItem->name] = implode('|', $currentElementValidator);
             }
 
             $this->attributes->add([
                 'form' => $form
             ]);
 
-            return $validators;
+            return $rules;
         }
 
-        return false;
+        throw new BadRequestHttpException('Unable to find form id');
     }
 }

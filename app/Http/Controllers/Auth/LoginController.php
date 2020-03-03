@@ -41,7 +41,7 @@ class LoginController extends Controller
     protected function loggedOut(Request $request)
     {
         if ($request->wantsJson()) {
-            return response('', 204);
+            return response()->noContent();
         }
 
         return false;

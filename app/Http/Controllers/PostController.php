@@ -13,12 +13,6 @@ use Illuminate\Support\Arr;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param ViewRequest $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Http\Response
-     */
     public function index(ViewRequest $request)
     {
         if ($request->get('only_own')) {
@@ -28,18 +22,12 @@ class PostController extends Controller
         }
 
         if ($posts->isEmpty()) {
-            return response()->json([], 204);
+            return response()->noContent();
         }
 
         return PostResource::collection($posts);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(CreateRequest $request)
     {
         $validated = $request->validated();
@@ -68,25 +56,11 @@ class PostController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param ViewRequest $request
-     * @param int $id
-     * @return Post|Post[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null
-     */
     public function show(ViewRequest $request, $id)
     {
         return new PostResource($request->get('post'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param UpdateRequest $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateRequest $request, $id)
     {
         $validated = $request->validated();
@@ -116,14 +90,6 @@ class PostController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param DeleteRequest $request
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     */
     public function destroy(DeleteRequest $request, $id)
     {
         /** @var Post $post */
@@ -134,7 +100,7 @@ class PostController extends Controller
             throw new \Exception('Unable to delete post, please try again');
         }
 
-        return response()->json([], 204);
+        return response()->noContent();
     }
 
     public function count(ViewRequest $request)

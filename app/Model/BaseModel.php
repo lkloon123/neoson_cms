@@ -26,6 +26,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\BaseModel withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\BaseModel withoutTrashed()
  * @mixin \Eloquent
+ * @property-read int|null $audits_count
  */
 class BaseModel extends Model implements Auditable
 {

@@ -30,7 +30,7 @@ class RoleController extends Controller
             ->get();
 
         if ($roles->isEmpty()) {
-            return response()->json([], 204);
+            return response()->noContent();
         }
 
         return RoleResource::collection($roles);
@@ -94,7 +94,7 @@ class RoleController extends Controller
             throw new \Exception('Unable to delete role, please try again');
         }
 
-        return response()->json([], 204);
+        return response()->noContent();
     }
 
     public function getPermissions()

@@ -28,6 +28,8 @@ use Laratrust\Models\LaratrustRole;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Role whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\User[] $users
+ * @property-read int|null $permissions_count
+ * @property-read int|null $users_count
  */
 class Role extends LaratrustRole
 {

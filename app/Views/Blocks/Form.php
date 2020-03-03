@@ -8,8 +8,8 @@
 
 namespace App\Views\Blocks;
 
+use App\Model\Form as FormModel;
 use App\Views\AbstractClass\AbstractBlock;
-use \App\Model\Form as FormModel;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 

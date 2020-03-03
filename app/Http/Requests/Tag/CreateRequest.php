@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Tag;
 
 use App\Http\Requests\BaseRequest;
-use Illuminate\Validation\Rule;
 
 class CreateRequest extends BaseRequest
 {

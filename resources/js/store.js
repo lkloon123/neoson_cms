@@ -10,18 +10,18 @@ import modules from './store/modules/index';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    strict: process.env.NODE_ENV !== 'production',
+  strict: process.env.NODE_ENV !== 'production',
 
-    modules: modules,
-    state: {
-        currentPageTitle: '',
-        pageBackLink: null,
-        currentUserInfo: null,
-        currentUserRole: null,
-        currentUserPermission: [],
-        showLoader: false
-    },
-    getters,
-    mutations,
-    actions
+  modules,
+  state: {
+    currentPageTitle: '',
+    pageBackLink: null,
+    currentUserInfo: null,
+    currentUserRole: null,
+    currentUserPermission: [],
+    showLoader: false,
+  },
+  getters,
+  mutations,
+  actions,
 });

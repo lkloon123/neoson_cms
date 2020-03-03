@@ -29,12 +29,12 @@ class Builder extends AbstractBuilder
 
     public function css($name, $isMinified = true)
     {
-        return app('asset')->getCss($name, $isMinified);
+        return app(Asset::class)->getCss($name, $isMinified);
     }
 
     public function js($name, $isMinified = true)
     {
-        return app('asset')->getJs($name, $isMinified);
+        return app(Asset::class)->getJs($name, $isMinified);
     }
 
     public function section($name, $additionalData = [])
@@ -46,7 +46,7 @@ class Builder extends AbstractBuilder
     {
         return $this->renderView('.menus.menu',
             [
-                'items' => \View::make('menuItems', ['dataItems' => app('menu.builder')->build($name)])
+                'items' => \View::make('menuItems', ['dataItems' => app(MenuBuilder::class)->build($name)])
             ]
         );
     }

@@ -55,6 +55,6 @@ class PluginController extends Controller
     {
         \PluginManager::uninstallPlugin($id);
 
-        return response()->json([], 204);
+        return response()->noContent();
     }
 }

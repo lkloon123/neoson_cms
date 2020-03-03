@@ -17,6 +17,7 @@ use App\Http\Requests\Tag\ViewRequest;
 use App\Http\Resources\TagResource;
 use App\Model\Tag;
 use App\Views\Builder;
+use App\Views\Theme;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -27,7 +28,7 @@ class TagController extends Controller
         $tags = Tag::getAllWithCount();
 
         if ($tags->isEmpty()) {
-            return response()->json([], 204);
+            return response()->noContent();
         }
 
         return TagResource::collection($tags);
@@ -84,7 +85,7 @@ class TagController extends Controller
             throw new \Exception('Unable to delete tag, please try again');
         }
 
-        return response()->json([], 204);
+        return response()->noContent();
     }
 
     public function search(SearchRequest $request)
@@ -105,12 +106,12 @@ class TagController extends Controller
         return TagResource::collection($tags);
     }
 
-    public function getTag($slug)
+    public function getTag($slug, Theme $theme)
     {
         $tag = Tag::findFromSlug($slug)->firstOrFail();
 
         Builder::setPage($tag, PageType::Tag);
 
-        return view('themes.BlackrockDigital.templates.index');
+        return view('themes.' . $theme->getTheme() . '.templates.index');
     }
 }

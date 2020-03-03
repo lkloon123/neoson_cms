@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Model\Page;
-
 /**
  * @mixin \App\Model\FormResponse
  * */

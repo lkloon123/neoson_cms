@@ -25,6 +25,7 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\FormResponse whereMeta($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\FormResponse whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read int|null $audits_count
  */
 class FormResponse extends BaseModel
 {

@@ -31,6 +31,8 @@ namespace App\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\MenuItem whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\MenuItem whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read int|null $audits_count
+ * @property-read int|null $children_count
  */
 class MenuItem extends BaseModel
 {

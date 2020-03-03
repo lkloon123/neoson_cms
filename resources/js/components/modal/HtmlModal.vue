@@ -1,132 +1,143 @@
 <template>
-    <span>
-        <button type="button"
-                :class="triggerBtnClass"
-                @click="triggerBtnClicked"
-                v-if="showBtn && !isBtnHtml"
-                :title="triggerBtnTooltip">
-            {{triggerBtnText}}
-        </button>
+  <span>
+    <button
+      v-if="showBtn && !isBtnHtml"
+      type="button"
+      :class="triggerBtnClass"
+      :title="triggerBtnTooltip"
+      @click="triggerBtnClicked"
+    >
+      {{ triggerBtnText }}
+    </button>
 
-        <button type="button"
-                :class="triggerBtnClass"
-                @click="triggerBtnClicked"
-                v-if="showBtn && isBtnHtml"
-                v-html="triggerBtnText"
-                :title="triggerBtnTooltip">
-        </button>
+    <button
+      v-if="showBtn && isBtnHtml"
+      type="button"
+      :class="triggerBtnClass"
+      :title="triggerBtnTooltip"
+      @click="triggerBtnClicked"
+      v-html="triggerBtnText"
+    />
 
-        <BaseModal :current-state="copyCurrentState" @hidden="handleHidden" @shown="$emit('shown', $event)" :size="size">
-            <template v-slot:header>
-                <h5 class="modal-title">{{title}}</h5>
-            </template>
-            <slot></slot>
-            <template v-slot:footer v-if="showFooter">
-                <button :class="cfmBtnClass" data-dismiss="modal" @click="$emit('confirm', $event)">
-                    {{cfmBtnText}}
-                </button>
-            </template>
-        </BaseModal>
-    </span>
+    <BaseModal
+      :current-state="copyCurrentState"
+      :size="size"
+      @hidden="handleHidden"
+      @shown="$emit('shown', $event)"
+    >
+      <template v-slot:header>
+        <h5 class="modal-title">{{ title }}</h5>
+      </template>
+      <slot />
+      <template
+        v-if="showFooter"
+        v-slot:footer
+      >
+        <button
+          :class="cfmBtnClass"
+          data-dismiss="modal"
+          @click="$emit('confirm', $event)"
+        >
+          {{ cfmBtnText }}
+        </button>
+      </template>
+    </BaseModal>
+  </span>
 </template>
 
 <script>
-    import BaseModal from './BaseModal';
+import BaseModal from './BaseModal';
 
-    export default {
-        props: {
-            title: {
-                type: String
-            },
-            cfmBtnClass: {
-                type: Object,
-                default: () => {
-                    return {
-                        btn: true,
-                        'btn-primary': true
-                    }
-                }
-            },
-            cfmBtnText: {
-                type: String,
-                default: 'ok'
-            },
-            showFooter: {
-                type: Boolean,
-                default: true
-            },
-            //trigger button
-            showBtn: {
-                type: Boolean,
-                default: false
-            },
-            isBtnHtml: {
-                type: Boolean,
-                default: false
-            },
-            triggerBtnText: {
-                type: String,
-                default: 'show'
-            },
-            triggerBtnClass: {
-                type: Object,
-                default: () => {
-                    return {
-                        btn: true,
-                        'btn-primary': true
-                    }
-                }
-            },
-            triggerBtnTooltip: {
-                type: String,
-                default: null
-            },
-            triggerBtnCallback: {
-                type: Function,
-                default: null
-            },
-            //inherit props from base modal
-            showXOnHeader: {
-                type: Boolean,
-                default: true
-            },
-            currentState: {
-                type: String,
-                default: 'hide',
-                validator: (value) => ['show', 'hide'].includes(value)
-            },
-            size: {
-                type: String,
-                default: 'default'
-            }
-        },
-        watch: {
-            currentState(newValue) {
-                this.copyCurrentState = newValue;
-            },
-        },
-        data: () => ({
-            copyCurrentState: null
-        }),
-        methods: {
-            handleHidden(event) {
-                this.copyCurrentState = 'hide';
-                this.$emit('hidden', event)
-            },
-            triggerBtnClicked() {
-                if(this.triggerBtnCallback !== null){
-                    this.triggerBtnCallback();
-                }
-                this.copyCurrentState = 'show';
-            }
-        },
-        components: {
-            BaseModal
-        },
-        created() {
-            this.copyCurrentState = this.currentState;
-        }
-    }
+export default {
+  components: {
+    BaseModal,
+  },
+  props: {
+    title: {
+      type: String,
+    },
+    cfmBtnClass: {
+      type: Object,
+      default: () => ({
+        btn: true,
+        'btn-primary': true,
+      }),
+    },
+    cfmBtnText: {
+      type: String,
+      default: 'ok',
+    },
+    showFooter: {
+      type: Boolean,
+      default: true,
+    },
+    // trigger button
+    showBtn: {
+      type: Boolean,
+      default: false,
+    },
+    isBtnHtml: {
+      type: Boolean,
+      default: false,
+    },
+    triggerBtnText: {
+      type: String,
+      default: 'show',
+    },
+    triggerBtnClass: {
+      type: Object,
+      default: () => ({
+        btn: true,
+        'btn-primary': true,
+      }),
+    },
+    triggerBtnTooltip: {
+      type: String,
+      default: null,
+    },
+    triggerBtnCallback: {
+      type: Function,
+      default: null,
+    },
+    // inherit props from base modal
+    showXOnHeader: {
+      type: Boolean,
+      default: true,
+    },
+    currentState: {
+      type: String,
+      default: 'hide',
+      validator: (value) => ['show', 'hide'].includes(value),
+    },
+    size: {
+      type: String,
+      default: 'default',
+    },
+  },
+  data: () => ({
+    copyCurrentState: null,
+  }),
+  watch: {
+    currentState(newValue) {
+      this.copyCurrentState = newValue;
+    },
+  },
+  created() {
+    this.copyCurrentState = this.currentState;
+  },
+  methods: {
+    handleHidden(event) {
+      this.copyCurrentState = 'hide';
+      this.$emit('hidden', event);
+    },
+    triggerBtnClicked() {
+      if (this.triggerBtnCallback !== null) {
+        this.triggerBtnCallback();
+      }
+      this.copyCurrentState = 'show';
+    },
+  },
+};
 </script>
 
 <style scoped>

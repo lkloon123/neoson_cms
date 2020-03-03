@@ -10,14 +10,15 @@ class MenuResource extends BaseResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
     {
-        return array_merge([
+        return [
             'id' => $this->id,
-            'name' => $this->name
-        ], $this->dateTimeData());
+            'name' => $this->name,
+            $this->merge($this->dateTimeData())
+        ];
     }
 }

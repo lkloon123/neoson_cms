@@ -1,17 +1,19 @@
 <template>
-    <input :aria-describedby="getId"
-           :checked="value"
-           :id="getId"
-           @click="$emit('input', $event.target.checked)"
-           type="checkbox">
+  <input
+    :id="getId"
+    :aria-describedby="getId"
+    :checked="value"
+    type="checkbox"
+    @click="$emit('input', $event.target.checked)"
+  >
 </template>
 
 <script>
-    import Mixin from './mixin';
+import Mixin from './mixin';
 
-    export default {
-        mixins: [Mixin]
-    }
+export default {
+  mixins: [Mixin],
+};
 </script>
 
 <style scoped>

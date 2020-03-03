@@ -47,6 +47,8 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post withinSchedule()
  * @property string|null $featured_img
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post whereFeaturedImg($value)
+ * @property-read int|null $audits_count
+ * @property-read int|null $tags_count
  */
 class Post extends BaseModel
 {

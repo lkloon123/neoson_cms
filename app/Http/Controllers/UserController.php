@@ -28,7 +28,7 @@ class UserController extends Controller
         }
 
         if ($users->isEmpty()) {
-            return response()->json([], 204);
+            return response()->noContent();
         }
 
         return UserResource::collection($users);

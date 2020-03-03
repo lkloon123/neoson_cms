@@ -1,32 +1,36 @@
 <template>
-    <div>
-        <router-view></router-view>
+  <div>
+    <router-view />
 
-        <div v-if="showLoader" class="loader_container">
-            <half-circle-spinner
-                    :animation-duration="1000"
-                    :size="60"
-                    :color="'#ff1d5e'"></half-circle-spinner>
-        </div>
+    <div
+      v-if="showLoader"
+      class="loader_container"
+    >
+      <half-circle-spinner
+        :animation-duration="1000"
+        :size="60"
+        :color="'#ff1d5e'"
+      />
     </div>
+  </div>
 </template>
 
 <script>
-    import {HalfCircleSpinner} from 'epic-spinners';
+import { HalfCircleSpinner } from 'epic-spinners';
 
-    export default {
-        computed: {
-            showLoader() {
-                return this.$store.state.showLoader;
-            }
-        },
-        components: {
-            HalfCircleSpinner
-        },
-        mounted() {
-            window.loading_screen.finish();
-        }
-    }
+export default {
+  components: {
+    HalfCircleSpinner,
+  },
+  computed: {
+    showLoader() {
+      return this.$store.state.showLoader;
+    },
+  },
+  mounted() {
+    window.loading_screen.finish();
+  },
+};
 </script>
 
 <style scoped>

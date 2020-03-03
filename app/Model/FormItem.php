@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 /**
@@ -29,15 +30,18 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\FormItem whereMeta($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\FormItem whereMetaId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\FormItem whereUpdatedAt($value)
- * @property-read mixed $is_required
  * @property-read mixed $label
  * @property-read mixed $type
  * @property-read mixed $name
+ * @property array $validators
+ * @property-read int|null $audits_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\FormItem whereValidators($value)
  */
 class FormItem extends BaseModel
 {
     protected $casts = [
-        'meta' => 'array'
+        'meta' => 'array',
+        'validators' => 'array',
     ];
 
     protected $touches = ['form'];
@@ -52,18 +56,9 @@ class FormItem extends BaseModel
         return $this->meta['type'];
     }
 
-    public function getIsRequiredAttribute()
-    {
-        if (isset($this->meta['isRequired']) && $this->meta['isRequired']) {
-            return $this->meta['isRequired'];
-        }
-
-        return null;
-    }
-
     public function getLabelAttribute()
     {
-        if ($this->is_required) {
+        if (Arr::get($this->validators, 'required')) {
             return $this->meta['label'] . '&nbsp;<span style="color: #ff0000;">*</span>';
         }
 

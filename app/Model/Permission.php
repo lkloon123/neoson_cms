@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use App\Enums\PermissionType;
-use App\Hook\HookManager;
 use Laratrust\Models\LaratrustPermission;
 
 /**
@@ -29,6 +28,7 @@ use Laratrust\Models\LaratrustPermission;
  * @property-read mixed $module
  * @property-read mixed $type
  * @property-read mixed $only_own
+ * @property-read int|null $roles_count
  */
 class Permission extends LaratrustPermission
 {
@@ -123,6 +123,12 @@ class Permission extends LaratrustPermission
             ],
             [
                 'module' => 'Login Admin',
+                'abilities' => [
+                    'view' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false]
+                ]
+            ],
+            [
+                'module' => 'Telescope',
                 'abilities' => [
                     'view' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false]
                 ]

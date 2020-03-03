@@ -17,12 +17,13 @@ class RoleResource extends BaseResource
      */
     public function toArray($request)
     {
-        return array_merge([
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'title' => $this->display_name,
             'users_count' => $this->users_count,
             'abilities' => PermissionResource::collection($this->whenLoaded('permissions')),
-        ], $this->dateTimeData());
+            $this->merge($this->dateTimeData())
+        ];
     }
 }

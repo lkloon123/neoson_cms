@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Menu;
 
 use App\Http\Requests\BaseRequest;
-use App\Model\Menu;
 
 class CreateRequest extends BaseRequest
 {

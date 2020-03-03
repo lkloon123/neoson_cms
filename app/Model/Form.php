@@ -27,6 +27,9 @@ use Illuminate\Support\Arr;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Form whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Form whereUserId($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\FormResponse[] $formResponses
+ * @property-read int|null $audits_count
+ * @property-read int|null $form_items_count
+ * @property-read int|null $form_responses_count
  */
 class Form extends BaseModel
 {
@@ -58,7 +61,8 @@ class Form extends BaseModel
                 [
                     'display_order' => $displayOrder,
                     'meta_id' => $item['id'],
-                    'meta' => Arr::except($item, ['id']),
+                    'meta' => Arr::except($item, ['id', 'validators']),
+                    'validators' => $item['validators']
                 ]
             );
 

@@ -29,7 +29,7 @@ class UserEventSubscriber
     /**
      * Handle the event.
      *
-     * @param  \Illuminate\Events\Dispatcher $event
+     * @param \Illuminate\Events\Dispatcher $event
      * @return void
      */
     public function subscribe($event)

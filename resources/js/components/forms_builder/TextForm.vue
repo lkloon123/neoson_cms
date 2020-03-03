@@ -1,18 +1,20 @@
 <template>
-    <input :aria-describedby="getId"
-           :id="getId"
-           :value="value"
-           @input="$emit('input', $event.target.value)"
-           class="form-control"
-           type="text"/>
+  <input
+    :id="getId"
+    :aria-describedby="getId"
+    :value="value"
+    class="form-control"
+    type="text"
+    @input="$emit('input', $event.target.value)"
+  >
 </template>
 
 <script>
-    import Mixin from './mixin';
+import Mixin from './mixin';
 
-    export default {
-        mixins: [Mixin]
-    }
+export default {
+  mixins: [Mixin],
+};
 </script>
 
 <style scoped>

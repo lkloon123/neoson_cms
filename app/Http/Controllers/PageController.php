@@ -13,16 +13,11 @@ use App\Http\Resources\PageResource;
 use App\Model\Page;
 use App\Model\Post;
 use App\Views\Builder;
+use App\Views\Theme;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param ViewRequest $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Http\Response
-     */
     public function index(ViewRequest $request)
     {
         if ($request->get('only_own')) {
@@ -32,18 +27,12 @@ class PageController extends Controller
         }
 
         if ($pages->isEmpty()) {
-            return response()->json([], 204);
+            return response()->noContent();
         }
 
         return PageResource::collection($pages);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(CreateRequest $request)
     {
         $validated = $request->validated();
@@ -69,25 +58,11 @@ class PageController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param ViewRequest $request
-     * @param int $id
-     * @return Page|Page[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null
-     */
     public function show(ViewRequest $request, $id)
     {
         return new PageResource($request->get('page'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param UpdateRequest $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateRequest $request, $id)
     {
         $validated = $request->validated();
@@ -114,14 +89,6 @@ class PageController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param DeleteRequest $request
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     */
     public function destroy(DeleteRequest $request, $id)
     {
         /** @var Page $page */
@@ -132,7 +99,7 @@ class PageController extends Controller
             throw new \Exception('Unable to delete page, please try again');
         }
 
-        return response()->json([], 204);
+        return response()->noContent();
     }
 
     public function search(SearchRequest $request)
@@ -168,13 +135,13 @@ class PageController extends Controller
         return response()->json(Page::published()->withinSchedule()->count());
     }
 
-    public function home()
+    public function home(Theme $theme)
     {
         Builder::setPage(null, PageType::Homepage);
-        return view('themes.BlackrockDigital.templates.index');
+        return view('themes.' . $theme->getTheme() . '.templates.index');
     }
 
-    public function getPage($slug)
+    public function getPage($slug, Theme $theme)
     {
         $page = Page::published()
             ->withinSchedule()
@@ -193,6 +160,6 @@ class PageController extends Controller
             Builder::setPage($page);
         }
 
-        return view('themes.BlackrockDigital.templates.index');
+        return view('themes.' . $theme->getTheme() . '.templates.index');
     }
 }

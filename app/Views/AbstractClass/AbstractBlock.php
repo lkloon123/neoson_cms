@@ -13,6 +13,7 @@ use App\Enums\PageType;
 use App\Model\Page;
 use App\Model\Post;
 use App\Model\Tag;
+use App\Views\Theme;
 use Illuminate\Support\Collection;
 
 abstract class AbstractBlock extends AbstractBuilder
@@ -24,7 +25,7 @@ abstract class AbstractBlock extends AbstractBuilder
 
     public function __construct($additionalData, $currentPage, $currentPageType)
     {
-        parent::__construct(app('theme.activated'));
+        parent::__construct(app(Theme::class));
         if (!($additionalData instanceof Collection)) {
             $additionalData = Collection::make($additionalData);
         }

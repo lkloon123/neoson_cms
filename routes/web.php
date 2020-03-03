@@ -32,6 +32,7 @@ Route::prefix('api')->group(function () {
         Route::resource('menu', 'MenuController')->except(['create', 'edit']);
 
         Route::get('form/response/{form}', 'FormController@formResponse');
+        Route::resource('form/component', 'FormComponentController')->except(['create', 'edit']);
         Route::resource('form', 'FormController')->except(['create', 'edit']);
 
         Route::get('setting/{setting}', 'SettingController@get');

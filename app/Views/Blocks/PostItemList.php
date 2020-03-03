@@ -8,7 +8,6 @@
 
 namespace App\Views\Blocks;
 
-use App\Enums\PageType;
 use App\Model\Post;
 use App\Views\AbstractClass\AbstractBlock;
 use Illuminate\Support\Arr;

@@ -26,6 +26,8 @@ use Illuminate\Support\Arr;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Menu whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Menu whereUserId($value)
  * @mixin \Eloquent
+ * @property-read int|null $audits_count
+ * @property-read int|null $menu_items_count
  */
 class Menu extends BaseModel
 {

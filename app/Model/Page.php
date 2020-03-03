@@ -43,6 +43,7 @@ use App\Traits\PageScopes;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Page withinSchedule()
  * @property string|null $featured_img
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Page whereFeaturedImg($value)
+ * @property-read int|null $audits_count
  */
 class Page extends BaseModel
 {

@@ -1,112 +1,135 @@
 <template>
-    <div class="card" :class="styleClass">
-        <div class="card-header" v-if="hasHeader">
-            <slot name="header"></slot>
-            <!-- header action -->
-            <div class="card-header-action" v-if="hasHeaderAction || isCollapsible">
-                <slot name="header-action"></slot>
-                <button :data-collapse="collapsibleId"
-                        class="btn btn-icon btn-light"
-                        v-if="isCollapsible"
-                        v-html="collapsibleIcon"
-                        @click="collapsibleClick">
-                </button>
-            </div>
-            <!-- #header action -->
-        </div>
-
-        <!-- collapsible -->
-        <div class="collapse" :class="{show: !defaultCollapse}" :id="collapsibleId" v-if="isCollapsible">
-            <div class="card-body">
-                <slot></slot>
-            </div>
-
-            <div class="card-footer" v-if="hasFooter">
-                <slot name="footer"></slot>
-            </div>
-        </div>
-        <!-- #collapsible -->
-
-        <div v-else>
-            <div class="card-body">
-                <slot></slot>
-            </div>
-
-            <div class="card-footer" v-if="hasFooter">
-                <slot name="footer"></slot>
-            </div>
-        </div>
+  <div
+    class="card"
+    :class="styleClass"
+  >
+    <div
+      v-if="hasHeader"
+      class="card-header"
+    >
+      <slot name="header" />
+      <!-- header action -->
+      <div
+        v-if="hasHeaderAction || isCollapsible"
+        class="card-header-action"
+      >
+        <slot name="header-action" />
+        <button
+          v-if="isCollapsible"
+          :data-collapse="collapsibleId"
+          class="btn btn-icon btn-light"
+          @click="collapsibleClick"
+          v-html="collapsibleIcon"
+        />
+      </div>
+      <!-- #header action -->
     </div>
+
+    <!-- collapsible -->
+    <div
+      v-if="isCollapsible"
+      :id="collapsibleId"
+      class="collapse"
+      :class="{show: !defaultCollapse}"
+    >
+      <div class="card-body">
+        <slot />
+      </div>
+
+      <div
+        v-if="hasFooter"
+        class="card-footer"
+      >
+        <slot name="footer" />
+      </div>
+    </div>
+    <!-- #collapsible -->
+
+    <div v-else>
+      <div class="card-body">
+        <slot />
+      </div>
+
+      <div
+        v-if="hasFooter"
+        class="card-footer"
+      >
+        <slot name="footer" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        props: {
-            isCollapsible: {
-                type: Boolean,
-                default: false
-            },
-            defaultCollapse: {
-                type: Boolean,
-                default: false
-            },
-            isHoverable: {
-                type: Boolean,
-                default: true
-            },
-            styleType: {
-                type: String,
-                default: 'light',
-                validator: (value) => Vue.prototype.$Utils.styleTypes().includes(value)
-            }
-        },
-        data: () => ({
-            collapsibleId: null,
-            collapsibleIcon: '<i class="fas fa-minus"></i>'
-        }),
-        methods: {
-            collapsibleClick() {
-                let target = $(`#${this.collapsibleId}`);
+import Vue from 'vue';
 
-                target.collapse('toggle');
-                target.on('shown.bs.collapse', () => this.collapsibleIcon = '<i class="fas fa-minus"></i>');
-                target.on('hidden.bs.collapse', () => this.collapsibleIcon = '<i class="fas fa-plus"></i>');
-            }
-        },
-        computed: {
-            styleClass() {
-                return {
-                    'card-primary': this.styleType === 'primary',
-                    'card-secondary': this.styleType === 'secondary',
-                    'card-success': this.styleType === 'success',
-                    'card-danger': this.styleType === 'danger',
-                    'card-warning': this.styleType === 'warning',
-                    'card-info': this.styleType === 'info',
-                    'card-light': this.styleType === 'light',
-                    'card-dark': this.styleType === 'dark',
-                    'hoverable': this.isHoverable
-                }
-            },
-            hasHeader() {
-                return !!this.$slots['header'];
-            },
-            hasHeaderAction() {
-                return !!this.$slots['header-action'];
-            },
-            hasFooter() {
-                return !!this.$slots['footer'];
-            }
-        },
-        created() {
-            if (this.isCollapsible) {
-                this.collapsibleId = this.$Utils.getRandomId();
+export default {
+  props: {
+    isCollapsible: {
+      type: Boolean,
+      default: false,
+    },
+    defaultCollapse: {
+      type: Boolean,
+      default: false,
+    },
+    isHoverable: {
+      type: Boolean,
+      default: true,
+    },
+    styleType: {
+      type: String,
+      default: 'light',
+      validator: (value) => Vue.prototype.$Utils.styleTypes().includes(value),
+    },
+  },
+  data: () => ({
+    collapsibleId: null,
+    collapsibleIcon: '<i class="fas fa-minus"/>',
+  }),
+  computed: {
+    styleClass() {
+      return {
+        'card-primary': this.styleType === 'primary',
+        'card-secondary': this.styleType === 'secondary',
+        'card-success': this.styleType === 'success',
+        'card-danger': this.styleType === 'danger',
+        'card-warning': this.styleType === 'warning',
+        'card-info': this.styleType === 'info',
+        'card-light': this.styleType === 'light',
+        'card-dark': this.styleType === 'dark',
+        hoverable: this.isHoverable,
+      };
+    },
+    hasHeader() {
+      return !!this.$slots.header;
+    },
+    hasHeaderAction() {
+      return !!this.$slots['header-action'];
+    },
+    hasFooter() {
+      return !!this.$slots.footer;
+    },
+  },
+  created() {
+    if (this.isCollapsible) {
+      this.collapsibleId = this.$Utils.getRandomId();
 
-                if (this.defaultCollapse) {
-                    this.collapsibleIcon = '<i class="fas fa-plus"></i>';
-                }
-            }
-        }
+      if (this.defaultCollapse) {
+        this.collapsibleIcon = '<i class="fas fa-plus"/>';
+      }
     }
+  },
+  methods: {
+    collapsibleClick() {
+      const target = $(`#${this.collapsibleId}`);
+
+      target.collapse('toggle');
+      target.on('shown.bs.collapse', () => { this.collapsibleIcon = '<i class="fas fa-minus"/>'; });
+      target.on('hidden.bs.collapse', () => { this.collapsibleIcon = '<i class="fas fa-plus"/>'; });
+    },
+  },
+};
 </script>
 
 <style scoped>

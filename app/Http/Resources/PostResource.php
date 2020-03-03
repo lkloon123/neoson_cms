@@ -17,7 +17,7 @@ class PostResource extends BaseResource
      */
     public function toArray($request)
     {
-        return array_merge([
+        return [
             'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
@@ -28,7 +28,8 @@ class PostResource extends BaseResource
             'tags' => $this->when($this->relationLoaded('tags'), TagResource::collection($this->tags)),
             'featuredImg' => $this->featured_img,
             'publish_from_date' => $this->start_at !== null ? $this->start_at->format('Y-m-d H:i:s') : null,
-            'publish_to_date' => $this->expired_at !== null ? $this->expired_at->format('Y-m-d H:i:s') : null
-        ], $this->dateTimeData());
+            'publish_to_date' => $this->expired_at !== null ? $this->expired_at->format('Y-m-d H:i:s') : null,
+            $this->merge($this->dateTimeData())
+        ];
     }
 }

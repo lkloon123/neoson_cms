@@ -49,7 +49,7 @@ class UpdateManager
         }
 
         $pluginInstallationPath = storage_path() . '/plugins/' . Str::snake($figuredPluginInstallationDir[0]) . '/' . Str::snake($figuredPluginInstallationDir[1]);
-        if(!\File::isDirectory($pluginInstallationPath)) {
+        if (!\File::isDirectory($pluginInstallationPath)) {
             \File::makeDirectory($pluginInstallationPath);
         }
 

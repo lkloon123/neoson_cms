@@ -17,12 +17,6 @@ use Illuminate\Support\Str;
 
 class FormController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param ViewRequest $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
     public function index(ViewRequest $request)
     {
         if ($request->get('only_own')) {
@@ -32,18 +26,12 @@ class FormController extends Controller
         }
 
         if ($forms->isEmpty()) {
-            return response()->json([], 204);
+            return response()->noContent();
         }
 
         return FormResource::collection($forms);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param CreateRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function store(CreateRequest $request)
     {
         $validated = $request->validated();
@@ -62,13 +50,6 @@ class FormController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param ViewRequest $request
-     * @param int $id
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
     public function show(ViewRequest $request, $id)
     {
         $formItems = $request->get('form')
@@ -82,13 +63,6 @@ class FormController extends Controller
             ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param UpdateRequest $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateRequest $request, $id)
     {
         $validated = $request->validated();
@@ -111,14 +85,6 @@ class FormController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param DeleteRequest $request
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     */
     public function destroy(DeleteRequest $request, $id)
     {
         /** @var Form $form */
@@ -129,7 +95,7 @@ class FormController extends Controller
             throw new \Exception('Unable to delete page, please try again');
         }
 
-        return response()->json([], 204);
+        return response()->noContent();
     }
 
     public function formSubmit(FormSubmitRequest $request)
@@ -152,7 +118,7 @@ class FormController extends Controller
         $form = $request->get('form');
 
         if ($form->formResponses->isEmpty()) {
-            return response()->json([], 204);
+            return response()->noContent();
         }
 
         $lastResponse = $form->formResponses->first();
