@@ -11,6 +11,7 @@ namespace App\Views;
 
 use App\Enums\PageType;
 use App\Model\Page;
+use App\Model\Setting;
 use App\Views\AbstractClass\AbstractBlock;
 use App\Views\AbstractClass\AbstractBuilder;
 use App\Views\Blocks\BlockFactory;
@@ -53,7 +54,15 @@ class Builder extends AbstractBuilder
 
     public function setting($name, $default = '')
     {
-        return app('config')->get($name, $default);
+        $value = Setting::whereSettingKey($name)
+            ->orWhere('config_key', $name)
+            ->value('setting_value');
+
+        if (!$value) {
+            return value($default);
+        }
+
+        return $value;
     }
 
     public function block($name, array $additionalData = [])

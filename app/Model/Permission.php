@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Enums\HookActions;
 use App\Enums\PermissionType;
 use Laratrust\Models\LaratrustPermission;
 
@@ -80,10 +81,10 @@ class Permission extends LaratrustPermission
             [
                 'module' => 'Post',
                 'abilities' => [
-                    'view' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => true],
-                    'create' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
-                    'update' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => true],
-                    'delete' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => true]
+                    'view' => ['state' => PermissionType::OnlyOwn, 'label' => 'Disallow', 'has_own' => true],
+                    'create' => ['state' => PermissionType::Allow, 'label' => 'Disallow', 'has_own' => false],
+                    'update' => ['state' => PermissionType::OnlyOwn, 'label' => 'Disallow', 'has_own' => true],
+                    'delete' => ['state' => PermissionType::OnlyOwn, 'label' => 'Disallow', 'has_own' => true]
                 ]
             ],
             [
@@ -113,6 +114,13 @@ class Permission extends LaratrustPermission
                 ]
             ],
             [
+                'module' => 'Integration Setting',
+                'abilities' => [
+                    'view' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
+                    'update' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
+                ]
+            ],
+            [
                 'module' => 'Acl Setting',
                 'abilities' => [
                     'view' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
@@ -124,7 +132,7 @@ class Permission extends LaratrustPermission
             [
                 'module' => 'Login Admin',
                 'abilities' => [
-                    'view' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false]
+                    'view' => ['state' => PermissionType::Allow, 'label' => 'Disallow', 'has_own' => false]
                 ]
             ],
             [
@@ -135,7 +143,7 @@ class Permission extends LaratrustPermission
             ]
         ];
 
-        $default = \HookManager::applyFilter('permission.filter', $default);
+        $default = \HookManager::applyFilter(HookActions::PermissionFilter, $default);
         return $default;
     }
 }

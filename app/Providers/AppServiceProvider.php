@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+use App\Model\Setting;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Resources\Json\Resource;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use OwenIt\Auditing\Models\Audit;
@@ -54,8 +55,15 @@ class AppServiceProvider extends ServiceProvider
         Resource::withoutWrapping();
 
         //load all persistent setting to config ins
-        foreach (Arr::dot(\Setting::all()) as $key => $value) {
-            \Config::set($key, $value);
+        try {
+            $allSettingsFromDb = Setting::all();
+            foreach ($allSettingsFromDb as $settingFromDb) {
+                if ($settingFromDb->config_key) {
+                    \Config::set($settingFromDb->config_key, $settingFromDb->setting_value);
+                }
+            }
+        } catch (QueryException $ex) {
+            //ignore, running migration
         }
     }
 }

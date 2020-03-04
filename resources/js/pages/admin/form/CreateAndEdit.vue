@@ -63,8 +63,8 @@
             </div>
 
             <Draggable
-              v-for="(field, index) in formItems"
-              :key="field.id"
+              v-for="(formItem, index) in formItems"
+              :key="formItem.id"
             >
               <div
                 :class="{selected: selectedFormItemIndex === index}"
@@ -77,9 +77,9 @@
                   </div>
 
                   <!-- display form -->
-                  <example-form-field
-                    :template="getHtmlElementByType(field.type)"
-                    :field="field"
+                  <form-item-wrapper
+                    :template="`<div>${getHtmlElementByType(formItem.type)}</div>`"
+                    :form-item="formItem"
                   />
                 </div>
               </div>
@@ -101,14 +101,14 @@ import FormContentLoading from '@components/content_loading/FormContentLoading';
 import { cloneDeep } from 'lodash';
 import { mapGetters } from 'vuex';
 import axios from 'axios';
+import FormItemWrapper from '@components/FormItemWrapper';
 import AvailableFormComponent from './components/AvailableFormComponent';
 import UpdateField from './components/UpdateField';
 import Mixin from './mixin';
-import ExampleFormField from './components/ExampleFormField';
 
 export default {
   components: {
-    AvailableFormComponent, Card, Container, Draggable, UpdateField, FormContentLoading, ExampleFormField,
+    AvailableFormComponent, Card, Container, Draggable, UpdateField, FormContentLoading, FormItemWrapper,
   },
   mixins: [Mixin],
   props: {

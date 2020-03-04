@@ -317,6 +317,20 @@ const routes = [
             },
           },
           {
+            path: 'integration',
+            component: () => import('./pages/admin/setting/Integration.vue'),
+            name: 'setting.integration',
+            meta: {
+              breadcrumb: [
+                { name: 'Dashboard', link: '/dashboard' },
+                { name: 'Settings', link: '/settings' },
+                { name: 'Integration' },
+              ],
+              module: 'integration_setting',
+              permission: 'view',
+            },
+          },
+          {
             path: 'roles',
             component: () => import('./pages/admin/role/Index.vue'),
             children: [

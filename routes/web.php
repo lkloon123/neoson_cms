@@ -35,7 +35,7 @@ Route::prefix('api')->group(function () {
         Route::resource('form/component', 'FormComponentController')->except(['create', 'edit']);
         Route::resource('form', 'FormController')->except(['create', 'edit']);
 
-        Route::get('setting/{setting}', 'SettingController@get');
+        Route::get('setting/{group}', 'SettingController@get');
         Route::match(['put', 'patch'], 'setting/{setting}', 'SettingController@save');
 
         Route::resource('role', 'RoleController')->except(['create', 'edit']);

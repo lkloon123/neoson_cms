@@ -29,8 +29,4 @@ class FormComponent extends BaseModel
     protected $casts = [
         'default_meta' => 'array',
     ];
-
-    protected $fillable = [
-        'html_component', 'default_meta'
-    ];
 }

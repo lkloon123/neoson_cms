@@ -17,7 +17,7 @@ class PageContentServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(Theme::class, function ($app) {
-            return new Theme($app['config']->get('activated_theme'));
+            return new Theme($app['config']->get('app.activated_theme'));
         });
 
         $this->app->singleton('page.content', function ($app) {

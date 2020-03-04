@@ -13,7 +13,6 @@
   "require": {
     "php": "^7.2",
     "alexusmai/laravel-file-manager": "^2.4",
-    "anlutro/l4-settings": "^0.10",
     "askedio/laravel-soft-cascade": "^6.0",
     "bensampo/laravel-enum": "^1.26",
     "fideloper/proxy": "^4.0",

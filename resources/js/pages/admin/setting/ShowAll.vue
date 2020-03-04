@@ -20,6 +20,23 @@
     <div class="col-md-6 col-sm-12">
       <div class="card card-large-icons">
         <div class="card-icon bg-primary text-white">
+          <i class="fas fa-link" />
+        </div>
+        <div class="card-body">
+          <h4>Integration</h4>
+          <p>Integration settings with other services</p>
+          <router-link
+            class="card-cta"
+            to="/settings/integration"
+          >
+            Change Setting
+          </router-link>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <div class="card card-large-icons">
+        <div class="card-icon bg-primary text-white">
           <i class="fas fa-user-lock" />
         </div>
         <div class="card-body">

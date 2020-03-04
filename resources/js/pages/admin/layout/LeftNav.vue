@@ -97,7 +97,7 @@
           <a><i class="fas fa-plug" /> <span>Plugins</span></a>
         </router-link>
         <router-link
-          v-if="hasPermission('view', 'general_setting') || hasPermission('view', 'acl_setting')"
+          v-if="hasPermission('view', 'general_setting') || hasPermission('view', 'acl_setting') || hasPermission('view', 'user_manage')"
           tag="li"
           to="/settings"
         >

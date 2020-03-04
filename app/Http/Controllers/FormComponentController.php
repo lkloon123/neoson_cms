@@ -16,7 +16,7 @@ class FormComponentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -27,7 +27,7 @@ class FormComponentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\FormComponent  $formComponent
+     * @param \App\FormComponent $formComponent
      * @return \Illuminate\Http\Response
      */
     public function show(FormComponent $formComponent)
@@ -38,8 +38,8 @@ class FormComponentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\FormComponent  $formComponent
+     * @param \Illuminate\Http\Request $request
+     * @param \App\FormComponent $formComponent
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, FormComponent $formComponent)
@@ -50,7 +50,7 @@ class FormComponentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\FormComponent  $formComponent
+     * @param \App\FormComponent $formComponent
      * @return \Illuminate\Http\Response
      */
     public function destroy(FormComponent $formComponent)

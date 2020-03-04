@@ -16,13 +16,15 @@ class FormComponentSeeder extends Seeder
                 'type' => 'text',
                 'label' => 'Text',
                 'componentLabel' => 'Text',
+                'readonly' => true,
                 'validators' => ['required' => false],
             ],
             'html_component' => '<label>
     {{field.label}}
     <span v-if="field.validators.required" class="text-danger ml-1">*</span>
 </label>
-<input class="form-control" type="text" readonly/>'
+<input class="form-control" type="text" :readonly="field.readonly" :value="field.value" @input="field.inputWatcher"/>
+<small class="form-text text-muted" v-if="field.description">{{field.description}}</small>'
         ]);
 
         \App\Model\FormComponent::create([
@@ -30,13 +32,31 @@ class FormComponentSeeder extends Seeder
                 'type' => 'text_area',
                 'label' => 'Text Area',
                 'componentLabel' => 'Text Area',
+                'readonly' => true,
                 'validators' => ['required' => false],
             ],
             'html_component' => '<label>
     {{field.label}}
     <span v-if="field.validators.required" class="text-danger ml-1">*</span>
 </label>
-<textarea class="form-control" readonly></textarea>'
+<textarea class="form-control" :readonly="field.readonly" :value="field.value" @input="field.inputWatcher"></textarea>
+<small class="form-text text-muted" v-if="field.description">{{field.description}}</small>'
+        ]);
+
+        \App\Model\FormComponent::create([
+            'default_meta' => [
+                'type' => 'password',
+                'label' => 'Password',
+                'componentLabel' => 'Password',
+                'readonly' => true,
+                'validators' => ['required' => false],
+            ],
+            'html_component' => '<label>
+    {{field.label}}
+    <span v-if="field.validators.required" class="text-danger ml-1">*</span>
+</label>
+<input class="form-control" type="password" :readonly="field.readonly" :value="field.value" @input="field.inputWatcher"/>
+<small class="form-text text-muted" v-if="field.description">{{field.description}}</small>'
         ]);
 
         \App\Model\FormComponent::create([
@@ -45,7 +65,7 @@ class FormComponentSeeder extends Seeder
                 'label' => 'Submit',
                 'componentLabel' => 'Submit',
             ],
-            'html_component' => '<button type="submit" class="btn btn-primary">{{field.label}}</button>'
+            'html_component' => '<button type="submit" class="btn btn-primary" @click="field.submitWatcher">{{field.label}}</button>'
         ]);
     }
 }

@@ -28,7 +28,7 @@
                         </a>
                     </li>
                 </ul>
-                <p class="copyright text-muted">{!! PageContent::setting('copyright') !!}</p>
+                <p class="copyright text-muted">{!! PageContent::setting('site_copyright') !!}</p>
             </div>
         </div>
     </div>

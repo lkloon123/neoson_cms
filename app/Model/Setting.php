@@ -1,149 +1,127 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Neoson Lam
- * Date: 4/5/2019
- * Time: 10:53 AM.
- */
 
 namespace App\Model;
 
-use Illuminate\Contracts\Config\Repository as ConfigContract;
-use Illuminate\Support\Collection;
-
-class Setting implements ConfigContract
+/**
+ * App\Model\Setting
+ *
+ * @property int $id
+ * @property string $setting_key
+ * @property string $setting_value
+ * @property string|null $config_key
+ * @property string $type
+ * @property string $group
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\OwenIt\Auditing\Models\Audit[] $audits
+ * @property-read int|null $audits_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Setting newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Setting newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Setting query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Setting whereConfigKey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Setting whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Setting whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Setting whereGroup($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Setting whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Setting whereSettingKey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Setting whereSettingValue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Setting whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Setting whereUpdatedAt($value)
+ * @mixin \Eloquent
+ * @property array $meta
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Setting whereMeta($value)
+ */
+class Setting extends BaseModel
 {
-    protected $selectedGroup;
-    protected $loadedSettings;
-    protected $loadedSettingForms;
+    protected $casts = ['setting_value' => 'string', 'meta' => 'array'];
+    protected static $defaultTypes = [];
 
-    private function __construct($selectedGroup)
+    protected function getCastType($key)
     {
-        if (!($selectedGroup instanceof Collection)) {
-            $selectedGroup = collect($selectedGroup);
-        }
-        $this->selectedGroup = $selectedGroup;
-        $this->loadedSettings = collect();
-        $this->loadedSettingForms = collect();
-    }
-
-    public static function find($group = 'default')
-    {
-        /** @var Collection $groupCollection */
-        $groupCollection = collect(self::availableGroup())->recursive();
-
-        if (!$groupCollection->has($group)) {
-            return null;
+        if ($key === 'setting_value' && $this->type) {
+            return $this->type;
         }
 
-        $ins = new self($groupCollection->get($group));
-        $ins->load();
-
-        return $ins;
+        return parent::getCastType($key);
     }
 
-    protected function load()
+    public static function saveSetting($item, $group = 'general')
     {
-        $this->selectedGroup->each(function (Collection $settingData) {
-            $this->loadedSettings->put(
-                $settingData->get('public-key'),
-                config($settingData->get('private-key'))
-            );
-            $this->loadedSettingForms->put(
-                $settingData->get('public-key'),
-                $settingData->get('form')
-            );
+        $defaultType = $item['type'];
+
+        if (isset(self::$defaultTypes[$item['setting_key']])) {
+            $defaultType = self::$defaultTypes[$item['setting_key']];
+        }
+
+        return self::updateOrCreate(
+            ['setting_key' => $item['setting_key'], 'group' => $group],
+            ['setting_value' => $item['setting_value'], 'type' => $defaultType]
+        );
+    }
+
+    public static function saveMultipleSettings(array $keyValuePairs, $group = 'general')
+    {
+        $result = [];
+
+        collect($keyValuePairs)->each(function ($item) use (&$result, $group) {
+            $result[] = self::saveSetting($item, $group);
         });
+
+        return $result;
     }
 
-    protected static function availableGroup()
+    public static function getSetting($key, $default = null, $group = 'general')
     {
-        $defaultAvailable = [
-            'default' => [],
-            'general' => [
-                [
-                    'public-key' => 'site-title',
-                    'private-key' => 'app.name',
-                    'form' => [
-                        'label' => 'Site Title',
-                        'type' => 'text'
-                    ]
-                ],
-                [
-                    'public-key' => 'site-description',
-                    'private-key' => 'app.description',
-                    'form' => [
-                        'label' => 'Site Description',
-                        'type' => 'text'
-                    ]
-                ],
-                [
-                    'public-key' => 'admin-email',
-                    'private-key' => 'app.admin.email',
-                    'form' => [
-                        'label' => 'Admin Email',
-                        'type' => 'text',
-                        'desc' => 'This email address for admin usage only'
-                    ]
-                ]
-            ]
-        ];
+        $setting = self::whereSettingKey($key)
+            ->whereGroup($group)
+            ->first();
 
-        $defaultAvailable = \HookManager::applyFilter('setting.group.filter', $defaultAvailable);
-        return $defaultAvailable;
-    }
-
-    public function has($key)
-    {
-        return $this->loadedSettings->has($key);
-    }
-
-    public function get($key, $default = null)
-    {
-        return $this->loadedSettings->get($key, $default);
-    }
-
-    public function all()
-    {
-        return $this->loadedSettings;
-    }
-
-    public function set($key, $value = null)
-    {
-        $keyedSelectedGroup = $this->selectedGroup->keyBy('public-key');
-        if (\is_array($key)) {
-            foreach ($key as $item => $itemValue) {
-                if ($keyedSelectedGroup->has($item)) {
-                    setting()->set(
-                        $keyedSelectedGroup->get($item)->get('private-key'),
-                        $itemValue
-                    );
-                }
-            }
-        } else {
-            if ($keyedSelectedGroup->has($key)) {
-                setting()->set(
-                    $keyedSelectedGroup->get($key)->get('private-key'),
-                    $value
-                );
-            }
+        if (!$setting) {
+            return value($default);
         }
 
-        setting()->save();
+        return $setting->setting_value;
     }
 
-    public function prepend($key, $value)
+    public static function getMultipleSettings(array $keys, $defaults = null, $group = 'general')
     {
-        $this->set($key, $value);
+        $result = [];
+
+        collect($keys)->each(function ($item, $index) use ($defaults, &$result, $group) {
+            $result[$item] = self::getSetting($item, $defaults[$index] ?? null, $group);
+        });
+
+        return $result;
     }
 
-    public function push($key, $value)
+    public static function getAllSettingFromGroup($group)
     {
-        $this->set($key, $value);
+        return self::whereGroup($group)
+            ->get();
     }
 
-    public function getSettingForms()
+    public static function deleteSetting($key, $group = 'general')
     {
-        return $this->loadedSettingForms;
+        return self::whereSettingKey($key)
+            ->whereGroup($group)
+            ->delete();
+    }
+
+    public static function deleteAllSettingsFromGroup($group)
+    {
+        return self::whereGroup($group)
+            ->delete();
+    }
+
+    public static function deleteMultipleSettings(array $keys, $group = 'general')
+    {
+        $result = [];
+
+        collect($keys)->each(function ($item) use (&$result, $group) {
+            $result[] = self::deleteSetting($item, $group);
+        });
+
+        return $result;
     }
 }

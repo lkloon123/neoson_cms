@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'description' => env('APP_DESCRIPTION', 'A Laravel CMS'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -122,6 +124,17 @@ return [
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Activated Theme
+    |--------------------------------------------------------------------------
+    |
+    | Theme that currently activated, defaults to BlackrockDigital
+    |
+    */
+
+    'activated_theme' => env('ACTIVATED_THEME', 'BlackrockDigital'),
 
     /*
     |--------------------------------------------------------------------------

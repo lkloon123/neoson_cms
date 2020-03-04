@@ -4,7 +4,7 @@
     <div class="col-md-8 col-sm-8">
       <card>
         <template v-slot:header>
-          <h4>General</h4>
+          <h4>Integration</h4>
         </template>
 
         <vcl-table v-if="isLoading" />
@@ -46,18 +46,16 @@ export default {
   },
   mixins: [Mixin],
   data: () => ({
-    group: 'general',
+    group: 'integration',
   }),
   created() {
     this.loadSetting(this.group);
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'General Settings');
+    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Integration Settings');
     this.$store.commit('SET_PAGE_BACK_LINK', '/settings');
   },
 };
 </script>
 
 <style scoped>
-    .btn-save {
-        width: 150px
-    }
+
 </style>

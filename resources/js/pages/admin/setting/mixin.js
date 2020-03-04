@@ -3,15 +3,33 @@ import axios from 'axios';
 export default {
   data: () => ({
     settings: [],
-    forms: [],
+    formComponents: [],
     isLoading: true,
   }),
   methods: {
+    buildFormItemFromSetting(setting) {
+      setting.meta.value = setting.setting_value;
+      return setting.meta;
+    },
+    formItemTemplate(formType) {
+      return `<div class="form-group">${this.getHtmlElementByType(formType)}</div>`;
+    },
+    updateSettingValueState(newValue, index) {
+      this.settings[index].setting_value = newValue;
+    },
+    getHtmlElementByType(formType) {
+      return this.formComponents.find((formComponent) => formComponent.default_meta.type === formType)?.html_component;
+    },
     async loadSetting(group) {
       this.resetState();
-      const loadSettingResponse = await axios.get(`/api/setting/${group}`);
-      this.settings = loadSettingResponse.data.settings;
-      this.forms = loadSettingResponse.data.forms;
+
+      const [loadSettingResponse, formComponentResponse] = await Promise.all([
+        axios.get(`/api/setting/${group}`),
+        axios.get('/api/form/component'),
+      ]);
+
+      this.settings = loadSettingResponse.data;
+      this.formComponents = formComponentResponse.data;
 
       this.isLoading = false;
     },
@@ -39,6 +57,7 @@ export default {
     },
     resetState() {
       this.settings = [];
+      this.formComponents = [];
       this.isLoading = true;
     },
   },

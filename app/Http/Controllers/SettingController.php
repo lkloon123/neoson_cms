@@ -11,36 +11,28 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Setting\UpdateRequest;
 use App\Http\Requests\Setting\ViewRequest;
+use App\Http\Resources\SettingResource;
 use App\Model\Setting;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SettingController extends Controller
 {
-    public function get(ViewRequest $request, $key)
+    public function get(ViewRequest $request, $group)
     {
-        $setting = Setting::find($key);
+        $settings = Setting::getAllSettingFromGroup($group);
 
-        if ($setting === null) {
+        if ($settings === null) {
             throw new NotFoundHttpException('Setting not found');
         }
 
-        return [
-            'settings' => $setting->all(),
-            'forms' => $setting->getSettingForms()
-        ];
+        return SettingResource::collection($settings);
     }
 
-    public function save(UpdateRequest $request, $key)
+    public function save(UpdateRequest $request, $group)
     {
         $validated = $request->validated();
 
-        $setting = Setting::find($key);
-
-        if ($setting === null) {
-            throw new NotFoundHttpException('Setting not found');
-        }
-
-        $setting->set($validated['data']);
+        Setting::saveMultipleSettings($validated['data'], $group);
 
         return response()->json([
             'updated_at' => now()->format('Y-m-d H:i:s')
