@@ -9,6 +9,7 @@
 namespace App\Plugins;
 
 
+use App\Bootstrap\Composer;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
@@ -18,19 +19,24 @@ use RecursiveIteratorIterator;
 
 class PluginLoader
 {
-    protected $plugins;
+    protected $composer;
     protected $disabledConfigPath;
-    protected $hasRegistered;
-    protected $hasBooted;
+    protected $plugins;
     protected $pathMapper;
 
-    public function __construct($disabledPluginConfigFilePath)
+    protected $hasRegistered;
+    protected $hasBooted;
+
+    public function __construct($disabledPluginConfigFilePath, Composer $composer)
     {
+        $this->composer = $composer;
         $this->disabledConfigPath = $disabledPluginConfigFilePath;
         $this->plugins = collect();
         $this->pathMapper = collect();
+
         $this->hasRegistered = false;
         $this->hasBooted = false;
+
         $this->loadPlugins();
     }
 
@@ -39,6 +45,9 @@ class PluginLoader
         $namespaces = $this->getPluginsNamespace();
 
         foreach ($namespaces as $namespace => $pluginPath) {
+            //we register the plugin autoloader first
+            $this->composer->registerPluginAutoLoader($pluginPath);
+
             $className = '\\' . $namespace . 'Plugin';
             if (class_exists($className)) {
                 if ($this->plugins->contains($this->getPluginId($className))) {
@@ -49,8 +58,8 @@ class PluginLoader
                 if ($this->isDisabled($className)) {
                     $createdPlugin->isDisabled = true;
                 }
-                $this->plugins->put($this->getPluginId($className), $createdPlugin);
-                $this->pathMapper->put($this->getPluginId($className), $pluginPath);
+                $this->plugins->put($createdPlugin->id, $createdPlugin);
+                $this->pathMapper->put($createdPlugin->id, $pluginPath);
             }
         }
     }
@@ -212,6 +221,20 @@ class PluginLoader
     public function writeDisabledConfig($config)
     {
         \File::put($this->disabledConfigPath, json_encode($config));
+    }
+
+    public function reloadPlugins()
+    {
+        //reinitialize composer
+        $this->composer->initialize();
+
+        $this->plugins = collect();
+        $this->pathMapper = collect();
+
+        $this->hasRegistered = false;
+        $this->hasBooted = false;
+
+        $this->loadPlugins();
     }
 
     protected function getPluginId($plugin)

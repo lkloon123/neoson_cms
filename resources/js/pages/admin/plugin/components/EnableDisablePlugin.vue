@@ -12,6 +12,7 @@
 <script>
 import { ToggleButton } from 'vue-js-toggle-button';
 import axios from 'axios';
+import { cloneDeep } from 'lodash';
 
 export default {
   components: {
@@ -37,10 +38,15 @@ export default {
         await axios.put(`/api/plugin/${this.plugin.id}`, {
           isDisabled: !state,
         });
+
         this.$Toast.show({
           type: 'success',
-          message: `Successfully updated plugin [${this.plugin.name}]`,
+          message: `Successfully ${!state ? 'disabled' : 'enabled'} plugin [${this.plugin.name}]`,
         });
+
+        const clonedPlugin = cloneDeep(this.plugin);
+        clonedPlugin.isDisabled = !state;
+        this.$emit('updated', clonedPlugin);
       } catch (err) {
         this.$Toast.show({
           type: 'error',

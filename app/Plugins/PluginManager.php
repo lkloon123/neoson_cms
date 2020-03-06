@@ -13,18 +13,18 @@ use Illuminate\Http\UploadedFile;
 
 class PluginManager
 {
-    protected $loader;
+    protected $pluginLoader;
     protected $updateManager;
 
     public function __construct(PluginLoader $pluginLoader, UpdateManager $updateManager)
     {
-        $this->loader = $pluginLoader;
+        $this->pluginLoader = $pluginLoader;
         $this->updateManager = $updateManager;
     }
 
     public function getAllPlugin()
     {
-        return $this->loader->getLoadedPlugins();
+        return $this->pluginLoader->getLoadedPlugins();
     }
 
     public function getPlugin($id)
@@ -50,9 +50,9 @@ class PluginManager
             return false;
         }
 
-        $disabledConfig = $this->loader->readDisabledConfig();
+        $disabledConfig = $this->pluginLoader->readDisabledConfig();
         $disabledConfig[] = $id;
-        $this->loader->writeDisabledConfig($disabledConfig);
+        $this->pluginLoader->writeDisabledConfig($disabledConfig);
 
         $this->getPlugin($id)->isDisabled = true;
 
@@ -66,12 +66,12 @@ class PluginManager
             return false;
         }
 
-        $disabledConfig = $this->loader->readDisabledConfig();
+        $disabledConfig = $this->pluginLoader->readDisabledConfig();
         if (($key = array_search($id, $disabledConfig)) !== false) {
             unset($disabledConfig[$key]);
             $disabledConfig = array_values($disabledConfig);
         }
-        $this->loader->writeDisabledConfig($disabledConfig);
+        $this->pluginLoader->writeDisabledConfig($disabledConfig);
 
         $this->getPlugin($id)->isDisabled = false;
 
@@ -89,7 +89,7 @@ class PluginManager
         $this->disablePlugin($id);
 
         //delete the plugin files
-        $this->updateManager->uninstall($this->loader->getPluginPath($id));
+        $this->updateManager->uninstall($this->getPlugin($id));
 
         return true;
     }

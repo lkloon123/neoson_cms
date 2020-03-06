@@ -48,7 +48,10 @@
           <i class="fas fa-ellipsis-v text-muted show-action-icon" />
         </span>
         <span v-else-if="props.column.field === 'enabled_disabled_state'">
-          <enable-disable-plugin :plugin="props.row" />
+          <enable-disable-plugin
+            :plugin="props.row"
+            @updated="updatePluginState($event, props.index)"
+          />
         </span>
         <span v-else>
           {{ props.formattedRow[props.column.field] }}
@@ -117,6 +120,9 @@ export default {
     this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Plugins');
   },
   methods: {
+    updatePluginState(newPluginState, index) {
+      this.$set(this.rows, index, newPluginState);
+    },
     async loadPlugins() {
       try {
         const pluginsResponse = await axios.get('/api/plugin');

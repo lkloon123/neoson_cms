@@ -13,23 +13,24 @@ use App\Http\Requests\Plugin\CreateRequest;
 use App\Http\Requests\Plugin\DeleteRequest;
 use App\Http\Requests\Plugin\UpdateRequest;
 use App\Http\Resources\PluginResource;
+use App\Plugins\PluginManager;
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 
 class PluginController extends Controller
 {
-    public function index()
+    public function index(PluginManager $pluginManager)
     {
-        return PluginResource::collection(\PluginManager::getAllPlugin()->values());
+        return PluginResource::collection($pluginManager->getAllPlugin()->values());
     }
 
-    public function update(UpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $id, PluginManager $pluginManager)
     {
         $validated = $request->validated();
 
         if ($validated['isDisabled'] === true) {
-            $result = \PluginManager::disablePlugin($id);
+            $result = $pluginManager->disablePlugin($id);
         } else {
-            $result = \PluginManager::enablePlugin($id);
+            $result = $pluginManager->enablePlugin($id);
         }
 
         if (!$result) {
@@ -42,18 +43,18 @@ class PluginController extends Controller
         ]);
     }
 
-    public function store(CreateRequest $request)
+    public function store(CreateRequest $request, PluginManager $pluginManager)
     {
-        \PluginManager::installPlugin($request->file('file'));
+        $pluginManager->installPlugin($request->file('file'));
 
         return response()->json([
             'installed_at' => now()->format('Y-m-d H:i:s')
         ]);
     }
 
-    public function destroy(DeleteRequest $request, $id)
+    public function destroy(DeleteRequest $request, $id, PluginManager $pluginManager)
     {
-        \PluginManager::uninstallPlugin($id);
+        $pluginManager->uninstallPlugin($id);
 
         return response()->noContent();
     }
