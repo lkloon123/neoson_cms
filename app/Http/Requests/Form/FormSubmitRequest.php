@@ -10,6 +10,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class FormSubmitRequest extends BaseRequest
 {
+    protected $errorMessages = [];
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -30,6 +32,11 @@ class FormSubmitRequest extends BaseRequest
         $defaultValidator = ['formId' => 'required'];
 
         return array_merge($this->getFormValidators(), $defaultValidator);
+    }
+
+    public function messages()
+    {
+        return $this->errorMessages;
     }
 
     protected function getFormValidators()
@@ -57,13 +64,22 @@ class FormSubmitRequest extends BaseRequest
                 $currentElementValidator = [];
                 if ($validators = $formItem->validators) {
                     foreach ($validators as $validatorRule => $validatorValue) {
-                        if ($validatorValue) {
+                        if ($validatorValue !== false) {
+                            if (class_exists($validatorRule)) {
+                                $validatorRule = new $validatorRule();
+                            } else {
+                                //set error message if value is string
+                                if (is_string($validatorValue)) {
+                                    $this->errorMessages[$formItem->formKey . '.' . $validatorRule] = $validatorValue;
+                                }
+                            }
+
                             $currentElementValidator[] = $validatorRule;
                         }
                     }
                 }
 
-                $rules[$formItem->name] = implode('|', $currentElementValidator);
+                $rules[$formItem->formKey] = $currentElementValidator;
             }
 
             $this->attributes->add([

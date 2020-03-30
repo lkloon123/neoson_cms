@@ -32,7 +32,7 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\FormItem whereUpdatedAt($value)
  * @property-read mixed $label
  * @property-read mixed $type
- * @property-read mixed $name
+ * @property-read mixed $formKey
  * @property array $validators
  * @property-read int|null $audits_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\FormItem whereValidators($value)
@@ -65,8 +65,12 @@ class FormItem extends BaseModel
         return $this->meta['label'];
     }
 
-    public function getNameAttribute()
+    public function getFormKeyAttribute()
     {
+        if (isset($this->meta['key'])) {
+            return $this->meta['key'];
+        }
+
         return Str::snake($this->meta['label']);
     }
 }

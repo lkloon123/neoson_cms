@@ -28,9 +28,9 @@ class PluginController extends Controller
         $validated = $request->validated();
 
         if ($validated['isDisabled'] === true) {
-            $result = $pluginManager->disablePlugin($id);
+            $result = $pluginManager->disablePlugin($pluginManager->getPlugin($id));
         } else {
-            $result = $pluginManager->enablePlugin($id);
+            $result = $pluginManager->enablePlugin($pluginManager->getPlugin($id));
         }
 
         if (!$result) {

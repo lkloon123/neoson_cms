@@ -18,6 +18,15 @@ abstract class AbstractPlugin extends ServiceProvider
 
     abstract public function pluginInformation();
 
+    public function registerHooks()
+    {
+    }
+
+    public function registerRoute()
+    {
+        return false;
+    }
+
     /**
      * This function is to run all migration during installation purpose
      * Override this method and return an array of migration file path
@@ -69,18 +78,24 @@ abstract class AbstractPlugin extends ServiceProvider
     }
 
     /**
-     * This function will be called during install process，
-     * Override this if you have something to run when install
+     * Override this method if you are using any views
+     *
+     * @return string the view path
      */
-    public function install()
+    public function registerViewPath()
     {
+        return false;
     }
 
     /**
-     * This function will be called during uninstall process
-     * Override this if you have something to run when uninstall
+     * Called by system, don't call it
      */
-    public function uninstall()
+    public function loadViews($pluginPath)
     {
+        if (!$viewPath = $this->registerViewPath()) {
+            return;
+        }
+
+        $this->loadViewsFrom($pluginPath . DIRECTORY_SEPARATOR . $viewPath, $this->id);
     }
 }

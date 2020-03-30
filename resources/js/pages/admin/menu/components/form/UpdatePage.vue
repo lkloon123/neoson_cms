@@ -4,10 +4,11 @@
       <label for="menu-label">Label</label>
       <input
         id="menu-label"
-        v-model="menuLabel"
+        :value="getValue('menuLabel')"
         class="form-control"
         name="Label"
         type="text"
+        @input="setValue('menuLabel', $event.target.value)"
       >
     </div>
 
@@ -30,32 +31,10 @@
 </template>
 
 <script>
-import { cloneDeep } from 'lodash';
+import Mixin from '../mixin';
 
 export default {
-  props: {
-    itemData: {
-      type: Object,
-    },
-  },
-  computed: {
-    menuLabel: {
-      get() {
-        return this.itemData.menuLabel;
-      },
-      set(value) {
-        const cloned = cloneDeep(this.itemData);
-        cloned.menuLabel = value;
-        this.$store.commit('menu/UPDATE_MENU_ITEM', cloned);
-      },
-    },
-  },
-  methods: {
-    removeMenu() {
-      const cloned = cloneDeep(this.itemData);
-      this.$store.commit('menu/REMOVE_MENU_ITEM', cloned);
-    },
-  },
+  mixins: [Mixin],
 };
 </script>
 

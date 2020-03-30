@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Plugins\PluginManager;
 use App\Views\Builder;
 use App\Views\Theme;
 use Illuminate\Foundation\AliasLoader;
@@ -21,7 +22,7 @@ class PageContentServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('page.content', function ($app) {
-            $builder = new Builder($app[Theme::class]);
+            $builder = new Builder($app[Theme::class], $app[PluginManager::class]);
             $view = $app['view'];
             $view->share('builder', $builder);
             return $builder;

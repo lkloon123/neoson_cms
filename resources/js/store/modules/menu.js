@@ -31,6 +31,15 @@ const mutations = {
     const found = Vue.prototype.$Utils.findId(state.menuItems, clonePayload.id);
     Object.assign(found.current, clonePayload);
   },
+  UPDATE_MENU_ITEM_KEY: (state, { id, key, value }) => {
+    const found = Vue.prototype.$Utils.findId(state.menuItems, id);
+
+    const clonedItem = cloneDeep(found.current);
+    delete clonedItem.children;
+    clonedItem[key] = value;
+
+    Object.assign(found.current, clonedItem);
+  },
   REMOVE_MENU_ITEM: (state, payload) => {
     const found = Vue.prototype.$Utils.findId(state.menuItems, payload.id);
     let foundIndex = null;

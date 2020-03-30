@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Model\Setting;
 use Illuminate\Database\QueryException;
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use OwenIt\Auditing\Models\Audit;
@@ -52,7 +52,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         //dont append data on api resources
-        Resource::withoutWrapping();
+        JsonResource::withoutWrapping();
 
         //load all persistent setting to config ins
         try {

@@ -16,6 +16,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use NeoSon\GoogleRecaptchaFormField\Seeder\GoogleRecaptchaSettingSeeder;
 use PhpZip\ZipFile;
 
 class UpdateManager
@@ -33,6 +34,8 @@ class UpdateManager
 
     public function install(UploadedFile $zipFile)
     {
+        \HookManager::dispatch(HookActions::PluginInstalling);
+
         $archive = $this->zipper->openFile($zipFile);
         if (!$archive->hasEntry('composer.json') || !$archive->hasEntry('Plugin.php')) {
             throw new PluginInstallException('plugin must contain composer.json and Plugin.php');
@@ -70,7 +73,7 @@ class UpdateManager
         $pluginIns = app(PluginManager::class)->getPlugin($pluginId);
 
         //enable the plugin
-        app(PluginManager::class)->enablePlugin($pluginId);
+        app(PluginManager::class)->enablePlugin($pluginIns);
 
         $this->afterInstalled($pluginIns);
     }
@@ -82,9 +85,6 @@ class UpdateManager
         //dispatch plugin uninstalling hook
         \HookManager::dispatch(HookActions::PluginUninstalling, $pluginIns);
 
-        //run plugin uninstall function
-        $pluginIns->uninstall();
-
         //rollback all migrations
         foreach (array_reverse($pluginIns->registerMigration()) as $version => $migrationPaths) {
             foreach (array_reverse($migrationPaths) as $migrationPath) {
@@ -95,7 +95,7 @@ class UpdateManager
         //delete the plugin folder
         \File::deleteDirectory($pluginPath);
 
-        //dispatch plugin installed hook
+        //dispatch plugin uninstalled hook
         \HookManager::dispatch(HookActions::PluginUninstalled);
     }
 
@@ -131,9 +131,6 @@ class UpdateManager
     {
         $pluginInformation = collect($pluginIns->pluginInformation());
         $pluginPath = $this->pluginLoader->getPluginPath($pluginIns->id);
-
-        //run plugin install function
-        $pluginIns->install();
 
         //run migration if version match
         foreach ($pluginIns->registerMigration() as $version => $migrationPaths) {

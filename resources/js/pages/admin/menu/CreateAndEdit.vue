@@ -71,37 +71,24 @@
             </vue-nestable-handle>
 
             <!-- menu options -->
-            <collapse-transition>
-              <div
-                v-if="item.type === 'custom_link' && item.showMenuOption"
-                class="menu-item-component collapse"
-                :class="{show: item.showMenuOption}"
-              >
-                <div class="card card-body mb-0 card-option">
-                  <update-link :item-data="item" />
-                </div>
-              </div>
-            </collapse-transition>
-
-            <collapse-transition>
-              <div
-                v-if="item.type === 'page' && item.showMenuOption"
-                class="menu-item-component collapse"
-                :class="{show: item.showMenuOption}"
-              >
-                <div class="card card-body mb-0 card-option">
-                  <update-page :item-data="item" />
-                </div>
-              </div>
-            </collapse-transition>
+            <update-wrapper :item="item" />
             <!-- #menu options -->
           </template>
         </vue-nestable>
       </card>
     </div>
     <div class="col-md-3">
-      <select-page />
-      <custom-link />
+      <available-item-wrapper title="Pages">
+        <select-page />
+      </available-item-wrapper>
+
+      <available-item-wrapper title="Custom Link">
+        <custom-link />
+      </available-item-wrapper>
+
+      <available-item-wrapper title="Auth">
+        <auth />
+      </available-item-wrapper>
     </div>
   </div>
 </template>
@@ -109,25 +96,25 @@
 <script>
 import Card from '@components/Card';
 import { VueNestable, VueNestableHandle } from 'vue-nestable';
-import { CollapseTransition } from 'vue2-transitions';
 import { VclList } from 'vue-content-loading';
 import { camelCase, cloneDeep, startCase } from 'lodash';
 import axios from 'axios';
+import AvailableItemWrapper from './components/AvailableItemWrapper';
 import CustomLink from './components/CustomLink';
 import SelectPage from './components/SelectPage';
-import UpdateLink from './components/form/UpdateLink';
-import UpdatePage from './components/form/UpdatePage';
+import Auth from './components/Auth';
+import UpdateWrapper from './components/form/UpdateWrapper';
 
 export default {
   components: {
+    AvailableItemWrapper,
     Card,
     CustomLink,
     SelectPage,
-    UpdateLink,
-    UpdatePage,
+    Auth,
+    UpdateWrapper,
     VueNestable,
     VueNestableHandle,
-    CollapseTransition,
     VclList,
   },
   props: {
@@ -267,12 +254,6 @@ export default {
 
     .menu-item-control .btn {
         cursor: pointer;
-    }
-
-    .card-option {
-        border: 1px solid rgba(0, 0, 0, 0.125);
-        padding: 0.5rem 1rem 1rem;
-        background-color: #e3eaef;
     }
 
     .menu-item-component {

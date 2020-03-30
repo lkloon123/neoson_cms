@@ -145,6 +145,7 @@ class PluginLoader
                 if (!$pluginClass->isDisabled) {
                     $this->bootPlugin($pluginClass);
                 }
+                $pluginClass->registerHooks();
             }
         }
 
@@ -195,6 +196,14 @@ class PluginLoader
                 ->each(function ($middlewareClass, $key) {
                     app(Router::class)->aliasMiddleware($key, $middlewareClass);
                 });
+        }
+
+        //load plugin view
+        $pluginClass->loadViews($this->getPluginPath($pluginClass->id));
+
+        //load routes
+        if (($pluginRoute = $pluginClass->registerRoute()) && !app()->routesAreCached()) {
+            require $pluginRoute;
         }
 
         // run plugin boot method if exist

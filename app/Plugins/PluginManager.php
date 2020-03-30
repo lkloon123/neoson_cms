@@ -9,6 +9,7 @@
 namespace App\Plugins;
 
 
+use App\Enums\HookActions;
 use Illuminate\Http\UploadedFile;
 
 class PluginManager
@@ -43,37 +44,45 @@ class PluginManager
         return null;
     }
 
-    public function disablePlugin($id)
+    public function disablePlugin($pluginIns)
     {
-        if (optional($this->getPlugin($id))->isDisabled) {
+        if (optional($pluginIns)->isDisabled) {
             //already disabled, simple return
             return false;
         }
 
+        \HookManager::dispatch(HookActions::PluginDisabling, $pluginIns);
+
         $disabledConfig = $this->pluginLoader->readDisabledConfig();
-        $disabledConfig[] = $id;
+        $disabledConfig[] = $pluginIns->id;
         $this->pluginLoader->writeDisabledConfig($disabledConfig);
 
-        $this->getPlugin($id)->isDisabled = true;
+        $pluginIns->isDisabled = true;
+
+        \HookManager::dispatch(HookActions::PluginDisabled, $pluginIns);
 
         return true;
     }
 
-    public function enablePlugin($id)
+    public function enablePlugin($pluginIns)
     {
-        if (!optional($this->getPlugin($id))->isDisabled) {
+        if (!optional($pluginIns)->isDisabled) {
             //already enabled, simple return
             return false;
         }
 
+        \HookManager::dispatch(HookActions::PluginEnabling, $pluginIns);
+
         $disabledConfig = $this->pluginLoader->readDisabledConfig();
-        if (($key = array_search($id, $disabledConfig)) !== false) {
+        if (($key = array_search($pluginIns->id, $disabledConfig)) !== false) {
             unset($disabledConfig[$key]);
             $disabledConfig = array_values($disabledConfig);
         }
         $this->pluginLoader->writeDisabledConfig($disabledConfig);
 
-        $this->getPlugin($id)->isDisabled = false;
+        $pluginIns->isDisabled = false;
+
+        \HookManager::dispatch(HookActions::PluginEnabled, $pluginIns);
 
         return true;
     }
@@ -85,11 +94,13 @@ class PluginManager
 
     public function uninstallPlugin($id)
     {
+        $pluginIns = $this->getPlugin($id);
+
         //we will disable the plugin first to ensure everything works perfectly
-        $this->disablePlugin($id);
+        $this->disablePlugin($pluginIns);
 
         //delete the plugin files
-        $this->updateManager->uninstall($this->getPlugin($id));
+        $this->updateManager->uninstall($pluginIns);
 
         return true;
     }

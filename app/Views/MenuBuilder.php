@@ -80,5 +80,12 @@ class MenuBuilder extends AbstractBuilder
                 'url' => $item->meta['url']
             ];
         }
+
+        if ($item->meta['type'] === 'auth') {
+            return [
+                'title' => \Auth::check() ? $item->meta['menuLabel'] : $item->meta['guestLabel'],
+                'url' => \Auth::check() ? '/login' : '/admin',
+            ];
+        }
     }
 }

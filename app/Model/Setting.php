@@ -101,25 +101,43 @@ class Setting extends BaseModel
             ->get();
     }
 
-    public static function deleteSetting($key, $group = 'general')
+    public static function restoreSetting($key, $group = 'general')
     {
-        return self::whereSettingKey($key)
+        return self::onlyTrashed()
+            ->whereSettingKey($key)
             ->whereGroup($group)
-            ->delete();
+            ->restore();
     }
 
-    public static function deleteAllSettingsFromGroup($group)
+    public static function deleteSetting($key, $group = 'general', $forceDelete = false)
     {
-        return self::whereGroup($group)
-            ->delete();
+        $setting = self::whereSettingKey($key)
+            ->whereGroup($group);
+
+        if ($forceDelete) {
+            return $setting->forceDelete();
+        }
+
+        return $setting->delete();
     }
 
-    public static function deleteMultipleSettings(array $keys, $group = 'general')
+    public static function deleteAllSettingsFromGroup($group, $forceDelete = false)
+    {
+        $settings = self::whereGroup($group);
+
+        if ($forceDelete) {
+            return $settings->forceDelete();
+        }
+
+        return $settings->delete();
+    }
+
+    public static function deleteMultipleSettings(array $keys, $group = 'general', $forceDelete = false)
     {
         $result = [];
 
-        collect($keys)->each(function ($item) use (&$result, $group) {
-            $result[] = self::deleteSetting($item, $group);
+        collect($keys)->each(function ($item) use (&$result, $group, $forceDelete) {
+            $result[] = self::deleteSetting($item, $group, $forceDelete);
         });
 
         return $result;

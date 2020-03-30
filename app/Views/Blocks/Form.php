@@ -33,7 +33,8 @@ class Form extends AbstractBlock
             $formElements .= $this->renderView('.forms.' . $formItem->type, [
                 'label' => $formItem->label,
                 'id' => $formItem->meta_id,
-                'name' => $formItem->name
+                'formKey' => $formItem->formKey,
+                'meta' => $formItem->meta,
             ]);
         }
 

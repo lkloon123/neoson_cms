@@ -63,31 +63,5 @@ class SettingSeeder extends Seeder
                 'validators' => ['required' => false],
             ],
         ]);
-
-        \App\Model\Setting::create([
-            'setting_key' => 'google_recaptcha_key',
-            'setting_value' => '',
-            'config_key' => null,
-            'type' => 'string',
-            'group' => 'integration',
-            'meta' => [
-                'type' => 'text',
-                'label' => 'Google Recaptcha Key',
-                'validators' => ['required' => false],
-            ],
-        ]);
-
-        \App\Model\Setting::create([
-            'setting_key' => 'google_recaptcha_secret',
-            'setting_value' => '',
-            'config_key' => null,
-            'type' => 'string',
-            'group' => 'integration',
-            'meta' => [
-                'type' => 'password',
-                'label' => 'Google Recaptcha Secret',
-                'validators' => ['required' => false],
-            ],
-        ]);
     }
 }

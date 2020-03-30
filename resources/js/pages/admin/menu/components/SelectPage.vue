@@ -1,57 +1,41 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <card
-    :is-collapsible="true"
-    class="mb-1"
-  >
-    <template v-slot:header>
-      <h4>Pages</h4>
-    </template>
-
-    <form-content-loading
-      v-if="isNotReady"
-      :form-amount="1"
-    />
-
-    <div v-else>
-      <div class="form-group">
-        <label>All Pages</label>
-        <multiselect
-          v-model="selectedPages"
-          :clear-on-select="false"
-          :close-on-select="false"
-          :internal-search="false"
-          :loading="isSearching"
-          :multiple="true"
-          :options="pages"
-          :searchable="true"
-          deselect-label="remove"
-          label="title"
-          select-label="select"
-          track-by="id"
-          @search-change="searchPage"
-        />
-      </div>
-
-      <button
-        class="btn btn-primary"
-        @click="addToMenu"
-      >
-        Add to menu
-      </button>
+<template>
+  <div>
+    <div class="form-group">
+      <label>All Pages</label>
+      <multiselect
+        v-model="selectedPages"
+        :clear-on-select="false"
+        :close-on-select="false"
+        :internal-search="false"
+        :loading="isSearching"
+        :multiple="true"
+        :options="pages"
+        :searchable="true"
+        deselect-label="remove"
+        label="title"
+        select-label="select"
+        track-by="id"
+        @search-change="searchPage"
+      />
     </div>
-  </card>
+
+    <button
+      class="btn btn-primary"
+      @click="addToMenu"
+    >
+      Add to menu
+    </button>
+  </div>
 </template>
 
 <script>
 import Multiselect from 'vue-multiselect';
-import Card from '@components/Card';
 import { mapMutations } from 'vuex';
-import FormContentLoading from '@components/content_loading/FormContentLoading';
 import axios from 'axios';
 
 export default {
   components: {
-    Card, Multiselect, FormContentLoading,
+    Multiselect,
   },
   data: () => ({
     selectedPages: [],
