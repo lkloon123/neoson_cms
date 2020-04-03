@@ -16,7 +16,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use NeoSon\GoogleRecaptchaFormField\Seeder\GoogleRecaptchaSettingSeeder;
 use PhpZip\ZipFile;
 
 class UpdateManager

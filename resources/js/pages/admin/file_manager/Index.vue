@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 700px;">
+  <div class="fm-container">
     <file-manager />
   </div>
 </template>
@@ -17,5 +17,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .fm-container {
+    height: 700px;
+  }
 </style>

@@ -17,6 +17,18 @@ class FormResponsesResource extends BaseResource
     {
         $tmp = $this->meta;
         $tmp['id'] = $this->id;
-        return array_merge($tmp, $this->dateTimeData());
+
+        return $this->filterByDontShow(
+            array_merge($tmp, $this->dateTimeData())
+        );
+    }
+
+    protected function filterByDontShow($data)
+    {
+        foreach ($this->dontShow as $dontShow) {
+            unset($data[$dontShow]);
+        }
+
+        return $data;
     }
 }

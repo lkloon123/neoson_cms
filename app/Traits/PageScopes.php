@@ -24,4 +24,9 @@ trait PageScopes
         return $query->whereDate('start_at', '<=', $now)
             ->whereDate('expired_at', '>=', $now);
     }
+
+    public function scopeExpired(Builder $query)
+    {
+        return $query->whereDate('expired_at', '<=', now());
+    }
 }

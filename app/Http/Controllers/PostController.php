@@ -16,7 +16,7 @@ class PostController extends Controller
     public function index(ViewRequest $request)
     {
         if ($request->get('only_own')) {
-            $posts = \Auth::user()->posts()->with(['author', 'tags'])->get();
+            $posts = $this->getUser()->posts()->with(['author', 'tags'])->get();
         } else {
             $posts = Post::with(['author', 'tags'])->get();
         }
@@ -36,7 +36,7 @@ class PostController extends Controller
         $validated['content'] = \Purifier::clean($validated['content'], 'youtube');
 
         /** @var Post $post */
-        $post = \Auth::user()->posts()->create([
+        $post = $this->getUser()->posts()->create([
             'title' => $validated['title'],
             'slug' => $validated['slug'],
             'description' => $validated['description'],
@@ -105,6 +105,10 @@ class PostController extends Controller
 
     public function count(ViewRequest $request)
     {
-        return response()->json(Post::published()->withinSchedule()->count());
+        if ($request->get('only_own')) {
+            return response()->json(['count' => $this->getUser()->posts()->published()->withinSchedule()->count()]);
+        }
+
+        return response()->json(['count' => Post::published()->withinSchedule()->count()]);
     }
 }

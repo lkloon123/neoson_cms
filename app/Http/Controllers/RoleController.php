@@ -100,8 +100,8 @@ class RoleController extends Controller
     public function getPermissions()
     {
         return [
-            'role' => \Auth::user()->roles->first()->name,
-            'permissions' => PermissionResource::collection(\Auth::user()->allPermissions())
+            'role' => $this->getUser()->roles->first()->name,
+            'permissions' => PermissionResource::collection($this->getUser()->allPermissions())
         ];
     }
 

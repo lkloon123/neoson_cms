@@ -1,14 +1,21 @@
 import axios from 'axios';
+import PermissionMixin from '@mixins/permission_mixin';
 
 export default {
+  mixins: [PermissionMixin],
   data: () => ({
     settings: [],
     formComponents: [],
     isLoading: true,
   }),
   methods: {
-    buildFormItemFromSetting(setting) {
+    buildFormItemFromSetting(setting, group) {
       setting.meta.value = setting.setting_value;
+
+      if (!this.hasPermission('update', `${group}_setting`)) {
+        setting.meta.readonly = true;
+      }
+
       return setting.meta;
     },
     formItemTemplate(formType) {

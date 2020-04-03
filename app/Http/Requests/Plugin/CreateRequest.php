@@ -13,7 +13,7 @@ class CreateRequest extends BaseRequest
      */
     public function authorize()
     {
-        return true;
+        return $this->user()->ability('superadmin', 'plugin-create');
     }
 
     /**

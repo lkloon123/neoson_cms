@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use OwenIt\Auditing\Models\Audit;
 use Schema;
+use Talevskiigor\ComposerBump\ComposerBumpServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
             });
         });
 
-        $this->app->register(\Talevskiigor\ComposerBump\ComposerBumpServiceProvider::class);
+        $this->app->register(ComposerBumpServiceProvider::class);
         $this->app->register(HookServiceProvider::class);
         $this->app->register(PluginServiceProvider::class);
         $this->app->register(PageContentServiceProvider::class);

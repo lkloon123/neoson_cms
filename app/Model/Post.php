@@ -2,7 +2,9 @@
 
 namespace App\Model;
 
+use App\Enums\PostStatus;
 use App\Traits\PageScopes;
+use BenSampo\Enum\Traits\CastsEnums;
 use Spatie\Tags\HasTags;
 
 /**
@@ -14,7 +16,7 @@ use Spatie\Tags\HasTags;
  * @property string $slug
  * @property string|null $description
  * @property string $content
- * @property int $status
+ * @property \App\Enums\PostStatus|null $status
  * @property \Illuminate\Support\Carbon|null $start_at
  * @property \Illuminate\Support\Carbon|null $expired_at
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -49,10 +51,15 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post whereFeaturedImg($value)
  * @property-read int|null $audits_count
  * @property-read int|null $tags_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Post expired()
  */
 class Post extends BaseModel
 {
-    use HasTags, PageScopes;
+    use HasTags, PageScopes, CastsEnums;
+
+    public $enumCasts = [
+        'status' => PostStatus::class,
+    ];
 
     public function __construct(array $attributes = [])
     {

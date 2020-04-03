@@ -53,11 +53,15 @@ class UserController extends Controller
 
     public function getMe()
     {
-        return new UserResource(\Auth::user());
+        return new UserResource($this->getUser());
     }
 
     public function count(ViewRequest $request)
     {
-        return response()->json(User::count());
+        if ($request->get('only_own')) {
+            return response()->json(['count' => 1]);
+        }
+
+        return response()->json(['count' => User::count()]);
     }
 }

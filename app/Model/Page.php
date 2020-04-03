@@ -2,7 +2,9 @@
 
 namespace App\Model;
 
+use App\Enums\PageStatus;
 use App\Traits\PageScopes;
+use BenSampo\Enum\Traits\CastsEnums;
 
 /**
  * App\Model\Page
@@ -14,7 +16,7 @@ use App\Traits\PageScopes;
  * @property int|null $parent_id
  * @property string|null $description
  * @property string $content
- * @property int $status
+ * @property \App\Enums\PageStatus|null $status
  * @property \Illuminate\Support\Carbon|null $start_at
  * @property \Illuminate\Support\Carbon|null $expired_at
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -44,10 +46,15 @@ use App\Traits\PageScopes;
  * @property string|null $featured_img
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Page whereFeaturedImg($value)
  * @property-read int|null $audits_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Page expired()
  */
 class Page extends BaseModel
 {
-    use PageScopes;
+    use PageScopes, CastsEnums;
+
+    public $enumCasts = [
+        'status' => PageStatus::class,
+    ];
 
     public function __construct(array $attributes = [])
     {

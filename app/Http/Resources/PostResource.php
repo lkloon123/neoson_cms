@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Enums\PostStatus;
-
 /**
  * @mixin \App\Model\Post
  * */
@@ -24,7 +22,7 @@ class PostResource extends BaseResource
             'description' => $this->description ?? '',
             'content' => $this->content,
             'author' => new UserResource($this->whenLoaded('author')),
-            'status' => PostStatus::getKey($this->status),
+            'status' => $this->status->key,
             'tags' => $this->when($this->relationLoaded('tags'), TagResource::collection($this->tags)),
             'featuredImg' => $this->featured_img,
             'publish_from_date' => $this->start_at !== null ? $this->start_at->format('Y-m-d H:i:s') : null,

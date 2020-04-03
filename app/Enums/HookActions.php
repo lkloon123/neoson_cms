@@ -6,6 +6,16 @@ use BenSampo\Enum\Enum;
 
 /**
  * @method static HookActions PermissionFilter()
+ * @method static HookActions FormSubmitValidating()
+ * @method static HookActions FormSubmitValidated()
+ * @method static HookActions PluginEnabling()
+ * @method static HookActions PluginEnabled()
+ * @method static HookActions PluginDisabling()
+ * @method static HookActions PluginDisabled()
+ * @method static HookActions PluginInstalling()
+ * @method static HookActions PluginInstalled()
+ * @method static HookActions PluginUninstalling()
+ * @method static HookActions PluginUninstalled()
  */
 final class HookActions extends Enum
 {

@@ -3,8 +3,11 @@
 namespace App\Console;
 
 use App\Console\Commands\CustomPackageDiscoverCommand;
+use App\Console\Commands\UpdatePageStatusCommand;
+use App\Console\Commands\UpdatePostStatusCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Laravel\Telescope\Console\PruneCommand;
 
 class Kernel extends ConsoleKernel
 {
@@ -35,8 +38,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command(UpdatePageStatusCommand::class)->everyMinute();
+        $schedule->command(UpdatePostStatusCommand::class)->everyMinute();
+        $schedule->command(PruneCommand::class)->daily();
     }
 
     /**

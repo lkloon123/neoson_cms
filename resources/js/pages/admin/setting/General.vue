@@ -14,12 +14,15 @@
             <form-item-wrapper
               :key="index"
               :template="formItemTemplate(setting.meta.type)"
-              :form-item="buildFormItemFromSetting(setting)"
+              :form-item="buildFormItemFromSetting(setting, group)"
               @value-changed="updateSettingValueState($event, index)"
             />
           </template>
 
-          <div class="text-right">
+          <div
+            v-if="hasPermission('update', 'general_setting')"
+            class="text-right"
+          >
             <button
               type="submit"
               class="btn btn-primary btn-save"

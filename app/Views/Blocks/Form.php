@@ -35,6 +35,7 @@ class Form extends AbstractBlock
                 'id' => $formItem->meta_id,
                 'formKey' => $formItem->formKey,
                 'meta' => $formItem->meta,
+                'validators' => $formItem->validators,
             ]);
         }
 

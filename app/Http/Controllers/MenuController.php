@@ -15,7 +15,7 @@ class MenuController extends Controller
     public function index(ViewRequest $request)
     {
         if ($request->get('only_own')) {
-            $menus = \Auth::user()->menus()->get();
+            $menus = $this->getUser()->menus()->get();
         } else {
             $menus = Menu::all();
         }
@@ -32,7 +32,7 @@ class MenuController extends Controller
         $validated = $request->validated();
 
         /** @var Menu $menu */
-        $menu = \Auth::user()->menus()
+        $menu = $this->getUser()->menus()
             ->create([
                 'name' => $validated['name']
             ]);

@@ -4,6 +4,7 @@
       <h4>
         Plugins&nbsp;
         <router-link
+          v-if="hasPermission('create', 'plugin')"
           to="/plugins/installer"
           class="btn btn-icon icon-left btn-primary"
         >
@@ -30,26 +31,30 @@
         slot-scope="props"
       >
         <span v-if="props.column.field === 'action'">
-          <span class="table-actions">
-            <!-- delete button -->
-            <confirm-modal
-              :body="`Confirm Delete Plugin [${props.row.name}] ?`"
-              :cfm-btn-class="{btn: true, 'btn-danger': true}"
-              :is-btn-html="true"
-              :show-btn="true"
-              :trigger-btn-class="{btn: true, 'btn-icon': true, 'btn-sm': true, 'btn-danger': true}"
-              :trigger-btn-text="deleteBtnIcon"
-              trigger-btn-tooltip="Delete"
-              title="Confirmation"
-              @confirm="deletePlugin(props.row.id, props.row.name)"
-            />
+          <template v-if="hasPermission('delete', 'plugin')">
+            <span class="table-actions">
+              <!-- delete button -->
+              <confirm-modal
+                v-if="hasPermission('delete', 'plugin')"
+                :body="`Confirm Delete Plugin [${props.row.name}] ?`"
+                :cfm-btn-class="{btn: true, 'btn-danger': true}"
+                :is-btn-html="true"
+                :show-btn="true"
+                :trigger-btn-class="{btn: true, 'btn-icon': true, 'btn-sm': true, 'btn-danger': true}"
+                :trigger-btn-text="deleteBtnIcon"
+                trigger-btn-tooltip="Delete"
+                title="Confirmation"
+                @confirm="deletePlugin(props.row.id, props.row.name)"
+              />
             <!-- #delete button -->
-          </span>
-          <i class="fas fa-ellipsis-v text-muted show-action-icon" />
+            </span>
+            <i class="fas fa-ellipsis-v text-muted show-action-icon" />
+          </template>
         </span>
         <span v-else-if="props.column.field === 'enabled_disabled_state'">
           <enable-disable-plugin
             :plugin="props.row"
+            :disabled="!hasPermission('update', 'plugin')"
             @updated="updatePluginState($event, props.index)"
           />
         </span>
@@ -67,12 +72,14 @@ import Card from '@components/Card';
 import { VclTable } from 'vue-content-loading';
 import ConfirmModal from '@components/modal/ConfirmModal';
 import axios from 'axios';
+import PermissionMixin from '@mixins/permission_mixin';
 import EnableDisablePlugin from './components/EnableDisablePlugin';
 
 export default {
   components: {
     EnableDisablePlugin, VueGoodTable, Card, VclTable, ConfirmModal,
   },
+  mixins: [PermissionMixin],
   data: () => ({
     columns: [
       {
@@ -105,6 +112,7 @@ export default {
         field: 'action',
         tdClass: 'text-center show-action',
         width: '1%',
+        sortable: false,
       },
     ],
     rows: [],

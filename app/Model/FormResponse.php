@@ -33,6 +33,8 @@ class FormResponse extends BaseModel
         'meta' => 'array'
     ];
 
+    public $dontShow = [];
+
     public function form()
     {
         return $this->belongsTo(Form::class);
@@ -42,8 +44,12 @@ class FormResponse extends BaseModel
     {
         $columns = [];
         foreach ($this->meta as $key => $value) {
+            if (in_array($key, $this->dontShow, true)) {
+                continue;
+            }
+
             $columns[] = [
-                'label' => Str::title(str_replace('_', ' ', $key)),
+                'label' => Str::title(str_replace(['_', '-'], ' ', $key)),
                 'field' => $key,
             ];
         }

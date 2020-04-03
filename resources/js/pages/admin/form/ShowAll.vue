@@ -4,6 +4,7 @@
       <h4>
         All Forms&nbsp;
         <router-link
+          v-if="hasPermission('create', 'form')"
           to="/forms/create"
           class="btn btn-icon icon-left btn-primary"
         >
@@ -49,29 +50,33 @@
           </span>
         </span>
         <span v-else-if="props.column.field === 'action'">
-          <span class="table-actions">
-            <button
-              class="btn btn-icon btn-info btn-sm"
-              title="Edit"
-              @click="gotoEdit(props.row.id)"
-            >
-              <i class="fas fa-edit fa-fw" />
-            </button>
-            <!-- delete button -->
-            <confirm-modal
-              :body="`Confirm Delete Form [${props.row.name}] ?`"
-              :cfm-btn-class="{btn: true, 'btn-danger': true}"
-              :is-btn-html="true"
-              :show-btn="true"
-              :trigger-btn-class="{btn: true, 'btn-icon': true, 'btn-sm': true, 'btn-danger': true}"
-              :trigger-btn-text="deleteBtnIcon"
-              trigger-btn-tooltip="Delete"
-              title="Confirmation"
-              @confirm="deleteForm(props.row.id, props.row.name)"
-            />
-            <!-- #delete button -->
-          </span>
-          <i class="fas fa-ellipsis-v text-muted show-action-icon" />
+          <template v-if="hasPermission('update', 'form') || hasPermission('delete', 'form')">
+            <span class="table-actions">
+              <button
+                v-if="hasPermission('update', 'form')"
+                class="btn btn-icon btn-info btn-sm"
+                title="Edit"
+                @click="gotoEdit(props.row.id)"
+              >
+                <i class="fas fa-edit fa-fw" />
+              </button>
+              <!-- delete button -->
+              <confirm-modal
+                v-if="hasPermission('delete', 'form')"
+                :body="`Confirm Delete Form [${props.row.name}] ?`"
+                :cfm-btn-class="{btn: true, 'btn-danger': true}"
+                :is-btn-html="true"
+                :show-btn="true"
+                :trigger-btn-class="{btn: true, 'btn-icon': true, 'btn-sm': true, 'btn-danger': true}"
+                :trigger-btn-text="deleteBtnIcon"
+                trigger-btn-tooltip="Delete"
+                title="Confirmation"
+                @confirm="deleteForm(props.row.id, props.row.name)"
+              />
+              <!-- #delete button -->
+            </span>
+            <i class="fas fa-ellipsis-v text-muted show-action-icon" />
+          </template>
         </span>
         <span v-else>
           {{ props.formattedRow[props.column.field] }}
@@ -88,11 +93,13 @@ import { VclTable } from 'vue-content-loading';
 import ConfirmModal from '@components/modal/ConfirmModal';
 import axios from 'axios';
 import moment from 'moment';
+import PermissionMixin from '@mixins/permission_mixin';
 
 export default {
   components: {
     VueGoodTable, Card, VclTable, ConfirmModal,
   },
+  mixins: [PermissionMixin],
   data: () => ({
     columns: [
       {
@@ -120,6 +127,7 @@ export default {
         field: 'action',
         tdClass: 'text-center show-action',
         width: '1%',
+        sortable: false,
       },
     ],
     rows: [],

@@ -91,6 +91,7 @@
           </ul>
         </li>
         <router-link
+          v-if="hasPermission('view', 'plugin')"
           to="/plugins"
           tag="li"
         >
@@ -109,14 +110,14 @@
 </template>
 
 <script>
+import PermissionMixin from '@mixins/permission_mixin.js';
+
 export default {
+  mixins: [PermissionMixin],
   methods: {
     subIsActive(input) {
       const paths = Array.isArray(input) ? input : [input];
       return paths.some((path) => this.$route.path.indexOf(path) === 0);
-    },
-    hasPermission(permission, module) {
-      return this.$rbac.can(permission, module);
     },
   },
 };

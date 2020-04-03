@@ -96,6 +96,7 @@ export default {
         field: 'action',
         tdClass: 'text-center show-action',
         width: '1%',
+        sortable: false,
       },
     ],
     rows: [],

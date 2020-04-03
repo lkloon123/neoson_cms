@@ -4,6 +4,14 @@ namespace App\Enums;
 
 use BenSampo\Enum\Enum;
 
+/**
+ * @method static PageType Homepage()
+ * @method static PageType Page()
+ * @method static PageType Post()
+ * @method static PageType Tag()
+ * @method static PageType Error404()
+ * @method static PageType Error500()
+ */
 final class PageType extends Enum
 {
     const Homepage = 0;

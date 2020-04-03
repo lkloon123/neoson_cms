@@ -58,7 +58,7 @@
                   :class="{allow: props.formattedRow[props.column.field].state === 0, disallow: props.formattedRow[props.column.field].state === 1, own: props.formattedRow[props.column.field].state === 2}"
                   :options="displaySelectOption(props.index, props.column.field)"
                   :searchable="false"
-                  :value="props.formattedRow[props.column.field]"
+                  :value="formatValue(props.formattedRow[props.column.field])"
                   deselect-label=""
                   label="label"
                   select-label=""
@@ -81,7 +81,9 @@ import Card from '@components/Card';
 import { VclTable } from 'vue-content-loading';
 import Multiselect from 'vue-multiselect';
 import axios from 'axios';
-import { get, set, snakeCase } from 'lodash';
+import {
+  get, set, snakeCase, cloneDeep,
+} from 'lodash';
 
 export default {
   components: {
@@ -122,6 +124,9 @@ export default {
         }
       });
     },
+    formatValue(value) {
+      return this.selectOptions.filter((opt) => opt.state === value.state);
+    },
     displaySelectOption(index, field) {
       if (get(this.rows[index], `${field}.has_own`) === true) {
         return this.selectOptions;
@@ -132,8 +137,14 @@ export default {
         { state: 1, label: 'Disallow' },
       ];
     },
-    changeCheckboxState(checkState, index, field) {
-      set(this.rows[index], field, checkState);
+    changeCheckboxState({ state }, index, field) {
+      const newValue = cloneDeep(
+        get(this.rows[index], field),
+      );
+
+      newValue.state = state;
+
+      set(this.rows[index], field, newValue);
     },
     async loadAbilityOptions() {
       const loadAbilitiyResponse = await axios.options('/api/abilities');
@@ -187,8 +198,6 @@ export default {
             message: err.response.data.message,
           });
         }
-
-        this.isLoading = false;
       } else if (this.mode === 'edit') {
         this.$Toast.showLoading({
           title: 'Updating...',
@@ -209,9 +218,9 @@ export default {
             message: err.response.data.message,
           });
         }
-
-        this.isLoading = false;
       }
+
+      this.isLoading = false;
     },
   },
 };

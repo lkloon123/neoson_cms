@@ -23,9 +23,6 @@
 
 <script>
 export default {
-  mounted() {
-    $('#btnBack').removeClass('active');
-  },
   created() {
     this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Not Found');
   },

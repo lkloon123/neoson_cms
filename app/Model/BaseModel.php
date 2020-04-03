@@ -9,8 +9,11 @@
 namespace App\Model;
 
 
+use App\Observers\ObserverForHooks;
+use Askedio\SoftCascade\Traits\SoftCascadeTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
@@ -30,10 +33,24 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class BaseModel extends Model implements Auditable
 {
-    use SoftDeletes, \OwenIt\Auditing\Auditable, \Askedio\SoftCascade\Traits\SoftCascadeTrait;
+    use SoftDeletes, \OwenIt\Auditing\Auditable, SoftCascadeTrait;
 
     protected $dates = ['deleted_at'];
     protected $guarded = ['id'];
     protected $hidden = ['pivot'];
     protected $auditExclude = ['remember_token'];
+
+    public function __construct(array $attributes = [])
+    {
+        \HookManager::dispatch('model.' . Str::snake(class_basename($this)) . '.constructing', $this);
+
+        parent::__construct($attributes);
+
+        \HookManager::dispatch('model.' . Str::snake(class_basename($this)) . '.constructed', $this);
+    }
+
+    protected static function booted()
+    {
+        self::observe(ObserverForHooks::class);
+    }
 }

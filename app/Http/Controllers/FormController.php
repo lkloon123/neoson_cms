@@ -20,7 +20,7 @@ class FormController extends Controller
     public function index(ViewRequest $request)
     {
         if ($request->get('only_own')) {
-            $forms = \Auth::user()->forms()->withCount('formResponses')->get();
+            $forms = $this->getUser()->forms()->withCount('formResponses')->get();
         } else {
             $forms = Form::withCount('formResponses')->get();
         }
@@ -37,7 +37,7 @@ class FormController extends Controller
         $validated = $request->validated();
 
         /** @var Form $form */
-        $form = \Auth::user()->forms()
+        $form = $this->getUser()->forms()
             ->create([
                 'name' => $validated['name']
             ]);

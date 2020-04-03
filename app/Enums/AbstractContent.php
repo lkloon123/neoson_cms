@@ -4,6 +4,12 @@ namespace App\Enums;
 
 use BenSampo\Enum\Enum;
 
+/**
+ * @method static AbstractContent Publish()
+ * @method static AbstractContent Expired()
+ * @method static AbstractContent PendingReview()
+ * @method static AbstractContent Draft()
+ */
 abstract class AbstractContent extends Enum
 {
     const Publish = 0;

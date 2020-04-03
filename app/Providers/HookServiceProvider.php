@@ -16,12 +16,12 @@ class HookServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('hook', function ($app) {
+        $this->app->singleton(Hooks::class, function () {
             return new Hooks();
         });
 
         $this->app->singleton('hook.manager', function ($app) {
-            return new HookManager($app['hook']);
+            return new HookManager($app[Hooks::class]);
         });
     }
 

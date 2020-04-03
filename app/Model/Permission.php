@@ -72,73 +72,82 @@ class Permission extends LaratrustPermission
             [
                 'module' => 'Page',
                 'abilities' => [
-                    'view' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => true],
-                    'create' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
-                    'update' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => true],
-                    'delete' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => true]
+                    'view' => ['state' => PermissionType::Disallow, 'has_own' => true],
+                    'create' => ['state' => PermissionType::Disallow, 'has_own' => false],
+                    'update' => ['state' => PermissionType::Disallow, 'has_own' => true],
+                    'delete' => ['state' => PermissionType::Disallow, 'has_own' => true]
                 ]
             ],
             [
                 'module' => 'Post',
                 'abilities' => [
-                    'view' => ['state' => PermissionType::OnlyOwn, 'label' => 'Disallow', 'has_own' => true],
-                    'create' => ['state' => PermissionType::Allow, 'label' => 'Disallow', 'has_own' => false],
-                    'update' => ['state' => PermissionType::OnlyOwn, 'label' => 'Disallow', 'has_own' => true],
-                    'delete' => ['state' => PermissionType::OnlyOwn, 'label' => 'Disallow', 'has_own' => true]
+                    'view' => ['state' => PermissionType::OnlyOwn, 'has_own' => true],
+                    'create' => ['state' => PermissionType::Allow, 'has_own' => false],
+                    'update' => ['state' => PermissionType::OnlyOwn, 'has_own' => true],
+                    'delete' => ['state' => PermissionType::OnlyOwn, 'has_own' => true]
                 ]
             ],
             [
                 'module' => 'Form',
                 'abilities' => [
-                    'view' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => true],
-                    'create' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
-                    'update' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => true],
-                    'delete' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => true]
+                    'view' => ['state' => PermissionType::Disallow, 'has_own' => true],
+                    'create' => ['state' => PermissionType::Disallow, 'has_own' => false],
+                    'update' => ['state' => PermissionType::Disallow, 'has_own' => true],
+                    'delete' => ['state' => PermissionType::Disallow, 'has_own' => true]
                 ]
             ],
             [
                 'module' => 'User Manage',
                 'abilities' => [
-                    'view' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
-                    'create' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
-                    'update' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
-                    'delete' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false]
+                    'view' => ['state' => PermissionType::Disallow, 'has_own' => true],
+                    'create' => ['state' => PermissionType::Disallow, 'has_own' => false],
+                    'update' => ['state' => PermissionType::Disallow, 'has_own' => true],
+                    'delete' => ['state' => PermissionType::Disallow, 'has_own' => false]
                 ]
 
             ],
             [
+                'module' => 'Plugin',
+                'abilities' => [
+                    'view' => ['state' => PermissionType::Disallow, 'has_own' => false],
+                    'create' => ['state' => PermissionType::Disallow, 'has_own' => false],
+                    'update' => ['state' => PermissionType::Disallow, 'has_own' => false],
+                    'delete' => ['state' => PermissionType::Disallow, 'has_own' => false]
+                ]
+            ],
+            [
                 'module' => 'General Setting',
                 'abilities' => [
-                    'view' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
-                    'update' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
+                    'view' => ['state' => PermissionType::Disallow, 'has_own' => false],
+                    'update' => ['state' => PermissionType::Disallow, 'has_own' => false],
                 ]
             ],
             [
                 'module' => 'Integration Setting',
                 'abilities' => [
-                    'view' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
-                    'update' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
+                    'view' => ['state' => PermissionType::Disallow, 'has_own' => false],
+                    'update' => ['state' => PermissionType::Disallow, 'has_own' => false],
                 ]
             ],
             [
                 'module' => 'Acl Setting',
                 'abilities' => [
-                    'view' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
-                    'create' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
-                    'update' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false],
-                    'delete' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false]
+                    'view' => ['state' => PermissionType::Disallow, 'has_own' => false],
+                    'create' => ['state' => PermissionType::Disallow, 'has_own' => false],
+                    'update' => ['state' => PermissionType::Disallow, 'has_own' => false],
+                    'delete' => ['state' => PermissionType::Disallow, 'has_own' => false]
                 ]
             ],
             [
                 'module' => 'Login Admin',
                 'abilities' => [
-                    'view' => ['state' => PermissionType::Allow, 'label' => 'Disallow', 'has_own' => false]
+                    'view' => ['state' => PermissionType::Allow, 'has_own' => false]
                 ]
             ],
             [
                 'module' => 'Telescope',
                 'abilities' => [
-                    'view' => ['state' => PermissionType::Disallow, 'label' => 'Disallow', 'has_own' => false]
+                    'view' => ['state' => PermissionType::Disallow, 'has_own' => false]
                 ]
             ]
         ];

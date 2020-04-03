@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Setting;
+namespace App\Http\Requests\Plugin;
 
 use App\Http\Requests\BaseRequest;
 
@@ -13,7 +13,7 @@ class ViewRequest extends BaseRequest
      */
     public function authorize()
     {
-        return $this->user()->ability('superadmin', $this->route('group') . '_setting-view');
+        return $this->user()->ability('superadmin', 'plugin-view');
     }
 
     /**

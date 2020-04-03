@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 /**
@@ -33,15 +32,16 @@ use Illuminate\Support\Str;
  * @property-read mixed $label
  * @property-read mixed $type
  * @property-read mixed $formKey
- * @property array $validators
+ * @property \Illuminate\Support\Collection $validators
  * @property-read int|null $audits_count
+ * @property-read mixed $form_key
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\FormItem whereValidators($value)
  */
 class FormItem extends BaseModel
 {
     protected $casts = [
         'meta' => 'array',
-        'validators' => 'array',
+        'validators' => 'collection',
     ];
 
     protected $touches = ['form'];
@@ -58,10 +58,6 @@ class FormItem extends BaseModel
 
     public function getLabelAttribute()
     {
-        if (Arr::get($this->validators, 'required')) {
-            return $this->meta['label'] . '&nbsp;<span style="color: #ff0000;">*</span>';
-        }
-
         return $this->meta['label'];
     }
 

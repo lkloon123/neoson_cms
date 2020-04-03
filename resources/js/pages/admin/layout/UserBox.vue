@@ -54,6 +54,7 @@
 import { mapActions, mapState } from 'vuex';
 import moment from 'moment';
 import ConfirmModal from '@components/modal/ConfirmModal';
+import PermissionMixin from '@mixins/permission_mixin.js';
 
 moment.updateLocale('en', {
   relativeTime: {
@@ -68,6 +69,7 @@ export default {
   components: {
     ConfirmModal,
   },
+  mixins: [PermissionMixin],
   data: () => ({
     logoutModalState: 'hide',
   }),
@@ -90,9 +92,6 @@ export default {
   },
   methods: {
     ...mapActions(['logout']),
-    hasPermission(permission, module) {
-      return this.$rbac.can(permission, module);
-    },
   },
 };
 </script>

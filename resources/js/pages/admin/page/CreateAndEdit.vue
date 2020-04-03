@@ -29,12 +29,12 @@
           v-validate="'required'"
           name="Content"
           :is-content-loading="isLoading"
-          :style="{border: contentHasErrorBorderStyle}"
+          :class="showContentErrorBorder"
         />
 
         <div
           class="invalid-feedback"
-          :style="{display: contentHasErrorStyle}"
+          :class="showContentErrorFeedback"
         >
           {{ errors.first('Content') }}
         </div>
@@ -188,19 +188,19 @@ export default {
     isLoading: true,
   }),
   computed: {
-    contentHasErrorStyle() {
-      if (this.errors && this.errors.items.length > 0) {
-        return this.errors.first('Content') ? 'block' : 'none';
+    showContentErrorFeedback() {
+      if (this.errors?.items.length > 0) {
+        return { 'd-block': this.errors.first('Content') };
       }
 
-      return 'none';
+      return { 'd-none': true };
     },
-    contentHasErrorBorderStyle() {
-      if (this.errors && this.errors.items.length > 0) {
-        return this.errors.first('Content') ? '1px solid #dc3545' : 'none';
+    showContentErrorBorder() {
+      if (this.errors?.items.length > 0) {
+        return { 'border border-danger': this.errors.first('Content') };
       }
 
-      return 'none';
+      return { 'border-0': true };
     },
   },
   watch: {
@@ -303,7 +303,4 @@ export default {
 </script>
 
 <style scoped>
-    .content-field {
-        padding: 20px;
-    }
 </style>

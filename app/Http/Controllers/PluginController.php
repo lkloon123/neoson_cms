@@ -12,13 +12,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Plugin\CreateRequest;
 use App\Http\Requests\Plugin\DeleteRequest;
 use App\Http\Requests\Plugin\UpdateRequest;
+use App\Http\Requests\Plugin\ViewRequest;
 use App\Http\Resources\PluginResource;
 use App\Plugins\PluginManager;
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 
 class PluginController extends Controller
 {
-    public function index(PluginManager $pluginManager)
+    public function index(ViewRequest $request, PluginManager $pluginManager)
     {
         return PluginResource::collection($pluginManager->getAllPlugin()->values());
     }

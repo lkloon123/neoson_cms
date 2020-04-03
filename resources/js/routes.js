@@ -271,6 +271,8 @@ const routes = [
                 { name: 'Dashboard', link: '/dashboard' },
                 { name: 'Plugins' },
               ],
+              module: 'plugin',
+              permission: 'view',
             },
           },
           {
@@ -283,6 +285,8 @@ const routes = [
                 { name: 'Plugins', link: '/plugins' },
                 { name: 'Installer' },
               ],
+              module: 'plugin',
+              permission: 'create',
             },
           },
         ],

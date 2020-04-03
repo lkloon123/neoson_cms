@@ -1,7 +1,7 @@
 <template>
   <toggle-button
-    :color="{checked: '#63ed7a', unchecked: '#fc544b', disabled: '#CCCCCC'}"
-    :disabled="updating"
+    :color="{checked: '#63ed7a', unchecked: '#fc544b', disabled: plugin.isDisabled ? '#fc544b' : '#63ed7a'}"
+    :disabled="disabled || updating"
     :sync="true"
     :value="!plugin.isDisabled"
     class="mt-2"
@@ -18,7 +18,7 @@ export default {
   components: {
     ToggleButton,
   },
-  props: ['plugin'],
+  props: ['plugin', 'disabled'],
   data: () => ({
     updating: false,
   }),

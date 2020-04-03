@@ -39,7 +39,7 @@ export default {
       this.isLoading = true;
 
       const postsCountResponse = await axios.get('/api/post/count');
-      this.amount = postsCountResponse.data;
+      this.amount = postsCountResponse.data.count;
 
       this.isLoading = false;
     },

@@ -9,6 +9,7 @@ module.exports = {
         alias: {
             '@node_modules': __dirname + '/node_modules',
             '@components': __dirname + '/resources/js/components',
+            '@mixins': __dirname + '/resources/js/mixins',
             '@pages': __dirname + '/resources/js/pages',
             '@css': __dirname + '/resources/sass',
             '@stisla': __dirname + '/resources/js/stisla'

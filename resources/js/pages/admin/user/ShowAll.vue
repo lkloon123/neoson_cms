@@ -4,6 +4,7 @@
       <h4>
         All Users&nbsp;
         <router-link
+          v-if="hasPermission('create', 'user_manage')"
           to="/setting/users/create"
           class="btn btn-icon icon-left btn-primary"
         >
@@ -49,9 +50,10 @@
           </template>
         </div>
         <span v-else-if="props.column.field === 'action'">
-          <template v-if="!isCurrentLoggedInUser(props.row.id)">
+          <template v-if="hasPermission('update', 'user_manage') || hasPermission('delete', 'user_manage')">
             <span class="table-actions">
               <button
+                v-if="hasPermission('update', 'user_manage')"
                 class="btn btn-icon btn-info btn-sm"
                 title="Edit"
                 @click="gotoEdit(props.row.id)"
@@ -60,6 +62,7 @@
               </button>
               <!-- delete button -->
               <confirm-modal
+                v-if="hasPermission('delete', 'user_manage') && !isCurrentLoggedInUser(props.row.id)"
                 :body="`Confirm Delete User [${props.row.email}] ?`"
                 :cfm-btn-class="{btn: true, 'btn-danger': true}"
                 :is-btn-html="true"
@@ -91,11 +94,13 @@ import { VclTable } from 'vue-content-loading';
 import ConfirmModal from '@components/modal/ConfirmModal';
 import axios from 'axios';
 import moment from 'moment';
+import PermissionMixin from '@mixins/permission_mixin';
 
 export default {
   components: {
     VueGoodTable, Card, VclTable, ConfirmModal, Xeditable,
   },
+  mixins: [PermissionMixin],
   data: () => ({
     columns: [
       {
@@ -128,6 +133,7 @@ export default {
         field: 'action',
         tdClass: 'text-center show-action',
         width: '1%',
+        sortable: false,
       },
     ],
     rows: [],

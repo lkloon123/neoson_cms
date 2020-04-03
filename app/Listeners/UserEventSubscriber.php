@@ -36,12 +36,12 @@ class UserEventSubscriber
     {
         $event->listen(
             Login::class,
-            'App\Listeners\UserEventSubscriber@onUserLogin'
+            static::class . '@onUserLogin'
         );
 
         $event->listen(
             Logout::class,
-            'App\Listeners\UserEventSubscriber@onUserLogout'
+            static::class . '@onUserLogout'
         );
     }
 }

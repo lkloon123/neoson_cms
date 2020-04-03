@@ -21,7 +21,7 @@ class PageController extends Controller
     public function index(ViewRequest $request)
     {
         if ($request->get('only_own')) {
-            $pages = \Auth::user()->pages()->with('author')->get();
+            $pages = $this->getUser()->pages()->with('author')->get();
         } else {
             $pages = Page::with('author')->get();
         }
@@ -41,7 +41,7 @@ class PageController extends Controller
         $validated['content'] = \Purifier::clean($validated['content'], 'youtube');
 
         /** @var Page $page */
-        $page = \Auth::user()->pages()->create([
+        $page = $this->getUser()->pages()->create([
             'title' => $validated['title'],
             'slug' => $validated['slug'],
             'description' => $validated['description'],
@@ -105,7 +105,7 @@ class PageController extends Controller
     public function search(SearchRequest $request)
     {
         if ($request->get('only_own')) {
-            $queryBuilder = \Auth::user()->pages()->with('author');
+            $queryBuilder = $this->getUser()->pages()->with('author');
         } else {
             $queryBuilder = Page::with('author');
         }
@@ -132,7 +132,11 @@ class PageController extends Controller
 
     public function count(ViewRequest $request)
     {
-        return response()->json(Page::published()->withinSchedule()->count());
+        if ($request->get('only_own')) {
+            return response()->json(['count' => $this->getUser()->pages()->published()->withinSchedule()->count()]);
+        }
+
+        return response()->json(['count' => Page::published()->withinSchedule()->count()]);
     }
 
     public function home(Theme $theme)

@@ -39,7 +39,7 @@ export default {
       this.isLoading = true;
 
       const pagesCountResponse = await axios.get('/api/user/count');
-      this.amount = pagesCountResponse.data;
+      this.amount = pagesCountResponse.data.count;
 
       this.isLoading = false;
     },
