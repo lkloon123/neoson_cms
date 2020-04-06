@@ -26,8 +26,7 @@
     "predis/predis": "^1.1",
     "santigarcor/laratrust": "^5.0",
     "spatie/laravel-http-logger": "^1.4",
-    "spatie/laravel-tags": "^2.5",
-    "talevskiigor/composer-bump": "^1.0"
+    "spatie/laravel-tags": "^2.5"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",

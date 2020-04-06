@@ -77,14 +77,14 @@ import Card from '@components/Card';
 import { VclTable } from 'vue-content-loading';
 import ConfirmModal from '@components/modal/ConfirmModal';
 import axios from 'axios';
-import moment from 'moment';
+import DateFormattingMixin from '@mixins/date_formatting_mixin';
 import PermissionMixin from '@mixins/permission_mixin';
 
 export default {
   components: {
     VueGoodTable, Card, VclTable, ConfirmModal,
   },
-  mixins: [PermissionMixin],
+  mixins: [PermissionMixin, DateFormattingMixin],
   data: () => ({
     columns: [
       {
@@ -145,9 +145,6 @@ export default {
       }
 
       this.isLoading = false;
-    },
-    formatToAgoDate(inputDateTime) {
-      return moment(inputDateTime).fromNow();
     },
     gotoEdit(id) {
       this.$router.push(`/settings/roles/edit/${id}`);

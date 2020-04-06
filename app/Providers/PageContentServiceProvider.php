@@ -27,18 +27,9 @@ class PageContentServiceProvider extends ServiceProvider
             $view->share('builder', $builder);
             return $builder;
         });
-    }
 
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
         $loader = AliasLoader::getInstance();
         $loader->alias('PageContent', \App\Facade\PageContentFacade::class);
         $loader->alias('PageType', \App\Enums\PageType::class);
     }
-
 }

@@ -36,16 +36,20 @@
       <li class="dropdown">
         <user-box />
       </li>
+      <li class="dropdown">
+        <locale-selector />
+      </li>
     </ul>
   </nav>
 </template>
 
 <script>
+import LocaleSelector from '@components/LocaleSelector';
 import UserBox from './UserBox';
 
 export default {
   components: {
-    UserBox,
+    LocaleSelector, UserBox,
   },
 };
 </script>

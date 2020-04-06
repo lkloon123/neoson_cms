@@ -55,7 +55,7 @@ class Setting extends BaseModel
         }
 
         return self::updateOrCreate(
-            ['setting_key' => $item['setting_key'], 'group' => $group],
+            ['setting_key' => $item['setting_key'], 'group' => $group, 'config_key' => $item['config_key']],
             ['setting_value' => $item['setting_value'], 'type' => $defaultType]
         );
     }

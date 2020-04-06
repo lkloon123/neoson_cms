@@ -47,6 +47,7 @@ mix
     .copyDirectory('node_modules/tinymce/skins', 'public/css/tinymce/skins')
     .copyDirectory('resources/icons', 'public/images/icon')
     .copyDirectory('resources/img', 'public/images')
+    .copyDirectory('node_modules/flag-icon-css/flags/4x3', 'public/images/flags')
     .copy('vendor/alexusmai/laravel-file-manager/resources/assets/css/file-manager.css', 'public/css/file-manager')
     .copy('vendor/alexusmai/laravel-file-manager/resources/assets/js/file-manager.js', 'public/js/file-manager');
 

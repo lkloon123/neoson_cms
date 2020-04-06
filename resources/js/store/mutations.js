@@ -4,6 +4,7 @@ const SET_CURRENT_USER_INFO = (state, payload) => { state.currentUserInfo = payl
 const SET_CURRENT_USER_ROLE = (state, payload) => { state.currentUserRole = payload; };
 const SET_CURRENT_USER_PERMISSION = (state, payload) => { state.currentUserPermission = payload; };
 const UPDATE_LOADER = (state, payload) => { state.showLoader = payload; };
+const SET_LOCALE = (state, payload) => { state.locale = payload; };
 
 export {
   SET_CURRENT_PAGE_TITLE,
@@ -12,4 +13,5 @@ export {
   SET_CURRENT_USER_ROLE,
   SET_CURRENT_USER_PERMISSION,
   UPDATE_LOADER,
+  SET_LOCALE,
 };

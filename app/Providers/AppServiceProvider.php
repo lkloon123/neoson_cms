@@ -4,12 +4,12 @@ namespace App\Providers;
 
 use App\Model\Setting;
 use Illuminate\Database\QueryException;
+use Illuminate\Foundation\Events\LocaleUpdated;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use OwenIt\Auditing\Models\Audit;
 use Schema;
-use Talevskiigor\ComposerBump\ComposerBumpServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,10 +29,10 @@ class AppServiceProvider extends ServiceProvider
             });
         });
 
-        $this->app->register(ComposerBumpServiceProvider::class);
         $this->app->register(HookServiceProvider::class);
         $this->app->register(PluginServiceProvider::class);
         $this->app->register(PageContentServiceProvider::class);
+        $this->app->register(TranslationServiceProvider::class);
     }
 
     /**
@@ -61,6 +61,12 @@ class AppServiceProvider extends ServiceProvider
             foreach ($allSettingsFromDb as $settingFromDb) {
                 if ($settingFromDb->config_key) {
                     \Config::set($settingFromDb->config_key, $settingFromDb->setting_value);
+                }
+
+                if ($settingFromDb->config_key === 'app.locale') {
+                    //set locale to translator and events
+                    $this->app->make('translator')->setLocale($settingFromDb->setting_value);
+                    $this->app->make('events')->dispatch(new LocaleUpdated($settingFromDb->setting_value));
                 }
             }
         } catch (QueryException $ex) {

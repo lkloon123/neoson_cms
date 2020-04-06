@@ -64,13 +64,14 @@ import Card from '@components/Card';
 import { VclTable } from 'vue-content-loading';
 import ConfirmModal from '@components/modal/ConfirmModal';
 import axios from 'axios';
-import moment from 'moment';
+import DateFormattingMixin from '@mixins/date_formatting_mixin';
 import CreateAndEditForm from './components/CreateAndEditForm';
 
 export default {
   components: {
     VueGoodTable, Card, VclTable, ConfirmModal, CreateAndEditForm,
   },
+  mixins: [DateFormattingMixin],
   data: () => ({
     columns: [
       {
@@ -128,9 +129,6 @@ export default {
       }
 
       this.isLoading = false;
-    },
-    formatToAgoDate(inputDateTime) {
-      return moment(inputDateTime).fromNow();
     },
     save(data, index) {
       this.rows[index] = Object.assign(this.rows[index], data);

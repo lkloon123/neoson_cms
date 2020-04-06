@@ -17,12 +17,16 @@
 
   tbody {
     tr {
-      th.vgt-checkbox-col {
-        border-right: initial;
-        background: initial;
-      }
-
       th {
+        &.vgt-row-header {
+          cursor: pointer;
+        }
+
+        &.vgt-checkbox-col {
+          border-right: initial;
+          background: initial;
+        }
+
         border-bottom: 1px solid #dcdfe6;
       }
 

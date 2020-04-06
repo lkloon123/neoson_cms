@@ -143,4 +143,15 @@ class Composer extends \Illuminate\Support\Composer
 
         $process->run();
     }
+
+    public function getAppVersion()
+    {
+        return $this->parseComposerJson()['version'];
+    }
+
+    public function parseComposerJson()
+    {
+        $composerjson = file_get_contents(base_path() . '/composer.json');
+        return json_decode($composerjson, true);
+    }
 }

@@ -420,6 +420,41 @@ const routes = [
               },
             ],
           },
+          {
+            path: 'translations',
+            component: () => import('./pages/admin/translation/Index.vue'),
+            children: [
+              {
+                path: '/',
+                component: () => import('./pages/admin/translation/ShowAll.vue'),
+                meta: {
+                  breadcrumb: [
+                    { name: 'Dashboard', link: '/dashboard' },
+                    { name: 'Settings', link: '/settings' },
+                    { name: 'Translations' },
+                  ],
+                  module: 'translation',
+                  permission: 'update',
+                },
+              },
+              {
+                path: 'edit/:id',
+                component: () => import('./pages/admin/translation/CreateAndEdit.vue'),
+                props: { mode: 'edit' },
+                name: 'translation.edit',
+                meta: {
+                  breadcrumb: [
+                    { name: 'Dashboard', link: '/dashboard' },
+                    { name: 'Settings', link: '/settings' },
+                    { name: 'Translations', link: '/settings/translations' },
+                    { name: 'Edit translation' },
+                  ],
+                  module: 'translation',
+                  permission: 'update',
+                },
+              },
+            ],
+          },
         ],
       },
       {

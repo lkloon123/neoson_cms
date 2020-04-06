@@ -23,15 +23,7 @@ class HookServiceProvider extends ServiceProvider
         $this->app->singleton('hook.manager', function ($app) {
             return new HookManager($app[Hooks::class]);
         });
-    }
 
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
         $loader = AliasLoader::getInstance();
         $loader->alias('HookManager', \App\Facade\HookManagerFacade::class);
     }

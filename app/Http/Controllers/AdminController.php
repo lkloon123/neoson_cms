@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Bootstrap\Composer;
 use App\Http\Requests\BaseRequest;
-use Talevskiigor\ComposerBump\ComposerBump;
 
 class AdminController extends Controller
 {
@@ -29,10 +29,17 @@ class AdminController extends Controller
         return view('layouts.admin');
     }
 
-    public function version(BaseRequest $request)
+    public function version(BaseRequest $request, Composer $composer)
     {
         return response()->json([
-            'version' => (new ComposerBump)->getVersion()
+            'version' => $composer->getAppVersion()
+        ]);
+    }
+
+    public function locale()
+    {
+        return response()->json([
+            'locale' => \App::getLocale(),
         ]);
     }
 }

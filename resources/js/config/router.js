@@ -6,6 +6,10 @@ router.beforeEach(async (to, from, next) => {
   store.commit('UPDATE_LOADER', true);
   store.commit('SET_PAGE_BACK_LINK', null);
 
+  if (store.state.locale === null) {
+    await store.dispatch('loadAppLocale');
+  }
+
   const hasPermission = async () => {
     if (store.state.currentUserRole === null) {
       await store.dispatch('getRbac');

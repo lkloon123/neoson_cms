@@ -17,6 +17,10 @@ Route::get('/admin', 'AdminController@index')->name('admin');
 Route::get('/admin/{any}', 'AdminController@index')->where('any', '.*');
 
 Route::prefix('api')->group(function () {
+    Route::get('translation/{language}', 'TranslationController@formattedTranslation');
+    Route::get('language', 'LanguageController@index');
+    Route::options('locale', 'AdminController@locale');
+
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::options('version', 'AdminController@version');
         Route::get('me', 'UserController@getMe');
@@ -31,12 +35,16 @@ Route::prefix('api')->group(function () {
 
         Route::resource('menu', 'MenuController')->except(['create', 'edit']);
 
+        Route::resource('language', 'LanguageController')->only(['show']);
+
+        Route::resource('translation', 'TranslationController')->only(['update']);
+
         Route::get('form/response/{form}', 'FormController@formResponse');
         Route::resource('form/component', 'FormComponentController')->except(['create', 'edit']);
         Route::resource('form', 'FormController')->except(['create', 'edit']);
 
         Route::get('setting/{group}', 'SettingController@get');
-        Route::match(['put', 'patch'], 'setting/{setting}', 'SettingController@save');
+        Route::match(['put', 'patch'], 'setting/{group}', 'SettingController@save');
 
         Route::resource('role', 'RoleController')->except(['create', 'edit']);
         Route::options('role', 'RoleController@getRolesOptions');

@@ -13,6 +13,7 @@ import Utils from './plugins/utils';
 import Toast from './plugins/toast';
 import Rbac from './plugins/rbac';
 import FormatSizeFilter from './filters/format_size';
+import { i18n } from './i18n';
 
 Vue.use(VeeValidate, { events: '' });
 Vue.use(Toast);
@@ -35,6 +36,7 @@ if (token) {
 // eslint-disable-next-line no-new
 new Vue({
   el: '#app',
+  i18n,
   router,
   store,
   components: {

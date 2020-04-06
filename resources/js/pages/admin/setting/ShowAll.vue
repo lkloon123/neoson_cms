@@ -61,6 +61,26 @@
       </div>
     </div>
     <div
+      v-if="hasPermission('update', 'translation')"
+      class="col-md-6 col-sm-12"
+    >
+      <div class="card card-large-icons">
+        <div class="card-icon bg-primary text-white">
+          <i class="fas fa-globe" />
+        </div>
+        <div class="card-body">
+          <h4>Translation</h4>
+          <p>Manage translations</p>
+          <router-link
+            class="card-cta"
+            to="/settings/translations"
+          >
+            Change Setting
+          </router-link>
+        </div>
+      </div>
+    </div>
+    <div
       v-if="hasPermission('view', 'user_manage')"
       class="col-md-6 col-sm-12"
     >

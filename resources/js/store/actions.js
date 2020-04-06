@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { i18n, loadLanguageAsync } from '../i18n';
 
 const getCurrentUserInfo = async ({ commit }) => {
   try {
@@ -37,8 +38,22 @@ const logout = async ({ commit }) => {
   window.location = '/';
 };
 
+const loadAppLocale = async ({ commit }) => {
+  const localeResponse = await axios.options('/api/locale');
+  const languageCode = localeResponse.data.locale;
+
+  await loadLanguageAsync(languageCode);
+  i18n.locale = languageCode;
+
+  commit('SET_LOCALE', languageCode);
+  commit('fm/settings/manualSettings', {
+    lang: languageCode,
+  });
+};
+
 export {
   getCurrentUserInfo,
   getRbac,
   logout,
+  loadAppLocale,
 };

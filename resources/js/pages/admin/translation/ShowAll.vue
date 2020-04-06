@@ -1,15 +1,7 @@
 <template>
   <card>
     <template v-slot:header>
-      <h4>
-        All Menus&nbsp;
-        <router-link
-          to="/menu/create"
-          class="btn btn-icon icon-left btn-primary"
-        >
-          <i class="fas fa-plus" /> Create
-        </router-link>
-      </h4>
+      <h4>Languages</h4>
     </template>
 
     <vcl-table
@@ -30,7 +22,7 @@
         slot="table-row"
         slot-scope="props"
       >
-        <span v-if="props.column.field === 'updated_at' || props.column.field === 'created_at'">
+        <span v-if="props.column.field === 'updated_at'">
           {{ formatToAgoDate(props.formattedRow[props.column.field]) }}
         </span>
         <span v-else-if="props.column.field === 'action'">
@@ -42,19 +34,6 @@
             >
               <i class="fas fa-edit fa-fw" />
             </button>
-            <!-- delete button -->
-            <confirm-modal
-              :body="`Confirm Delete Menu [${props.row.name}] ?`"
-              :cfm-btn-class="{btn: true, 'btn-danger': true}"
-              :is-btn-html="true"
-              :show-btn="true"
-              :trigger-btn-class="{btn: true, 'btn-icon': true, 'btn-sm': true, 'btn-danger': true}"
-              :trigger-btn-text="deleteBtnIcon"
-              trigger-btn-tooltip="Delete"
-              title="Confirmation"
-              @confirm="deleteMenu(props.row.id, props.row.name)"
-            />
-            <!-- #delete button -->
           </span>
           <i class="fas fa-ellipsis-v text-muted show-action-icon" />
         </span>
@@ -67,34 +46,38 @@
 </template>
 
 <script>
-import { VueGoodTable } from 'vue-good-table';
 import Card from '@components/Card';
+import { VueGoodTable } from 'vue-good-table';
 import { VclTable } from 'vue-content-loading';
-import ConfirmModal from '@components/modal/ConfirmModal';
 import axios from 'axios';
 import DateFormattingMixin from '@mixins/date_formatting_mixin';
 
 export default {
   components: {
-    VueGoodTable, Card, VclTable, ConfirmModal,
+    VueGoodTable, Card, VclTable,
   },
   mixins: [DateFormattingMixin],
   data: () => ({
     columns: [
       {
-        label: 'Name',
-        field: 'name',
-        width: '60%',
+        label: 'Title',
+        field: 'title',
+        width: '32%',
       },
       {
-        label: 'Created At',
-        field: 'created_at',
+        label: 'Code',
+        field: 'code',
+        width: '30%',
+      },
+      {
+        label: 'Translated',
+        field: 'count',
         width: '20%',
       },
       {
         label: 'Last edited',
         field: 'updated_at',
-        width: '19%',
+        width: '17%',
       },
       {
         label: '',
@@ -113,17 +96,18 @@ export default {
     },
   },
   created() {
-    this.loadMenus();
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Menu');
+    this.loadLanguages();
+    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Translations');
+    this.$store.commit('SET_PAGE_BACK_LINK', '/settings');
   },
   methods: {
-    async loadMenus() {
+    async loadLanguages() {
       this.resetState();
 
       try {
-        const menusResponse = await axios.get('/api/menu');
-        if (menusResponse.status === 200) {
-          this.rows = menusResponse.data;
+        const languagesResponse = await axios.get('/api/language');
+        if (languagesResponse.status === 200) {
+          this.rows = languagesResponse.data;
         }
       } catch (err) {
         this.$Toast.show({
@@ -135,30 +119,7 @@ export default {
       this.isLoading = false;
     },
     gotoEdit(id) {
-      this.$router.push(`/menu/edit/${id}`);
-    },
-    async deleteMenu(id, name) {
-      this.isLoading = true;
-      this.$Toast.showLoading({
-        title: 'Deleting...',
-      });
-
-      try {
-        await axios.delete(`/api/menu/${id}`);
-        this.$Toast.show({
-          type: 'success',
-          message: `Successfully deleted menu [${name}]`,
-        });
-
-        this.loadMenus();
-      } catch (err) {
-        this.$Toast.show({
-          type: 'error',
-          message: err.response.data.message,
-        });
-      }
-
-      this.isLoading = false;
+      this.$router.push(`/settings/translations/edit/${id}`);
     },
     resetState() {
       this.isLoading = true;
@@ -169,4 +130,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

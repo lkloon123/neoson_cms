@@ -93,14 +93,14 @@ import Xeditable from '@components/Xeditable';
 import { VclTable } from 'vue-content-loading';
 import ConfirmModal from '@components/modal/ConfirmModal';
 import axios from 'axios';
-import moment from 'moment';
+import DateFormattingMixin from '@mixins/date_formatting_mixin';
 import PermissionMixin from '@mixins/permission_mixin';
 
 export default {
   components: {
     VueGoodTable, Card, VclTable, ConfirmModal, Xeditable,
   },
-  mixins: [PermissionMixin],
+  mixins: [PermissionMixin, DateFormattingMixin],
   data: () => ({
     columns: [
       {
@@ -175,9 +175,6 @@ export default {
       }
 
       this.isLoading = false;
-    },
-    formatToAgoDate(inputDateTime) {
-      return moment(inputDateTime).fromNow();
     },
     gotoEdit(id) {
       this.$router.push(`/settings/users/edit/${id}`);

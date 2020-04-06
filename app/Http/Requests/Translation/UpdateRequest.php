@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Setting;
+namespace App\Http\Requests\Translation;
 
 use App\Http\Requests\BaseRequest;
 
@@ -13,11 +13,7 @@ class UpdateRequest extends BaseRequest
      */
     public function authorize()
     {
-        if ($this->route('group') === 'public') {
-            return true;
-        }
-
-        return $this->user()->ability('superadmin', $this->route('group') . '_setting-update');
+        return $this->user()->ability('superadmin', 'translation-update');
     }
 
     /**
@@ -28,7 +24,7 @@ class UpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'data' => 'array|required'
+            'text' => 'string|nullable'
         ];
     }
 }

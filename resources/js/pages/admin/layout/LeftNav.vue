@@ -17,7 +17,7 @@
           to="/dashboard"
           tag="li"
         >
-          <a><i class="fas fa-fire" /><span>Dashboard</span></a>
+          <a><i class="fas fa-fire" /><span>{{ $t('menu.dashboard') }}</span></a>
         </router-link>
         <router-link
           v-if="hasPermission('view', 'page')"

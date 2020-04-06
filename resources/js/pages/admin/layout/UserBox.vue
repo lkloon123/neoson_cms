@@ -10,7 +10,6 @@
         src="/images/avatar-1.png"
         class="rounded-circle mr-1"
       >
-      <div class="d-sm-none d-lg-inline-block">Hi, {{ currentUserInfoName }}</div>
     </a>
     <div class="dropdown-menu dropdown-menu-right">
       <div class="dropdown-title">
