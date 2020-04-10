@@ -1,20 +1,21 @@
 <template>
   <div>
     <div class="form-group">
-      <label>All Pages</label>
+      <label>{{ $t('page.all_pages') }}</label>
       <multiselect
         v-model="selectedPages"
         :clear-on-select="false"
-        :close-on-select="false"
         :internal-search="false"
         :loading="isSearching"
         :multiple="true"
         :options="pages"
         :searchable="true"
-        deselect-label="remove"
+        :deselect-label="$t('common.remove')"
         label="title"
-        select-label="select"
+        :placeholder="$t('page.select_page')"
+        :select-label="$t('common.select')"
         track-by="id"
+        :custom-label="customLabel"
         @search-change="searchPage"
       />
     </div>
@@ -23,7 +24,7 @@
       class="btn btn-primary"
       @click="addToMenu"
     >
-      Add to menu
+      {{ $t('menu.add_to_menu') }}
     </button>
   </div>
 </template>
@@ -53,6 +54,9 @@ export default {
   },
   methods: {
     ...mapMutations('menu', ['ADD_MENU_ITEM']),
+    customLabel({ title }) {
+      return this.$t(title);
+    },
     async searchPage(query = null) {
       this.isSearching = true;
 
@@ -76,6 +80,7 @@ export default {
           title: selectedPage.title,
           slug: selectedPage.slug,
           menuLabel: selectedPage.title,
+          componentLabel: 'menu.pages',
         };
 
         this.ADD_MENU_ITEM(tmp);

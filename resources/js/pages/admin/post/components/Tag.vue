@@ -4,7 +4,7 @@
     class="mb-1"
   >
     <template v-slot:header>
-      <h4>Tags</h4>
+      <h4>{{ $t('menu.tags') }}</h4>
     </template>
 
     <form-content-loading
@@ -20,11 +20,11 @@
       :options="tags"
       :searchable="true"
       :taggable="true"
-      deselect-label="remove"
+      :deselect-label="$t('common.remove')"
       label="name"
-      placeholder="Search or add a tag"
-      select-label="select"
-      tag-placeholder="Add this as new tag"
+      :placeholder="$t('tag.search_add_tag')"
+      :select-label="$t('common.select')"
+      :tag-placeholder="$t('tag.add_as_new_tag')"
       track-by="id"
       @search-change="searchTag"
       @tag="addTag"

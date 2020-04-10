@@ -2,7 +2,7 @@
   <card>
     <template v-slot:header>
       <h4>
-        All Tags&nbsp;
+        {{ $t('tag.all_tags') }}&nbsp;
         <create-and-edit-form @input="loadTags" />
       </h4>
     </template>
@@ -22,6 +22,15 @@
       style-class="vgt-table table-hover condensed"
     >
       <template
+        slot="table-column"
+        slot-scope="props"
+      >
+        <span>
+          {{ $t(props.column.label) }}
+        </span>
+      </template>
+
+      <template
         slot="table-row"
         slot-scope="props"
       >
@@ -36,14 +45,14 @@
             <!-- #edit form button -->
             <!-- delete button -->
             <confirm-modal
-              :body="`Confirm Delete Tag [${props.row.name}] ?`"
+              :body="$t('common.confirm_delete_confirmation', {entity: $t('menu.tags'), item: props.row.name})"
               :cfm-btn-class="{btn: true, 'btn-danger': true}"
               :is-btn-html="true"
               :show-btn="true"
               :trigger-btn-class="{btn: true, 'btn-icon': true, 'btn-sm': true, 'btn-danger': true}"
               :trigger-btn-text="deleteBtnIcon"
-              trigger-btn-tooltip="Delete"
-              title="Confirmation"
+              :trigger-btn-tooltip="$t('common.delete')"
+              :title="$t('common.confirmation')"
               @confirm="deleteTag(props.row.id, props.row.name)"
             />
             <!-- #delete button -->
@@ -75,17 +84,17 @@ export default {
   data: () => ({
     columns: [
       {
-        label: 'Name',
+        label: 'common.count',
         field: 'name',
         width: '50%',
       },
       {
-        label: 'Slug',
+        label: 'page.slug',
         field: 'slug',
         width: '35%',
       },
       {
-        label: 'Count',
+        label: 'common.count',
         field: 'count',
         type: 'number',
         thClass: 'text-left',
@@ -110,7 +119,7 @@ export default {
   },
   created() {
     this.loadTags();
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Tags');
+    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.tags');
   },
   methods: {
     async loadTags() {

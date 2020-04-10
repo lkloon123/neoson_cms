@@ -1,7 +1,7 @@
 <template>
   <card>
     <template v-slot:header>
-      <h4>Form Component</h4>
+      <h4>{{ $t('form.form_component') }}</h4>
     </template>
 
     <list-content-loading v-if="isLoading" />

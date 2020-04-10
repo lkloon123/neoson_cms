@@ -5,11 +5,13 @@
 <script>
 import VRuntimeTemplate from 'v-runtime-template';
 import { cloneDeep } from 'lodash';
+import TranslationMixin from '@mixins/translation_mixin';
 
 export default {
   components: {
     VRuntimeTemplate,
   },
+  mixins: [TranslationMixin],
   props: {
     template: {
       type: String,

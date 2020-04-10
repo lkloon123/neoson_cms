@@ -1,7 +1,7 @@
 <template>
   <card>
     <template v-slot:header>
-      <h4>Languages</h4>
+      <h4>{{ $t('translation.languages') }}</h4>
     </template>
 
     <vcl-table
@@ -19,6 +19,15 @@
       style-class="vgt-table table-hover condensed"
     >
       <template
+        slot="table-column"
+        slot-scope="props"
+      >
+        <span>
+          {{ $t(props.column.label) }}
+        </span>
+      </template>
+
+      <template
         slot="table-row"
         slot-scope="props"
       >
@@ -29,7 +38,7 @@
           <span class="table-actions">
             <button
               class="btn btn-icon btn-info btn-sm"
-              title="Edit"
+              :title="$t('common.edit')"
               @click="gotoEdit(props.row.id)"
             >
               <i class="fas fa-edit fa-fw" />
@@ -60,22 +69,22 @@ export default {
   data: () => ({
     columns: [
       {
-        label: 'Title',
+        label: 'common.title',
         field: 'title',
         width: '32%',
       },
       {
-        label: 'Code',
+        label: 'translation.code',
         field: 'code',
         width: '30%',
       },
       {
-        label: 'Translated',
+        label: 'translation.translated',
         field: 'count',
         width: '20%',
       },
       {
-        label: 'Last edited',
+        label: 'common.last_edited',
         field: 'updated_at',
         width: '17%',
       },
@@ -97,7 +106,7 @@ export default {
   },
   created() {
     this.loadLanguages();
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Translations');
+    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'setting.translation');
     this.$store.commit('SET_PAGE_BACK_LINK', '/settings');
   },
   methods: {

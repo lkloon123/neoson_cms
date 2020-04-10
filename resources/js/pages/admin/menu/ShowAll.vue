@@ -2,12 +2,12 @@
   <card>
     <template v-slot:header>
       <h4>
-        All Menus&nbsp;
+        {{ $t('menu.all_menus') }}&nbsp;
         <router-link
           to="/menu/create"
           class="btn btn-icon icon-left btn-primary"
         >
-          <i class="fas fa-plus" /> Create
+          <i class="fas fa-plus" /> {{ $t('common.create') }}
         </router-link>
       </h4>
     </template>
@@ -27,6 +27,15 @@
       style-class="vgt-table table-hover condensed"
     >
       <template
+        slot="table-column"
+        slot-scope="props"
+      >
+        <span>
+          {{ $t(props.column.label) }}
+        </span>
+      </template>
+
+      <template
         slot="table-row"
         slot-scope="props"
       >
@@ -37,21 +46,21 @@
           <span class="table-actions">
             <button
               class="btn btn-icon btn-info btn-sm"
-              title="Edit"
+              :title="$t('common.edit')"
               @click="gotoEdit(props.row.id)"
             >
               <i class="fas fa-edit fa-fw" />
             </button>
             <!-- delete button -->
             <confirm-modal
-              :body="`Confirm Delete Menu [${props.row.name}] ?`"
+              :body="$t('common.confirm_delete_confirmation', {entity: $t('menu.menu'), item: props.row.name})"
               :cfm-btn-class="{btn: true, 'btn-danger': true}"
               :is-btn-html="true"
               :show-btn="true"
               :trigger-btn-class="{btn: true, 'btn-icon': true, 'btn-sm': true, 'btn-danger': true}"
               :trigger-btn-text="deleteBtnIcon"
-              trigger-btn-tooltip="Delete"
-              title="Confirmation"
+              :trigger-btn-tooltip="$t('common.delete')"
+              :title="$t('common.confirmation')"
               @confirm="deleteMenu(props.row.id, props.row.name)"
             />
             <!-- #delete button -->
@@ -82,17 +91,17 @@ export default {
   data: () => ({
     columns: [
       {
-        label: 'Name',
+        label: 'common.name',
         field: 'name',
         width: '60%',
       },
       {
-        label: 'Created At',
+        label: 'common.created_at',
         field: 'created_at',
         width: '20%',
       },
       {
-        label: 'Last edited',
+        label: 'common.last_edited',
         field: 'updated_at',
         width: '19%',
       },
@@ -114,7 +123,7 @@ export default {
   },
   created() {
     this.loadMenus();
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Menu');
+    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.menu');
   },
   methods: {
     async loadMenus() {

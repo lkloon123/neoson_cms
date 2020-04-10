@@ -31,7 +31,7 @@ class Form extends AbstractBlock
 
         foreach ($form->formItems as $formItem) {
             $formElements .= $this->renderView('.forms.' . $formItem->type, [
-                'label' => $formItem->label,
+                'label' => __($formItem->label),
                 'id' => $formItem->meta_id,
                 'formKey' => $formItem->formKey,
                 'meta' => $formItem->meta,

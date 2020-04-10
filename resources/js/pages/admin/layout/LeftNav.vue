@@ -24,7 +24,7 @@
           to="/pages"
           tag="li"
         >
-          <a><i class="fas fa-file" /><span>Pages</span></a>
+          <a><i class="fas fa-file" /><span>{{ $t('menu.pages') }}</span></a>
         </router-link>
         <li
           v-if="hasPermission('view', 'post')"
@@ -36,7 +36,7 @@
             class="nav-link has-dropdown"
             data-toggle="dropdown"
           >
-            <i class="fas fa-highlighter" /> <span>Blogging</span>
+            <i class="fas fa-highlighter" /> <span>{{ $t('menu.blogging') }}</span>
           </a>
           <ul class="dropdown-menu">
             <router-link
@@ -44,14 +44,14 @@
               to="/posts"
               tag="li"
             >
-              <a><i class="fas fa-align-left" /> <span>Posts</span></a>
+              <a><i class="fas fa-align-left" /> <span>{{ $t('menu.posts') }}</span></a>
             </router-link>
             <router-link
               v-if="hasPermission('view', 'post')"
               to="/tags"
               tag="li"
             >
-              <a><i class="fas fa-tags" /> <span>Tags</span></a>
+              <a><i class="fas fa-tags" /> <span>{{ $t('menu.tags') }}</span></a>
             </router-link>
           </ul>
         </li>
@@ -60,13 +60,13 @@
           to="/forms"
           tag="li"
         >
-          <a><i class="fas fa-file-signature" /><span>Forms</span></a>
+          <a><i class="fas fa-file-signature" /><span>{{ $t('menu.forms') }}</span></a>
         </router-link>
         <router-link
           to="/file-manager"
           tag="li"
         >
-          <a><i class="fas fa-folder-open" /><span>File Manager</span></a>
+          <a><i class="fas fa-folder-open" /><span>{{ $t('menu.file_manager') }}</span></a>
         </router-link>
         <li
           v-if="hasPermission('view', 'menu')"
@@ -78,7 +78,7 @@
             class="nav-link has-dropdown"
             data-toggle="dropdown"
           >
-            <i class="fas fa-paint-brush" /> <span>Appearance</span>
+            <i class="fas fa-paint-brush" /> <span>{{ $t('menu.appearance') }}</span>
           </a>
           <ul class="dropdown-menu">
             <router-link
@@ -86,7 +86,7 @@
               to="/menu"
               tag="li"
             >
-              <a><i class="fas fa-compass" /> <span>Menu</span></a>
+              <a><i class="fas fa-compass" /> <span>{{ $t('menu.menu') }}</span></a>
             </router-link>
           </ul>
         </li>
@@ -95,14 +95,14 @@
           to="/plugins"
           tag="li"
         >
-          <a><i class="fas fa-plug" /> <span>Plugins</span></a>
+          <a><i class="fas fa-plug" /> <span>{{ $t('menu.plugins') }}</span></a>
         </router-link>
         <router-link
           v-if="hasPermission('view', 'general_setting') || hasPermission('view', 'acl_setting') || hasPermission('view', 'user_manage')"
           tag="li"
           to="/settings"
         >
-          <a><i class="fas fa-cogs" /><span>Settings</span></a>
+          <a><i class="fas fa-cogs" /><span>{{ $t('menu.settings') }}</span></a>
         </router-link>
       </ul>
     </aside>

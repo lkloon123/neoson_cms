@@ -4,12 +4,12 @@
       <div class="col-md-12">
         <card>
           <template v-slot:header>
-            <h4>Abilities</h4>
+            <h4>{{ $t('role.permissions') }}</h4>
           </template>
           <template v-slot:header-action>
             <div class="form-inline">
               <div class="form-group">
-                <label for="roleName">Name <span class="text-danger">*</span></label>
+                <label for="roleName">{{ $t('common.name') }} <span class="text-danger">*</span></label>
                 <input
                   id="roleName"
                   v-model="name"
@@ -28,7 +28,7 @@
                 class="btn btn-primary"
                 @click="validateAndSave"
               >
-                Save
+                {{ $t('common.save') }}
               </button>
             </div>
           </template>
@@ -46,11 +46,20 @@
             style-class="vgt-table table-hover condensed"
           >
             <template
+              slot="table-column"
+              slot-scope="props"
+            >
+              <span>
+                {{ $t(props.column.label) }}
+              </span>
+            </template>
+
+            <template
               slot="table-row"
               slot-scope="props"
             >
               <span v-if="props.column.field === 'module'">
-                {{ props.formattedRow[props.column.field] }}
+                {{ $t(props.formattedRow[props.column.field]) }}
               </span>
               <span v-else-if="props.formattedRow[props.column.field] !== ''">
                 <multiselect
@@ -99,18 +108,22 @@ export default {
     columns: [],
     rows: [],
     name: '',
-    selectOptions: [
-      { state: 0, label: 'Allow' },
-      { state: 1, label: 'Disallow' },
-      { state: 2, label: 'Only Own' },
-    ],
     isLoading: true,
   }),
+  computed: {
+    selectOptions() {
+      return [
+        { state: 0, label: this.$t('role.allow') },
+        { state: 1, label: this.$t('role.disallow') },
+        { state: 2, label: this.$t('role.only_own') },
+      ];
+    },
+  },
   created() {
     if (this.mode === 'edit') {
-      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Edit Role');
+      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'role.edit_role');
     } else {
-      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Create Role');
+      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'role.create_role');
     }
 
     this.$store.commit('SET_PAGE_BACK_LINK', '/settings/roles');
@@ -133,8 +146,8 @@ export default {
       }
 
       return [
-        { state: 0, label: 'Allow' },
-        { state: 1, label: 'Disallow' },
+        { state: 0, label: this.$t('role.allow') },
+        { state: 1, label: this.$t('role.disallow') },
       ];
     },
     changeCheckboxState({ state }, index, field) {

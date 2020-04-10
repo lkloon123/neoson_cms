@@ -4,13 +4,13 @@
       <card>
         <template v-slot:header>
           <h4 class="form-inline">
-            Menu Structure
+            {{ $t('menu.menu_structure') }}
           </h4>
         </template>
         <template v-slot:header-action>
           <div class="form-inline">
             <div class="form-group">
-              <label for="menuName">Name <span class="text-danger">*</span></label>
+              <label for="menuName">{{ $t('common.name') }} <span class="text-danger">*</span></label>
               <input
                 id="menuName"
                 v-model="name"
@@ -29,7 +29,7 @@
               class="btn btn-primary"
               @click="validateAndSave"
             >
-              Save
+              {{ $t('common.save') }}
             </button>
           </div>
         </template>
@@ -51,15 +51,15 @@
             <vue-nestable-handle :item="item">
               <div class="alert alert-light mb-0 p-2 pl-3 pr-3 menu-item-component">
                 <span class="menu-item-label">
-                  <b v-if="item.menuLabel">{{ item.menuLabel }}</b>
-                  <span v-else>(no label)</span>
+                  <b v-if="item.menuLabel">{{ translate(item.menuLabel) }}</b>
+                  <span v-else>({{ $t('menu.no_label') }})</span>
                   <em
                     v-if="isChild"
                     class="text-muted"
-                  > &nbsp;sub menu</em>
+                  > &nbsp;{{ $t('menu.sub_menu') }}</em>
                 </span>
                 <span class="menu-item-control">
-                  <span class="text-muted">{{ formatMenuType(item.type) }}</span>
+                  <span class="text-muted">{{ $t(item.componentLabel) }}</span>
                   <a
                     class="btn btn-light btn-icon btn-sm"
                     @click.prevent="openMenu(item)"
@@ -78,15 +78,15 @@
       </card>
     </div>
     <div class="col-md-3">
-      <available-item-wrapper title="Pages">
+      <available-item-wrapper :title="$t('menu.pages')">
         <select-page />
       </available-item-wrapper>
 
-      <available-item-wrapper title="Custom Link">
+      <available-item-wrapper :title="$t('menu.custom_link')">
         <custom-link />
       </available-item-wrapper>
 
-      <available-item-wrapper title="Auth">
+      <available-item-wrapper :title="$t('menu.auth')">
         <auth />
       </available-item-wrapper>
     </div>
@@ -97,7 +97,8 @@
 import Card from '@components/Card';
 import { VueNestable, VueNestableHandle } from 'vue-nestable';
 import { VclList } from 'vue-content-loading';
-import { camelCase, cloneDeep, startCase } from 'lodash';
+import { cloneDeep } from 'lodash';
+import TranslationMixin from '@mixins/translation_mixin';
 import axios from 'axios';
 import AvailableItemWrapper from './components/AvailableItemWrapper';
 import CustomLink from './components/CustomLink';
@@ -117,6 +118,7 @@ export default {
     VueNestableHandle,
     VclList,
   },
+  mixins: [TranslationMixin],
   props: {
     mode: {
       type: String,
@@ -151,7 +153,7 @@ export default {
     this.$store.commit('menu/RESET_STATE');
 
     if (this.mode === 'edit') {
-      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Edit Menu');
+      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.edit_menu');
 
       // fetch data from server
       try {
@@ -165,7 +167,7 @@ export default {
         });
       }
     } else {
-      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Create Menu');
+      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.create_menu');
     }
 
     this.$store.commit('SET_PAGE_BACK_LINK', '/menu');
@@ -179,9 +181,6 @@ export default {
           this.save();
         }
       });
-    },
-    formatMenuType(type) {
-      return startCase(camelCase(type));
     },
     openMenu(searchItem) {
       const cloned = cloneDeep(searchItem);

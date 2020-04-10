@@ -3,7 +3,7 @@
     class="cursor-pointer"
     @click="goToUser"
   >
-    <statistic-card header="Total Users">
+    <statistic-card :header="$t('dashboard.total_users')">
       <template v-slot:icon>
         <i class="fas fa-user" />
       </template>

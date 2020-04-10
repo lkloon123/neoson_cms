@@ -35,11 +35,4 @@ class AdminController extends Controller
             'version' => $composer->getAppVersion()
         ]);
     }
-
-    public function locale()
-    {
-        return response()->json([
-            'locale' => \App::getLocale(),
-        ]);
-    }
 }

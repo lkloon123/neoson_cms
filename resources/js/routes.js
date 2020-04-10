@@ -19,7 +19,7 @@ const routes = [
         name: 'dashboard',
         meta: {
           breadcrumb: [
-            { name: 'Dashboard' },
+            { name: 'menu.dashboard' },
           ],
         },
       },
@@ -28,8 +28,8 @@ const routes = [
         component: () => import('./pages/admin/file_manager/Index.vue'),
         meta: {
           breadcrumb: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'File Manager' },
+            { name: 'menu.dashboard', link: '/dashboard' },
+            { name: 'menu.file_manager' },
           ],
         },
       },
@@ -43,8 +43,8 @@ const routes = [
             name: 'form.showall',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Forms' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.forms' },
               ],
               module: 'form',
               permission: 'view',
@@ -56,9 +56,9 @@ const routes = [
             name: 'form.create',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Forms', link: '/forms' },
-                { name: 'Create new form' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.forms', link: '/forms' },
+                { name: 'form.create_form' },
               ],
               module: 'form',
               permission: 'create',
@@ -71,9 +71,9 @@ const routes = [
             name: 'form.edit',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Forms', link: '/forms' },
-                { name: 'Edit form' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.forms', link: '/forms' },
+                { name: 'form.edit_form' },
               ],
               module: 'form',
               permission: 'update',
@@ -85,9 +85,9 @@ const routes = [
             name: 'form.responses',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Forms', link: '/forms' },
-                { name: 'Form responses' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.forms', link: '/forms' },
+                { name: 'form.form_responses' },
               ],
               module: 'form',
               permission: 'view',
@@ -105,8 +105,8 @@ const routes = [
             name: 'page.showall',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Pages' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.pages' },
               ],
               module: 'page',
               permission: 'view',
@@ -118,9 +118,9 @@ const routes = [
             name: 'page.create',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Pages', link: '/pages' },
-                { name: 'Create new page' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.pages', link: '/pages' },
+                { name: 'page.create_page' },
               ],
               module: 'page',
               permission: 'create',
@@ -133,9 +133,9 @@ const routes = [
             name: 'page.edit',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Pages', link: '/pages' },
-                { name: 'Edit page' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.pages', link: '/pages' },
+                { name: 'page.edit_page' },
               ],
               module: 'page',
               permission: 'update',
@@ -153,8 +153,8 @@ const routes = [
             name: 'post.showall',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Posts' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.posts' },
               ],
               module: 'post',
               permission: 'view',
@@ -166,9 +166,9 @@ const routes = [
             name: 'post.create',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Posts', link: '/posts' },
-                { name: 'Create new post' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.posts', link: '/posts' },
+                { name: 'post.create_post' },
               ],
               module: 'post',
               permission: 'create',
@@ -181,9 +181,9 @@ const routes = [
             name: 'post.edit',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Posts', link: '/posts' },
-                { name: 'Edit post' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.posts', link: '/posts' },
+                { name: 'post.edit_post' },
               ],
               module: 'post',
               permission: 'update',
@@ -201,8 +201,8 @@ const routes = [
             name: 'tag.showall',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Tags' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.tags' },
               ],
               module: 'post',
               permission: 'view',
@@ -220,8 +220,8 @@ const routes = [
             name: 'menu.showall',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Menu' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.menu' },
               ],
               module: 'menu',
               permission: 'view',
@@ -233,9 +233,9 @@ const routes = [
             name: 'menu.create',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Menu', link: '/menu' },
-                { name: 'Create new menu' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.menu', link: '/menu' },
+                { name: 'menu.create_menu' },
               ],
               module: 'menu',
               permission: 'create',
@@ -248,9 +248,9 @@ const routes = [
             name: 'menu.edit',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Menu', link: '/menu' },
-                { name: 'Edit menu' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.menu', link: '/menu' },
+                { name: 'menu.edit_menu' },
               ],
               module: 'menu',
               permission: 'update',
@@ -268,8 +268,8 @@ const routes = [
             name: 'plugin.showall',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Plugins' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.plugins' },
               ],
               module: 'plugin',
               permission: 'view',
@@ -281,9 +281,9 @@ const routes = [
             name: 'plugin.installer',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Plugins', link: '/plugins' },
-                { name: 'Installer' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.plugins', link: '/plugins' },
+                { name: 'plugin.install_plugin' },
               ],
               module: 'plugin',
               permission: 'create',
@@ -301,8 +301,8 @@ const routes = [
             name: 'setting.showall',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Settings' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.settings' },
               ],
             },
           },
@@ -312,9 +312,9 @@ const routes = [
             name: 'setting.general',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Settings', link: '/settings' },
-                { name: 'General' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.settings', link: '/settings' },
+                { name: 'setting.general_settings' },
               ],
               module: 'general_setting',
               permission: 'view',
@@ -326,9 +326,9 @@ const routes = [
             name: 'setting.integration',
             meta: {
               breadcrumb: [
-                { name: 'Dashboard', link: '/dashboard' },
-                { name: 'Settings', link: '/settings' },
-                { name: 'Integration' },
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.settings', link: '/settings' },
+                { name: 'setting.integration_settings' },
               ],
               module: 'integration_setting',
               permission: 'view',
@@ -344,9 +344,9 @@ const routes = [
                 name: 'setting.role.showall',
                 meta: {
                   breadcrumb: [
-                    { name: 'Dashboard', link: '/dashboard' },
-                    { name: 'Settings', link: '/settings' },
-                    { name: 'Roles' },
+                    { name: 'menu.dashboard', link: '/dashboard' },
+                    { name: 'menu.settings', link: '/settings' },
+                    { name: 'setting.roles_and_permission' },
                   ],
                   module: 'acl_setting',
                   permission: 'view',
@@ -358,10 +358,10 @@ const routes = [
                 name: 'setting.role.create',
                 meta: {
                   breadcrumb: [
-                    { name: 'Dashboard', link: '/dashboard' },
-                    { name: 'Settings', link: '/settings' },
-                    { name: 'Roles', link: '/settings/roles' },
-                    { name: 'Create new role' },
+                    { name: 'menu.dashboard', link: '/dashboard' },
+                    { name: 'menu.settings', link: '/settings' },
+                    { name: 'setting.roles_and_permission', link: '/settings/roles' },
+                    { name: 'role.create_role' },
                   ],
                   module: 'acl_setting',
                   permission: 'create',
@@ -374,10 +374,10 @@ const routes = [
                 name: 'setting.role.edit',
                 meta: {
                   breadcrumb: [
-                    { name: 'Dashboard', link: '/dashboard' },
-                    { name: 'Settings', link: '/settings' },
-                    { name: 'Roles', link: '/settings/roles' },
-                    { name: 'Edit role' },
+                    { name: 'menu.dashboard', link: '/dashboard' },
+                    { name: 'menu.settings', link: '/settings' },
+                    { name: 'setting.roles_and_permission', link: '/settings/roles' },
+                    { name: 'role.edit_role' },
                   ],
                   module: 'acl_setting',
                   permission: 'update',
@@ -395,9 +395,9 @@ const routes = [
                 name: 'setting.user.showall',
                 meta: {
                   breadcrumb: [
-                    { name: 'Dashboard', link: '/dashboard' },
-                    { name: 'Settings', link: '/settings' },
-                    { name: 'Users' },
+                    { name: 'menu.dashboard', link: '/dashboard' },
+                    { name: 'menu.settings', link: '/settings' },
+                    { name: 'setting.users' },
                   ],
                   module: 'user_manage',
                   permission: 'view',
@@ -409,10 +409,10 @@ const routes = [
                 name: 'setting.user.create',
                 meta: {
                   breadcrumb: [
-                    { name: 'Dashboard', link: '/dashboard' },
-                    { name: 'Settings', link: '/settings' },
-                    { name: 'Users', link: '/settings/roles' },
-                    { name: 'Create new user' },
+                    { name: 'menu.dashboard', link: '/dashboard' },
+                    { name: 'menu.settings', link: '/settings' },
+                    { name: 'setting.users', link: '/settings/users' },
+                    { name: 'user.create_user' },
                   ],
                   module: 'user_manage',
                   permission: 'create',
@@ -429,9 +429,9 @@ const routes = [
                 component: () => import('./pages/admin/translation/ShowAll.vue'),
                 meta: {
                   breadcrumb: [
-                    { name: 'Dashboard', link: '/dashboard' },
-                    { name: 'Settings', link: '/settings' },
-                    { name: 'Translations' },
+                    { name: 'menu.dashboard', link: '/dashboard' },
+                    { name: 'menu.settings', link: '/settings' },
+                    { name: 'setting.translation' },
                   ],
                   module: 'translation',
                   permission: 'update',
@@ -444,10 +444,10 @@ const routes = [
                 name: 'translation.edit',
                 meta: {
                   breadcrumb: [
-                    { name: 'Dashboard', link: '/dashboard' },
-                    { name: 'Settings', link: '/settings' },
-                    { name: 'Translations', link: '/settings/translations' },
-                    { name: 'Edit translation' },
+                    { name: 'menu.dashboard', link: '/dashboard' },
+                    { name: 'menu.settings', link: '/settings' },
+                    { name: 'setting.translation', link: '/settings/translations' },
+                    { name: 'translation.edit_translation' },
                   ],
                   module: 'translation',
                   permission: 'update',
@@ -471,12 +471,10 @@ const routes = [
   },
 ];
 
-const router = new VueRouter({
+export default new VueRouter({
   routes,
   mode: 'history',
   base: '/admin/',
   linkActiveClass: 'active',
   scrollBehavior: (to, from, savedPosition) => savedPosition || { x: 0, y: 0 },
 });
-
-export default router;

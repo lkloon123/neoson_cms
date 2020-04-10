@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 /**
  * App\Model\Form
@@ -35,6 +36,7 @@ class Form extends BaseModel
 {
     protected $softCascade = ['formItems'];
     public $updatedFormItemMetaId = [];
+    public $dontShowInResponse = ['common_submit'];
 
     public function user()
     {
@@ -70,5 +72,31 @@ class Form extends BaseModel
 
             ++$displayOrder;
         }
+    }
+
+    public function buildFormResponseColumn()
+    {
+        $formItems = $this->formItems()
+            ->orderBy('display_order')
+            ->get();
+
+        $columns = [];
+        foreach ($formItems as $formItem) {
+            if (in_array(strtolower($formItem->formKey), $this->dontShowInResponse, true)) {
+                continue;
+            }
+
+            $columns[] = [
+                'label' => Str::contains($formItem->label, '.') ? $formItem->label : Str::title(str_replace(['_', '-'], ' ', $formItem->label)),
+                'field' => $formItem->formKey,
+            ];
+        }
+
+        $columns[] = [
+            'label' => 'common.submitted_on',
+            'field' => 'created_at',
+        ];
+
+        return ['columns' => $columns];
     }
 }

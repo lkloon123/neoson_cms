@@ -2,13 +2,13 @@
   <card>
     <template v-slot:header>
       <h4>
-        All Forms&nbsp;
+        {{ $t('form.all_forms') }}&nbsp;
         <router-link
           v-if="hasPermission('create', 'form')"
           to="/forms/create"
           class="btn btn-icon icon-left btn-primary"
         >
-          <i class="fas fa-plus" /> Create
+          <i class="fas fa-plus" /> {{ $t('common.create') }}
         </router-link>
       </h4>
     </template>
@@ -27,6 +27,15 @@
       :pagination-options="{enabled: true}"
       style-class="vgt-table table-hover condensed"
     >
+      <template
+        slot="table-column"
+        slot-scope="props"
+      >
+        <span>
+          {{ $t(props.column.label) }}
+        </span>
+      </template>
+
       <template
         slot="table-row"
         slot-scope="props"
@@ -55,7 +64,7 @@
               <button
                 v-if="hasPermission('update', 'form')"
                 class="btn btn-icon btn-info btn-sm"
-                title="Edit"
+                :title="$t('common.edit')"
                 @click="gotoEdit(props.row.id)"
               >
                 <i class="fas fa-edit fa-fw" />
@@ -63,14 +72,14 @@
               <!-- delete button -->
               <confirm-modal
                 v-if="hasPermission('delete', 'form')"
-                :body="`Confirm Delete Form [${props.row.name}] ?`"
+                :body="$t('common.confirm_delete_confirmation', {entity: $t('menu.forms'), item: props.row.name})"
                 :cfm-btn-class="{btn: true, 'btn-danger': true}"
                 :is-btn-html="true"
                 :show-btn="true"
                 :trigger-btn-class="{btn: true, 'btn-icon': true, 'btn-sm': true, 'btn-danger': true}"
                 :trigger-btn-text="deleteBtnIcon"
-                trigger-btn-tooltip="Delete"
-                title="Confirmation"
+                :trigger-btn-tooltip="$t('common.delete')"
+                :title="$t('common.confirmation')"
                 @confirm="deleteForm(props.row.id, props.row.name)"
               />
               <!-- #delete button -->
@@ -103,22 +112,22 @@ export default {
   data: () => ({
     columns: [
       {
-        label: 'Name',
+        label: 'common.name',
         field: 'name',
         width: '40%',
       },
       {
-        label: 'Responses',
+        label: 'form.responses',
         field: 'responses',
         width: '20%',
       },
       {
-        label: 'Created At',
+        label: 'common.created_at',
         field: 'created_at',
         width: '20%',
       },
       {
-        label: 'Last edited',
+        label: 'common.last_edited',
         field: 'updated_at',
         width: '19%',
       },
@@ -140,7 +149,7 @@ export default {
   },
   created() {
     this.loadForms();
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Forms');
+    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.forms');
   },
   methods: {
     async loadForms() {

@@ -2,13 +2,13 @@
   <card>
     <template v-slot:header>
       <h4>
-        All Users&nbsp;
+        {{ $t('user.all_users') }}&nbsp;
         <router-link
           v-if="hasPermission('create', 'user_manage')"
-          to="/setting/users/create"
+          to="/settings/users/create"
           class="btn btn-icon icon-left btn-primary"
         >
-          <i class="fas fa-plus" />Create
+          <i class="fas fa-plus" /> {{ $t('common.create') }}
         </router-link>
       </h4>
     </template>
@@ -27,6 +27,15 @@
       :pagination-options="{enabled: true}"
       style-class="vgt-table table-hover condensed"
     >
+      <template
+        slot="table-column"
+        slot-scope="props"
+      >
+        <span>
+          {{ $t(props.column.label) }}
+        </span>
+      </template>
+
       <template
         slot="table-row"
         slot-scope="props"
@@ -55,7 +64,7 @@
               <button
                 v-if="hasPermission('update', 'user_manage')"
                 class="btn btn-icon btn-info btn-sm"
-                title="Edit"
+                :title="$t('common.edit')"
                 @click="gotoEdit(props.row.id)"
               >
                 <i class="fas fa-edit fa-fw" />
@@ -63,14 +72,14 @@
               <!-- delete button -->
               <confirm-modal
                 v-if="hasPermission('delete', 'user_manage') && !isCurrentLoggedInUser(props.row.id)"
-                :body="`Confirm Delete User [${props.row.email}] ?`"
+                :body="$t('common.confirm_delete_confirmation', {entity: $t('setting.users'), item: props.row.email})"
                 :cfm-btn-class="{btn: true, 'btn-danger': true}"
                 :is-btn-html="true"
                 :show-btn="true"
                 :trigger-btn-class="{btn: true, 'btn-icon': true, 'btn-sm': true, 'btn-danger': true}"
                 :trigger-btn-text="deleteBtnIcon"
-                trigger-btn-tooltip="Delete"
-                title="Confirmation"
+                :trigger-btn-tooltip="$t('common.delete')"
+                :title="$t('common.confirmation')"
                 @confirm="deleteUser(props.row.id, props.row.email)"
               />
               <!-- #delete button -->
@@ -104,27 +113,27 @@ export default {
   data: () => ({
     columns: [
       {
-        label: 'Name',
+        label: 'common.name',
         field: 'name',
         width: '20%',
       },
       {
-        label: 'Email',
+        label: 'common.email',
         field: 'email',
         width: '20%',
       },
       {
-        label: 'Role',
+        label: 'role.role',
         field: 'role',
         width: '30%',
       },
       {
-        label: 'Created At',
+        label: 'common.created_at',
         field: 'created_at',
         width: '15%',
       },
       {
-        label: 'Last edited',
+        label: 'common.last_edited',
         field: 'updated_at',
         width: '15%',
       },
@@ -148,12 +157,12 @@ export default {
   created() {
     this.loadUsers();
     this.loadOptions();
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Users');
+    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'setting.users');
     this.$store.commit('SET_PAGE_BACK_LINK', '/settings');
   },
   methods: {
     isCurrentLoggedInUser(id) {
-      return this.$store.state.currentUserInfo ? this.$store.state.currentUserInfo.id === id : false;
+      return this.$store.state.currentUserInfo?.id === id;
     },
     async loadUsers() {
       this.resetState();

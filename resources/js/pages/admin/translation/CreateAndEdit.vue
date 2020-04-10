@@ -1,7 +1,7 @@
 <template>
   <card>
     <template v-slot:header>
-      <h4>Translations</h4>
+      <h4>{{ $t('translation.edit_translation') }}</h4>
     </template>
 
     <vue-good-table
@@ -16,12 +16,21 @@
       }"
       style-class="vgt-table table-hover condensed bordered"
     >
+      <template
+        slot="table-column"
+        slot-scope="props"
+      >
+        <span>
+          {{ $t(props.column.label) }}
+        </span>
+      </template>
+
       <template slot="table-actions">
         <button
           class="btn btn-primary btn-sm h-100"
           @click="collapseExpand"
         >
-          {{ collapseExpandLabel }}
+          {{ $t(collapseExpandLabel) }}
         </button>
       </template>
       <template
@@ -77,17 +86,17 @@ export default {
   data: () => ({
     columns: [
       {
-        label: 'Key',
+        label: 'translation.key',
         field: 'key',
         width: '20%',
       },
       {
-        label: 'Text',
+        label: 'translation.text',
         field: 'text',
         width: '65%',
       },
       {
-        label: 'Last edited',
+        label: 'common.last_edited',
         field: 'updated_at',
         width: '15%',
       },
@@ -99,12 +108,12 @@ export default {
   }),
   computed: {
     collapseExpandLabel() {
-      return this.expanded ? 'Collapse All' : 'Expand All';
+      return this.expanded ? 'common.collapse_all' : 'common.expand_all';
     },
   },
   async created() {
     if (this.mode === 'edit') {
-      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Edit Translation');
+      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'translation.edit_translation');
 
       // fetch data from server
       const transformedResponse = [];

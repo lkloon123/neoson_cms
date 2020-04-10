@@ -4,15 +4,15 @@
     :is-btn-html="true"
     :show-btn="true"
     :show-footer="false"
-    :title="getTitle"
+    :title="$t(getTitle)"
     :trigger-btn-class="{btn: true, 'btn-icon': true, 'btn-sm': mode === 'edit', 'btn-info': mode === 'edit', 'btn-primary': mode === 'create', 'icon-left': mode === 'create'}"
     :trigger-btn-text="editBtnIcon"
-    trigger-btn-tooltip="Edit"
+    :trigger-btn-tooltip="$t('common.edit')"
     @hidden="hideModal"
     @shown="showModal"
   >
     <div class="form-group">
-      <label for="name">Name <span class="text-danger">*</span></label>
+      <label for="name">{{ $t('common.name') }} <span class="text-danger">*</span></label>
       <input
         id="name"
         v-model="clonedValue.name"
@@ -29,7 +29,7 @@
     </div>
 
     <div class="form-group">
-      <label for="slug">Slug</label>
+      <label for="slug">{{ $t('page.slug') }}</label>
       <input
         id="slug"
         v-model="clonedValue.slug"
@@ -45,7 +45,7 @@
         :class="{'btn-progress': isLoading}"
         @click="validateAndSave"
       >
-        Save
+        {{ $t('common.save') }}
       </button>
     </div>
   </html-modal>
@@ -79,15 +79,15 @@ export default {
   computed: {
     editBtnIcon() {
       if (this.mode === 'create') {
-        return '<i class="fas fa-plus"/> Create';
+        return `<i class="fas fa-plus"/> ${this.$t('common.create')}`;
       }
       return '<i class="fas fa-edit fa-fw"/>';
     },
     getTitle() {
       if (this.mode === 'create') {
-        return 'Create Tag';
+        return 'tag.create_tag';
       }
-      return 'Edit Tag';
+      return 'tag.edit_tag';
     },
   },
   watch: {
@@ -97,7 +97,7 @@ export default {
       },
       immediate: true,
     },
-    'clonedValue.name': (newValue) => {
+    'clonedValue.name': function (newValue) {
       this.clonedValue.slug = sluggable(newValue, { lower: true });
     },
   },

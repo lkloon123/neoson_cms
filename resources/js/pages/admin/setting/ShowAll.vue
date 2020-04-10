@@ -9,13 +9,13 @@
           <i class="fas fa-cog" />
         </div>
         <div class="card-body">
-          <h4>General</h4>
-          <p>General settings such as site title, description</p>
+          <h4>{{ $t('setting.general') }}</h4>
+          <p>{{ $t('setting.general_description_text') }}</p>
           <router-link
             class="card-cta"
             to="/settings/general"
           >
-            {{ btnSettingText('general') }}
+            {{ $t(btnSettingText('general')) }}
           </router-link>
         </div>
       </div>
@@ -29,13 +29,13 @@
           <i class="fas fa-link" />
         </div>
         <div class="card-body">
-          <h4>Integration</h4>
-          <p>Integration settings with other services</p>
+          <h4>{{ $t('setting.integration') }}</h4>
+          <p>{{ $t('setting.integration_description_text') }}</p>
           <router-link
             class="card-cta"
             to="/settings/integration"
           >
-            {{ btnSettingText('integration') }}
+            {{ $t(btnSettingText('integration')) }}
           </router-link>
         </div>
       </div>
@@ -49,13 +49,13 @@
           <i class="fas fa-user-lock" />
         </div>
         <div class="card-body">
-          <h4>Roles And Permission</h4>
-          <p>Roles and permission setting</p>
+          <h4>{{ $t('setting.roles_and_permission') }}</h4>
+          <p>{{ $t('setting.roles_and_permission_description_text') }}</p>
           <router-link
             class="card-cta"
             to="/settings/roles"
           >
-            {{ btnSettingText('acl') }}
+            {{ $t(btnSettingText('acl')) }}
           </router-link>
         </div>
       </div>
@@ -69,13 +69,13 @@
           <i class="fas fa-globe" />
         </div>
         <div class="card-body">
-          <h4>Translation</h4>
-          <p>Manage translations</p>
+          <h4>{{ $t('setting.translation') }}</h4>
+          <p>{{ $t('setting.translation_description_text') }}</p>
           <router-link
             class="card-cta"
             to="/settings/translations"
           >
-            Change Setting
+            {{ $t('setting.change_setting') }}
           </router-link>
         </div>
       </div>
@@ -89,13 +89,13 @@
           <i class="fas fa-user" />
         </div>
         <div class="card-body">
-          <h4>User Management</h4>
-          <p>Manage user setting</p>
+          <h4>{{ $t('setting.user_management') }}</h4>
+          <p>{{ $t('setting.user_management_description_text') }}</p>
           <router-link
             class="card-cta"
             to="/settings/users"
           >
-            Change Setting
+            {{ $t('setting.change_setting') }}
           </router-link>
         </div>
       </div>
@@ -109,15 +109,15 @@ import PermissionMixin from '@mixins/permission_mixin';
 export default {
   mixins: [PermissionMixin],
   created() {
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Settings');
+    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.settings');
   },
   methods: {
     btnSettingText(group) {
       if (this.hasPermission('update', `${group}_setting`)) {
-        return 'Change Setting';
+        return 'setting.change_setting';
       }
 
-      return 'View Setting';
+      return 'setting.view_setting';
     },
   },
 };

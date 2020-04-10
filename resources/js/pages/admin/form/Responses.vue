@@ -1,7 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <card>
     <template v-slot:header>
-      <h4>{{ formName }} responses</h4>
+      <h4>{{ $t('form.form_responses') }}</h4>
     </template>
 
     <vcl-table
@@ -18,6 +18,15 @@
       :search-options="{enabled: true}"
       style-class="vgt-table table-hover condensed"
     >
+      <template
+        slot="table-column"
+        slot-scope="props"
+      >
+        <span>
+          {{ $t(props.column.label) }}
+        </span>
+      </template>
+
       <template v-slot:table-actions>
         <button
           class="btn btn-icon btn-sm btn-secondary btn-refresh"
@@ -48,7 +57,7 @@ export default {
   }),
   created() {
     this.loadFormResponse();
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Form Responses');
+    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'form.form_responses');
     this.$store.commit('SET_PAGE_BACK_LINK', '/forms');
   },
   methods: {
@@ -78,7 +87,7 @@ export default {
 </script>
 
 <style scoped>
-    .btn-refresh {
-        margin-top: 2px;
-    }
+  .btn-refresh {
+    margin-top: 2px;
+  }
 </style>

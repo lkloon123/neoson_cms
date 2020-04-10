@@ -73,15 +73,7 @@ export default {
       this.isLoading = false;
     },
     async changeAppLocale(languageCode) {
-      await axios.put('/api/setting/public', {
-        data: [{
-          config_key: 'app.locale',
-          group: 'public',
-          setting_key: 'app_locale',
-          setting_value: languageCode,
-          type: 'string',
-        }],
-      });
+      await axios.put(`/api/locale/${languageCode}`);
 
       this.loadAppLocale();
     },

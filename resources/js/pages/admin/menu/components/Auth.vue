@@ -1,25 +1,27 @@
 <template>
   <div>
     <div class="form-group">
-      <label for="guest-label">Guest Label</label>
+      <label for="guest-label">{{ $t('menu.guest_label') }}</label>
       <input
         id="guest-label"
         :value="getValue('guestLabel')"
         class="form-control"
         name="Label"
         type="text"
+        :placeholder="$t('common.login')"
         @input="setValue('guestLabel', $event.target.value)"
       >
     </div>
 
     <div class="form-group">
-      <label for="logged-in-label">Logged In Label</label>
+      <label for="logged-in-label">{{ $t('menu.logged_in_label') }}</label>
       <input
         id="logged-in-label"
         :value="getValue('menuLabel')"
         class="form-control"
         name="Label"
         type="text"
+        :placeholder="$t('common.my_account')"
         @input="setValue('menuLabel', $event.target.value)"
       >
     </div>
@@ -29,7 +31,7 @@
       class="btn btn-primary"
       @click="addToMenu"
     >
-      Add to menu
+      {{ $t('menu.add_to_menu') }}
     </button>
 
     <button
@@ -37,7 +39,7 @@
       class="btn btn-danger btn-icon icon-left"
       @click="removeMenu"
     >
-      <i class="fas fa-trash" /> Remove
+      <i class="fas fa-trash" /> {{ $t('common.remove') }}
     </button>
   </div>
 </template>
@@ -49,8 +51,9 @@ export default {
   mixins: [Mixin],
   data: () => ({
     type: 'auth',
-    guestLabel: 'Login',
-    menuLabel: 'My Account',
+    guestLabel: '',
+    menuLabel: '',
+    componentLabel: 'menu.auth',
   }),
   methods: {
     reset() {

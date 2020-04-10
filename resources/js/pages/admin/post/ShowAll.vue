@@ -2,13 +2,13 @@
   <card>
     <template v-slot:header>
       <h4>
-        All Posts&nbsp;
+        {{ $t('post.all_posts') }}&nbsp;
         <router-link
           v-if="hasPermission('create', 'post')"
           to="/posts/create"
           class="btn btn-icon icon-left btn-primary"
         >
-          <i class="fas fa-plus" /> Create
+          <i class="fas fa-plus" /> {{ $t('common.create') }}
         </router-link>
       </h4>
     </template>
@@ -28,6 +28,15 @@
       style-class="vgt-table table-hover condensed"
     >
       <template
+        slot="table-column"
+        slot-scope="props"
+      >
+        <span>
+          {{ $t(props.column.label) }}
+        </span>
+      </template>
+
+      <template
         slot="table-row"
         slot-scope="props"
       >
@@ -40,7 +49,7 @@
               <button
                 v-if="hasPermission('update', 'post')"
                 class="btn btn-icon btn-info btn-sm"
-                title="Edit"
+                :title="$t('common.edit')"
                 @click="gotoEdit(props.row.id)"
               >
                 <i class="fas fa-edit fa-fw" />
@@ -48,14 +57,14 @@
               <!-- delete button -->
               <confirm-modal
                 v-if="hasPermission('delete', 'post')"
-                :body="`Confirm Delete Post [${props.row.title}] ?`"
+                :body="$t('common.confirm_delete_confirmation', {entity: $t('menu.posts'), item: props.row.title})"
                 :cfm-btn-class="{btn: true, 'btn-danger': true}"
                 :is-btn-html="true"
                 :show-btn="true"
                 :trigger-btn-class="{btn: true, 'btn-icon': true, 'btn-sm': true, 'btn-danger': true}"
                 :trigger-btn-text="deleteBtnIcon"
-                trigger-btn-tooltip="Delete"
-                title="Confirmation"
+                :trigger-btn-tooltip="$t('common.delete')"
+                :title="$t('common.confirmation')"
                 @confirm="deletePost(props.row.id, props.row.title)"
               />
               <!-- #delete button -->
@@ -101,27 +110,27 @@ export default {
   data: () => ({
     columns: [
       {
-        label: 'Title',
+        label: 'common.title',
         field: 'title',
         width: '32%',
       },
       {
-        label: 'Author',
+        label: 'page.author',
         field: 'author.name',
         width: '20%',
       },
       {
-        label: 'Tags',
+        label: 'menu.tags',
         field: (row) => row.tags.map((tag) => tag.name).join(', '),
         width: '20%',
       },
       {
-        label: 'Status',
+        label: 'common.status',
         field: 'status',
         width: '10%',
       },
       {
-        label: 'Last edited',
+        label: 'common.last_edited',
         field: 'updated_at',
         width: '17%',
       },
@@ -143,7 +152,7 @@ export default {
   },
   created() {
     this.loadPosts();
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Posts');
+    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.posts');
   },
   methods: {
     async loadPosts() {

@@ -8,13 +8,13 @@
         <card>
           <template v-slot:header>
             <h4 class="form-inline">
-              Form Preview
+              {{ $t('form.form_preview') }}
             </h4>
           </template>
           <template v-slot:header-action>
             <div class="form-inline">
               <div class="form-group">
-                <label for="formName">Name <span class="text-danger">*</span></label>
+                <label for="formName">{{ $t('common.name') }} <span class="text-danger">*</span></label>
                 <input
                   id="formName"
                   v-model="name"
@@ -33,7 +33,7 @@
                 class="btn btn-primary"
                 @click="validateAndSave"
               >
-                Save
+                {{ $t('common.save') }}
               </button>
             </div>
           </template>
@@ -59,7 +59,7 @@
               v-if="isFormItemsEmpty && !itemsEntering"
               class="empty-form-component text-center"
             >
-              <i class="fas fa-arrows-alt" /> Drag component here from the left.
+              <i class="fas fa-arrows-alt" /> {{ $t('form.drag_component_placeholder') }}
             </div>
 
             <Draggable
@@ -153,7 +153,7 @@ export default {
     this.$store.commit('form/RESET_STATE');
 
     if (this.mode === 'edit') {
-      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Edit Form');
+      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'form.edit_form');
 
       // fetch data from server
       try {
@@ -167,7 +167,7 @@ export default {
         });
       }
     } else {
-      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Create Form');
+      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'form.create_form');
     }
 
     const formComponentResponse = await axios.get('/api/form/component');

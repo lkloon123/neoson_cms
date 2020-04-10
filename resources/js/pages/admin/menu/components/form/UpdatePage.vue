@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="form-group">
-      <label for="menu-label">Label</label>
+      <label for="menu-label">{{ $t('common.label') }}</label>
       <input
         id="menu-label"
         :value="getValue('menuLabel')"
@@ -14,10 +14,10 @@
 
     <div class="form-group">
       <span>
-        Link: <a
+        {{ $t('common.url') }}: <a
           :href="`/${itemData.slug}`"
           target="_blank"
-        >{{ itemData.title }}</a>
+        >{{ $t(itemData.title) }}</a>
       </span>
     </div>
 
@@ -25,7 +25,7 @@
       class="btn btn-danger btn-icon icon-left"
       @click="removeMenu"
     >
-      <i class="fas fa-trash" /> Remove
+      <i class="fas fa-trash" /> {{ $t('common.remove') }}
     </button>
   </div>
 </template>

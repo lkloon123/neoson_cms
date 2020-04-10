@@ -1,20 +1,20 @@
 <template>
   <card>
     <template v-slot:header>
-      <h4>Form Properties</h4>
+      <h4>{{ $t('form.form_properties') }}</h4>
     </template>
 
     <div v-if="!clonedSelectedItem">
       <div class="alert alert-info">
         <div class="alert-body">
-          Please click a component in form preview to change its properties
+          {{ $t('form.properties_component_placeholder') }}
         </div>
       </div>
     </div>
 
     <template v-else>
       <div class="form-group">
-        <label for="label">Label</label>
+        <label for="label">{{ $t('common.label') }}</label>
         <input
           id="label"
           v-model="formLabel"
@@ -33,7 +33,7 @@
           :sync="true"
           @input="(value) => setValidator('required', value)"
         />
-        Is Required?
+        {{ $t('form.is_required') }}
       </div>
 
       <div class="d-flex justify-content-between">
@@ -41,14 +41,14 @@
           class="btn btn-danger btn-icon icon-left"
           @click="removeField"
         >
-          <i class="fas fa-trash" /> Remove
+          <i class="fas fa-trash" /> {{ $t('common.remove') }}
         </button>
 
         <button
           class="btn btn-light btn-icon icon-left"
           @click="duplicateField"
         >
-          <i class="fas fa-clone" /> Duplicate
+          <i class="fas fa-clone" /> {{ $t('form.duplicate') }}
         </button>
       </div>
     </template>

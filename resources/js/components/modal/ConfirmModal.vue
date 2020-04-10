@@ -34,14 +34,14 @@
           data-dismiss="modal"
           @click="$emit('confirm', $event)"
         >
-          {{ cfmBtnText }}
+          {{ $t(cfmBtnText) }}
         </button>
         <button
           :class="cancelBtnClass"
           data-dismiss="modal"
           @click="$emit('cancel', $event)"
         >
-          {{ cancelBtnText }}
+          {{ $t(cancelBtnText) }}
         </button>
       </template>
     </BaseModal>
@@ -72,7 +72,7 @@ export default {
     },
     cfmBtnText: {
       type: String,
-      default: 'yes',
+      default: 'common.yes',
     },
     cancelBtnClass: {
       type: Object,
@@ -83,7 +83,7 @@ export default {
     },
     cancelBtnText: {
       type: String,
-      default: 'no',
+      default: 'common.no',
     },
     // trigger button
     showBtn: {
