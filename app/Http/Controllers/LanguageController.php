@@ -27,4 +27,16 @@ class LanguageController extends Controller
             ['translations' => $language->getTranslationsGroups()]
         ));
     }
+
+    public function setLocale($lang)
+    {
+        return tap(
+            request()->wantsJson() ? response()->json() : redirect()->back(),
+            function ($response) use ($lang) {
+                $response->withCookie(
+                    cookie()->forever('locale', $lang, null, null, null, false)
+                );
+            }
+        );
+    }
 }

@@ -125,7 +125,7 @@ class FormController extends Controller
 
         return FormResponsesResource::collection($form->formResponses)
             ->additional(array_merge(
-                $lastResponse->buildColumns(),
+                $form->buildFormResponseColumn(),
                 ['form_name' => Str::title(str_replace('_', ' ', $form->name))]
             ));
     }

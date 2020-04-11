@@ -2,13 +2,13 @@
   <card>
     <template v-slot:header>
       <h4>
-        Plugins&nbsp;
+        {{ $t('menu.plugins')}}&nbsp;
         <router-link
           v-if="hasPermission('create', 'plugin')"
           to="/plugins/installer"
           class="btn btn-icon icon-left btn-primary"
         >
-          <i class="fas fa-plus" /> Install
+          <i class="fas fa-plus" /> {{ $t('plugin.install') }}
         </router-link>
       </h4>
     </template>
@@ -27,6 +27,15 @@
       style-class="vgt-table table-hover condensed"
     >
       <template
+        slot="table-column"
+        slot-scope="props"
+      >
+        <span>
+          {{ $t(props.column.label) }}
+        </span>
+      </template>
+
+      <template
         slot="table-row"
         slot-scope="props"
       >
@@ -36,14 +45,14 @@
               <!-- delete button -->
               <confirm-modal
                 v-if="hasPermission('delete', 'plugin')"
-                :body="`Confirm Delete Plugin [${props.row.name}] ?`"
+                :body="$t('common.confirm_delete_confirmation', {entity: $t('menu.plugins'), item: props.row.name})"
                 :cfm-btn-class="{btn: true, 'btn-danger': true}"
                 :is-btn-html="true"
                 :show-btn="true"
                 :trigger-btn-class="{btn: true, 'btn-icon': true, 'btn-sm': true, 'btn-danger': true}"
                 :trigger-btn-text="deleteBtnIcon"
-                trigger-btn-tooltip="Delete"
-                title="Confirmation"
+                :trigger-btn-tooltip="$t('common.delete')"
+                :title="$t('common.confirmation')"
                 @confirm="deletePlugin(props.row.id, props.row.name)"
               />
             <!-- #delete button -->
@@ -83,27 +92,27 @@ export default {
   data: () => ({
     columns: [
       {
-        label: 'Name',
+        label: 'common.name',
         field: 'name',
         width: '25%',
       },
       {
-        label: 'Version',
+        label: 'common.version',
         field: 'ver',
         width: '10%',
       },
       {
-        label: 'Author',
+        label: 'page.author',
         field: 'author',
         width: '10%',
       },
       {
-        label: 'Description',
+        label: 'common.description',
         field: 'desc',
         width: '44%',
       },
       {
-        label: 'Enabled',
+        label: 'common.enabled',
         field: 'enabled_disabled_state',
         width: '10%',
       },
@@ -125,7 +134,7 @@ export default {
   },
   created() {
     this.loadPlugins();
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Plugins');
+    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.plugins');
   },
   methods: {
     updatePluginState(newPluginState, index) {

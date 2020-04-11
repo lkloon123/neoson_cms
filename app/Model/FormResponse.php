@@ -33,32 +33,8 @@ class FormResponse extends BaseModel
         'meta' => 'array'
     ];
 
-    public $dontShow = [];
-
     public function form()
     {
         return $this->belongsTo(Form::class);
-    }
-
-    public function buildColumns()
-    {
-        $columns = [];
-        foreach ($this->meta as $key => $value) {
-            if (in_array($key, $this->dontShow, true)) {
-                continue;
-            }
-
-            $columns[] = [
-                'label' => Str::title(str_replace(['_', '-'], ' ', $key)),
-                'field' => $key,
-            ];
-        }
-
-        $columns[] = [
-            'label' => 'Submitted On',
-            'field' => 'created_at',
-        ];
-
-        return ['columns' => $columns];
     }
 }

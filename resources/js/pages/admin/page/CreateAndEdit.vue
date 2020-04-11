@@ -3,7 +3,7 @@
     <div class="col-md-9">
       <card>
         <template v-slot:header>
-          <h4>Content</h4>
+          <h4>{{ $t('page.content') }}</h4>
         </template>
         <template v-slot:header-action>
           <button
@@ -12,7 +12,7 @@
             class="btn btn-light"
             @click="validateAndSave('Draft')"
           >
-            Save Draft
+            {{ $t('page.save_draft') }}
           </button>
           <button
             :class="{disabled: isLoading}"
@@ -20,7 +20,7 @@
             class="btn btn-primary"
             @click="validateAndSave('Publish')"
           >
-            Publish
+            {{ $t('page.publish') }}
           </button>
         </template>
 
@@ -46,7 +46,7 @@
         class="mb-1"
       >
         <template v-slot:header>
-          <h4>Schedule</h4>
+          <h4>{{ $t('page.schedule') }}</h4>
         </template>
 
         <form-content-loading
@@ -55,7 +55,7 @@
         />
         <div v-else>
           <div class="form-group">
-            <label>Publish From</label>
+            <label>{{ $t('page.publish_from') }}</label>
             <date-range-picker
               v-model="publishFromDate"
               v-validate="'required'"
@@ -69,7 +69,7 @@
             </div>
           </div>
           <div class="form-group mb-2">
-            <label>Publish To</label>
+            <label>{{ $t('page.publish_to') }}</label>
             <date-range-picker
               v-model="publishToDate"
               v-validate="'required'"
@@ -90,7 +90,7 @@
         class="mb-1"
       >
         <template v-slot:header>
-          <h4>Config</h4>
+          <h4>{{ $t('common.config') }}</h4>
         </template>
 
         <form-content-loading
@@ -99,7 +99,7 @@
         />
         <div v-else>
           <div class="form-group">
-            <label for="title">Title <span class="text-danger">*</span></label>
+            <label for="title">{{ $t('common.title') }} <span class="text-danger">*</span></label>
             <input
               id="title"
               v-model="title"
@@ -108,7 +108,7 @@
               class="form-control"
               :class="{'is-invalid': errors.first('Title')}"
               type="text"
-              placeholder="Enter page title"
+              :placeholder="$t('page.enter_title')"
             >
 
             <div class="invalid-feedback">
@@ -117,7 +117,7 @@
           </div>
 
           <div class="form-group">
-            <label for="slug">Slug/Permalink <span class="text-danger">*</span></label>
+            <label for="slug">{{ $t('page.slug') }} <span class="text-danger">*</span></label>
             <input
               id="slug"
               v-model="slug"
@@ -126,7 +126,7 @@
               class="form-control"
               :class="{'is-invalid': errors.first('Slug/Permalink')}"
               type="text"
-              placeholder="Enter slug"
+              :placeholder="$t('page.enter_slug')"
             >
 
             <div class="invalid-feedback">
@@ -135,12 +135,12 @@
           </div>
 
           <div class="form-group mb-2">
-            <label for="description">Description</label>
+            <label for="description">{{ $t('common.description') }}</label>
             <textarea
               id="description"
               v-model="description"
               class="form-control"
-              placeholder="Enter short description"
+              :placeholder="$t('page.enter_description')"
             />
           </div>
         </div>
@@ -210,7 +210,7 @@ export default {
   },
   async created() {
     if (this.mode === 'edit') {
-      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Edit Page');
+      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'page.edit_page');
       // fetch data from server
       try {
         const pageResponse = await axios.get(`/api/page/${this.$route.params.id}`);
@@ -228,7 +228,7 @@ export default {
         });
       }
     } else {
-      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Create Page');
+      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'page.create_page');
     }
 
     this.$store.commit('SET_PAGE_BACK_LINK', '/pages');

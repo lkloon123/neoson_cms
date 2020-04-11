@@ -9,7 +9,7 @@
       v-if="version"
       class="footer-right hidden-xs"
     >
-      Version {{ version }}
+      {{ $t('common.version') }} {{ version }}
     </div>
   </footer>
 </template>

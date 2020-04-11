@@ -67,6 +67,6 @@ class FormItem extends BaseModel
             return $this->meta['key'];
         }
 
-        return Str::snake($this->meta['label']);
+        return Str::snake(str_replace(['.'], ' ', $this->meta['label']));
     }
 }

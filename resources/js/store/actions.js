@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { i18n, loadLanguageAsync } from '../i18n';
+import Vue from 'vue';
+import i18n from '../i18n';
 
 const getCurrentUserInfo = async ({ commit }) => {
   try {
@@ -38,22 +39,39 @@ const logout = async ({ commit }) => {
   window.location = '/';
 };
 
-const loadAppLocale = async ({ commit }) => {
-  const localeResponse = await axios.options('/api/locale');
-  const languageCode = localeResponse.data.locale;
+const loadAppLocale = async ({ dispatch, commit, state }) => {
+  let languageCode = 'en';
+  if (Vue.$cookies.isKey('locale')) {
+    languageCode = Vue.$cookies.get('locale');
+  }
 
-  await loadLanguageAsync(languageCode);
+  if (languageCode === state.locale) {
+    return;
+  }
+
+  if (!state.loadedLanguages.includes(languageCode)) {
+    await dispatch('loadLanguageAsync', languageCode);
+  }
   i18n.locale = languageCode;
+  axios.defaults.headers.common['Accept-Language'] = languageCode;
+  document.querySelector('html').setAttribute('lang', languageCode);
 
   commit('SET_LOCALE', languageCode);
-  commit('fm/settings/manualSettings', {
-    lang: languageCode,
-  });
+  commit('fm/settings/manualSettings', { lang: languageCode });
 };
 
-export {
+const loadLanguageAsync = async ({ commit, state }, language) => {
+  const localeResponse = await axios.get(`/api/translation/${language}`);
+  const messages = localeResponse.data;
+
+  i18n.setLocaleMessage(language, messages);
+  commit('SET_LOADED_LANGUAGES', [language, ...state.loadedLanguages]);
+};
+
+export default {
   getCurrentUserInfo,
   getRbac,
   logout,
   loadAppLocale,
+  loadLanguageAsync,
 };

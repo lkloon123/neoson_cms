@@ -4,7 +4,7 @@
     <div class="col-md-8 col-sm-8">
       <card>
         <template v-slot:header>
-          <h4>General</h4>
+          <h4>{{ $t('setting.general_settings') }}</h4>
         </template>
 
         <vcl-table v-if="isLoading" />
@@ -28,7 +28,7 @@
               class="btn btn-primary btn-save"
               @click="save(group)"
             >
-              Save
+              {{ $t('common.save') }}
             </button>
           </div>
         </template>
@@ -53,7 +53,7 @@ export default {
   }),
   created() {
     this.loadSetting(this.group);
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'General Settings');
+    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'setting.general_settings');
     this.$store.commit('SET_PAGE_BACK_LINK', '/settings');
   },
 };

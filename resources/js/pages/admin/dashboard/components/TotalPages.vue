@@ -3,7 +3,7 @@
     class="cursor-pointer"
     @click="goToPage"
   >
-    <statistic-card header="Total Pages">
+    <statistic-card :header="$t('dashboard.total_pages')">
       <template v-slot:icon>
         <i class="fas fa-file" />
       </template>

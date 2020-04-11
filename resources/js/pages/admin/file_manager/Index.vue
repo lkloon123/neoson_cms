@@ -11,7 +11,7 @@ export default {
     this.$store.commit('fm/setFileCallBack', null);
   },
   created() {
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'File Manager');
+    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.file_manager');
   },
 };
 </script>

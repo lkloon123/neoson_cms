@@ -4,7 +4,7 @@
     <div class="col-6">
       <card>
         <template v-slot:header>
-          <h4>Upload Plugin</h4>
+          <h4>{{ $t('plugin.upload_plugin') }}</h4>
         </template>
 
         <div class="upload-component">
@@ -20,7 +20,7 @@
                       <label
                         for="file"
                         class="btn btn-primary pt-2"
-                      >Browse</label>
+                      >{{ $t('plugin.browse') }}</label>
                     </div>
                     <input
                       class="form-control mr-1"
@@ -34,7 +34,7 @@
                       type="button"
                       @click.prevent="$refs.upload.active = true"
                     >
-                      {{ installBtnText }}
+                      {{ $t(installBtnText) }}
                     </button>
                   </div>
                 </div>
@@ -61,11 +61,11 @@
             </div>
             <template v-else>
               <div class="text-center p-5">
-                <h4>Drop files anywhere to upload<br>or</h4>
+                <h4>{{ $t('plugin.drop_file_anyway_upload') }}<br>{{ $t('common.or') }}</h4>
                 <label
                   for="file"
                   class="btn btn-lg btn-primary ml-2"
-                >Select Files</label>
+                >{{ $t('plugin.select_file') }}</label>
               </div>
             </template>
 
@@ -73,7 +73,7 @@
               v-show="$refs.upload && $refs.upload.dropActive"
               class="drop-active"
             >
-              <h3>Drop files to upload</h3>
+              <h3>{{ $t('drop_file_to_upload') }}</h3>
             </div>
 
             <vue-upload-component
@@ -106,14 +106,14 @@ export default {
   computed: {
     installBtnText() {
       if (this.files[0].progress >= 100) {
-        return 'Installing';
+        return 'plugin.installing';
       }
 
       if (this.$refs.upload && this.$refs.upload.active) {
-        return 'Uploading';
+        return 'plugin.uploading';
       }
 
-      return 'Install';
+      return 'plugin.install';
     },
     headers() {
       return {
@@ -131,7 +131,7 @@ export default {
   },
   created() {
     this.$store.commit('SET_PAGE_BACK_LINK', '/plugins');
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Install Plugin');
+    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'plugin.install_plugin');
   },
   methods: {
     inputFile(newFile, oldFile) {

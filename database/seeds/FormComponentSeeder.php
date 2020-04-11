@@ -20,7 +20,7 @@ class FormComponentSeeder extends Seeder
                 'validators' => ['required' => false],
             ],
             'html_component' => '<label>
-    {{field.label}}
+    {{translate(field.label)}}
     <span v-if="field.validators.required" class="text-danger ml-1">*</span>
 </label>
 <input class="form-control" type="text" :readonly="field.readonly" :value="field.value" @input="field.inputWatcher"/>
@@ -36,7 +36,7 @@ class FormComponentSeeder extends Seeder
                 'validators' => ['required' => false],
             ],
             'html_component' => '<label>
-    {{field.label}}
+    {{translate(field.label)}}
     <span v-if="field.validators.required" class="text-danger ml-1">*</span>
 </label>
 <textarea class="form-control" :readonly="field.readonly" :value="field.value" @input="field.inputWatcher"></textarea>
@@ -52,7 +52,7 @@ class FormComponentSeeder extends Seeder
                 'validators' => ['required' => false],
             ],
             'html_component' => '<label>
-    {{field.label}}
+    {{translate(field.label)}}
     <span v-if="field.validators.required" class="text-danger ml-1">*</span>
 </label>
 <input class="form-control" type="password" :readonly="field.readonly" :value="field.value" @input="field.inputWatcher"/>
@@ -65,7 +65,7 @@ class FormComponentSeeder extends Seeder
                 'label' => 'Submit',
                 'componentLabel' => 'Submit',
             ],
-            'html_component' => '<button type="submit" class="btn btn-primary" @click="field.submitWatcher">{{field.label}}</button>'
+            'html_component' => '<button type="submit" class="btn btn-primary" @click="field.submitWatcher">{{translate(field.label)}}</button>'
         ]);
     }
 }

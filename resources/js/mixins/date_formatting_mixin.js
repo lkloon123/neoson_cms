@@ -3,7 +3,7 @@ import moment from 'moment';
 export default {
   methods: {
     formatToAgoDate(inputDateTime) {
-      return moment(inputDateTime).fromNow();
+      return moment(inputDateTime).locale(this.$store.state.locale).fromNow();
     },
   },
 };

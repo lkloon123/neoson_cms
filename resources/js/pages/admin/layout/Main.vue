@@ -18,7 +18,7 @@
               <i class="fas fa-arrow-left" />
             </router-link>
           </div>
-          <h1>{{ currentPageTitle }}</h1>
+          <h1>{{ $t(currentPageTitle) }}</h1>
 
           <div class="section-header-breadcrumb">
             <div
@@ -30,9 +30,9 @@
                 v-if="breadcrumb.link"
                 :to="breadcrumb.link"
               >
-                {{ breadcrumb.name }}
+                {{ $t(breadcrumb.name) }}
               </router-link>
-              <span v-else>{{ breadcrumb.name }}</span>
+              <span v-else>{{ $t(breadcrumb.name) }}</span>
             </div>
           </div>
         </div>

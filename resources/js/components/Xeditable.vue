@@ -3,9 +3,9 @@
     <span
       v-if="!isEditing"
       class="editable"
-      title="Click to edit"
+      :title="$t('common.click_to_edit')"
       @click="show"
-    >{{ placeholder }}</span>
+    >{{ $t(placeholder) }}</span>
 
     <div
       v-if="isEditing"
@@ -84,7 +84,7 @@ export default {
         return this.value;
       }
 
-      return 'Click to edit';
+      return 'common.click_to_edit';
     },
   },
   watch: {

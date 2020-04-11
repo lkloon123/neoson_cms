@@ -58,11 +58,11 @@ class Permission extends LaratrustPermission
     public static function displayColumnsOption()
     {
         return [
-            ['label' => 'Module', 'field' => 'module', 'width' => '20%'],
-            ['label' => 'View', 'field' => 'abilities.view', 'width' => '20%', 'thClass' => 'text-center'],
-            ['label' => 'Create', 'field' => 'abilities.create', 'width' => '20%', 'thClass' => 'text-center'],
-            ['label' => 'Update', 'field' => 'abilities.update', 'width' => '20%', 'thClass' => 'text-center'],
-            ['label' => 'Delete', 'field' => 'abilities.delete', 'width' => '20%', 'thClass' => 'text-center']
+            ['label' => 'role.module', 'field' => 'module', 'width' => '20%'],
+            ['label' => 'common.view', 'field' => 'abilities.view', 'width' => '20%', 'thClass' => 'text-center'],
+            ['label' => 'common.create', 'field' => 'abilities.create', 'width' => '20%', 'thClass' => 'text-center'],
+            ['label' => 'common.update', 'field' => 'abilities.update', 'width' => '20%', 'thClass' => 'text-center'],
+            ['label' => 'common.delete', 'field' => 'abilities.delete', 'width' => '20%', 'thClass' => 'text-center']
         ];
     }
 
@@ -70,7 +70,7 @@ class Permission extends LaratrustPermission
     {
         $default = [
             [
-                'module' => 'Page',
+                'module' => 'menu.pages',
                 'abilities' => [
                     'view' => ['state' => PermissionType::Disallow, 'has_own' => true],
                     'create' => ['state' => PermissionType::Disallow, 'has_own' => false],
@@ -79,7 +79,7 @@ class Permission extends LaratrustPermission
                 ]
             ],
             [
-                'module' => 'Post',
+                'module' => 'menu.posts',
                 'abilities' => [
                     'view' => ['state' => PermissionType::OnlyOwn, 'has_own' => true],
                     'create' => ['state' => PermissionType::Allow, 'has_own' => false],
@@ -88,7 +88,7 @@ class Permission extends LaratrustPermission
                 ]
             ],
             [
-                'module' => 'Form',
+                'module' => 'menu.forms',
                 'abilities' => [
                     'view' => ['state' => PermissionType::Disallow, 'has_own' => true],
                     'create' => ['state' => PermissionType::Disallow, 'has_own' => false],
@@ -97,7 +97,7 @@ class Permission extends LaratrustPermission
                 ]
             ],
             [
-                'module' => 'User Manage',
+                'module' => 'setting.user_management',
                 'abilities' => [
                     'view' => ['state' => PermissionType::Disallow, 'has_own' => true],
                     'create' => ['state' => PermissionType::Disallow, 'has_own' => false],
@@ -107,7 +107,7 @@ class Permission extends LaratrustPermission
 
             ],
             [
-                'module' => 'Plugin',
+                'module' => 'menu.plugins',
                 'abilities' => [
                     'view' => ['state' => PermissionType::Disallow, 'has_own' => false],
                     'create' => ['state' => PermissionType::Disallow, 'has_own' => false],
@@ -116,27 +116,27 @@ class Permission extends LaratrustPermission
                 ]
             ],
             [
-                'module' => 'Translation',
+                'module' => 'setting.translation',
                 'abilities' => [
                     'update' => ['state' => PermissionType::Disallow, 'has_own' => false]
                 ]
             ],
             [
-                'module' => 'General Setting',
+                'module' => 'setting.general_settings',
                 'abilities' => [
                     'view' => ['state' => PermissionType::Disallow, 'has_own' => false],
                     'update' => ['state' => PermissionType::Disallow, 'has_own' => false],
                 ]
             ],
             [
-                'module' => 'Integration Setting',
+                'module' => 'setting.integration_settings',
                 'abilities' => [
                     'view' => ['state' => PermissionType::Disallow, 'has_own' => false],
                     'update' => ['state' => PermissionType::Disallow, 'has_own' => false],
                 ]
             ],
             [
-                'module' => 'Acl Setting',
+                'module' => 'setting.roles_and_permission',
                 'abilities' => [
                     'view' => ['state' => PermissionType::Disallow, 'has_own' => false],
                     'create' => ['state' => PermissionType::Disallow, 'has_own' => false],
@@ -145,7 +145,7 @@ class Permission extends LaratrustPermission
                 ]
             ],
             [
-                'module' => 'Login Admin',
+                'module' => 'common.login_admin',
                 'abilities' => [
                     'view' => ['state' => PermissionType::Allow, 'has_own' => false]
                 ]

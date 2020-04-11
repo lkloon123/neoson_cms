@@ -25,7 +25,7 @@ class FormResponsesResource extends BaseResource
 
     protected function filterByDontShow($data)
     {
-        foreach ($this->dontShow as $dontShow) {
+        foreach ($this->form->dontShowInResponse as $dontShow) {
             unset($data[$dontShow]);
         }
 

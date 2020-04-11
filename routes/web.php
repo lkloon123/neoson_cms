@@ -19,7 +19,7 @@ Route::get('/admin/{any}', 'AdminController@index')->where('any', '.*');
 Route::prefix('api')->group(function () {
     Route::get('translation/{language}', 'TranslationController@formattedTranslation');
     Route::get('language', 'LanguageController@index');
-    Route::options('locale', 'AdminController@locale');
+    Route::put('locale/{lang}', 'LanguageController@setLocale');
 
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::options('version', 'AdminController@version');

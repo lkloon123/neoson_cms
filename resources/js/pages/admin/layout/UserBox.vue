@@ -34,7 +34,7 @@
         class="dropdown-item has-icon text-danger"
         @click.prevent="logoutModalState = 'show'"
       >
-        <i class="fas fa-sign-out-alt" /> Logout
+        <i class="fas fa-sign-out-alt" /> {{ $t('common.logout') }}
       </a>
     </div>
 
@@ -42,7 +42,7 @@
       :cfm-btn-class="{btn: true, 'btn-danger': true}"
       :current-state="logoutModalState"
       body="Confirm Logout?"
-      title="Confirmation"
+      :title="$t('common.confirmation')"
       @confirm="logout"
       @hidden="logoutModalState = 'hide'"
     />

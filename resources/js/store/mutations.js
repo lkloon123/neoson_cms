@@ -5,8 +5,9 @@ const SET_CURRENT_USER_ROLE = (state, payload) => { state.currentUserRole = payl
 const SET_CURRENT_USER_PERMISSION = (state, payload) => { state.currentUserPermission = payload; };
 const UPDATE_LOADER = (state, payload) => { state.showLoader = payload; };
 const SET_LOCALE = (state, payload) => { state.locale = payload; };
+const SET_LOADED_LANGUAGES = (state, payload) => { state.loadedLanguages = payload; };
 
-export {
+export default {
   SET_CURRENT_PAGE_TITLE,
   SET_PAGE_BACK_LINK,
   SET_CURRENT_USER_INFO,
@@ -14,4 +15,5 @@ export {
   SET_CURRENT_USER_PERMISSION,
   UPDATE_LOADER,
   SET_LOCALE,
+  SET_LOADED_LANGUAGES,
 };

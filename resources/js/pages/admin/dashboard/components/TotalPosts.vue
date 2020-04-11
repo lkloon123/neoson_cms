@@ -3,7 +3,7 @@
     class="cursor-pointer"
     @click="goToPost"
   >
-    <statistic-card header="Total Posts">
+    <statistic-card :header="$t('dashboard.total_posts')">
       <template v-slot:icon>
         <i class="fas fa-align-left" />
       </template>

@@ -4,7 +4,7 @@
     class="mb-1"
   >
     <template v-slot:header>
-      <h4>Featured Image</h4>
+      <h4>{{ $t('page.featured_image') }}</h4>
     </template>
 
     <img
@@ -27,7 +27,7 @@
         class="btn btn-danger btn-icon icon-left"
         @click="removeImg"
       >
-        <i class="fas fa-trash" />Remove
+        <i class="fas fa-trash" />{{ $t('common.remove') }}
       </button>
       <html-modal
         :current-state="modalState"
@@ -65,7 +65,7 @@ export default {
   }),
   computed: {
     triggerBtnTxt() {
-      return this.selectedImg ? '<i class="fas fa-exchange-alt"/>Replace' : 'Select';
+      return this.selectedImg ? `<i class="fas fa-exchange-alt"/> ${this.$t('common.replace')}` : this.$t('common.select');
     },
     hasSelectedImg() {
       return this.selectedImg && this.selectedImg !== '' && this.selectedImg !== undefined && this.selectedImg !== null;

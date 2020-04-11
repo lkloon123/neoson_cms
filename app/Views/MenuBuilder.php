@@ -69,21 +69,21 @@ class MenuBuilder extends AbstractBuilder
         if ($item->meta['type'] === 'page') {
             $page = Page::find($item->meta['pageId']);
             return [
-                'title' => $item->meta['menuLabel'],
+                'title' => __($item->meta['menuLabel']),
                 'url' => '/' . $page->slug
             ];
         }
 
         if ($item->meta['type'] === 'custom_link') {
             return [
-                'title' => $item->meta['menuLabel'],
+                'title' => __($item->meta['menuLabel']),
                 'url' => $item->meta['url']
             ];
         }
 
         if ($item->meta['type'] === 'auth') {
             return [
-                'title' => \Auth::check() ? $item->meta['menuLabel'] : $item->meta['guestLabel'],
+                'title' => \Auth::check() ? __($item->meta['menuLabel']) : __($item->meta['guestLabel']),
                 'url' => \Auth::check() ? '/login' : '/admin',
             ];
         }

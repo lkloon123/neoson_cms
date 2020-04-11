@@ -13,13 +13,13 @@ class Title extends AbstractBlock
     public function display()
     {
         if ($this->isHomepage()) {
-            return 'Home';
+            return __('menu.home');
         }
 
         if ($this->isTag()) {
-            return $this->currentPage->name;
+            return __($this->currentPage->name);
         }
 
-        return $this->currentPage->title;
+        return __($this->currentPage->title);
     }
 }

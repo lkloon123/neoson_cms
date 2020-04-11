@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="form-group">
-      <label for="menu-label">Label</label>
+      <label for="menu-label">{{ $t('common.label') }}</label>
       <input
         id="menu-label"
         :value="getValue('menuLabel')"
@@ -13,7 +13,7 @@
     </div>
 
     <div class="form-group">
-      <label for="url">Url</label>
+      <label for="url">{{ $t('common.url') }}</label>
       <input
         id="url"
         v-validate="{required: true, url:{require_host: false}}"
@@ -32,10 +32,19 @@
     </div>
 
     <button
+      v-if="mode === 'add'"
       class="btn btn-primary"
       @click="addToMenu"
     >
-      Add to menu
+      {{ $t('menu.add_to_menu') }}
+    </button>
+
+    <button
+      v-if="mode === 'update'"
+      class="btn btn-danger btn-icon icon-left"
+      @click="removeMenu"
+    >
+      <i class="fas fa-trash" /> {{ $t('common.remove') }}
     </button>
   </div>
 </template>
@@ -49,6 +58,7 @@ export default {
     type: 'custom_link',
     menuLabel: '',
     url: '',
+    componentLabel: 'menu.custom_link',
   }),
   methods: {
     reset() {

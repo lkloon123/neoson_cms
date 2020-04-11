@@ -33,7 +33,7 @@ export default {
   },
   mixins: [PermissionMixin],
   created() {
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Dashboard');
+    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.dashboard');
   },
 };
 </script>
