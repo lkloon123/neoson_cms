@@ -82,6 +82,7 @@ export default {
   },
   mounted() {
     const vm = this;
+    this.id = this.$Utils.getRandomId();
 
     $(`#${this.id}`).on('hidden.bs.modal', (event) => {
       vm.$emit('hidden', event);
@@ -90,9 +91,6 @@ export default {
     $(`#${this.id}`).on('shown.bs.modal', (event) => {
       vm.$emit('shown', event);
     });
-  },
-  created() {
-    this.id = this.$Utils.getRandomId();
   },
 };
 </script>

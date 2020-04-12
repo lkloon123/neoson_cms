@@ -21,7 +21,7 @@ export default {
   data: () => ({
     version: null,
   }),
-  created() {
+  mounted() {
     this.loadVersion();
   },
   methods: {

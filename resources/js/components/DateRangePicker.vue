@@ -50,14 +50,12 @@ export default {
     },
   },
   mounted() {
-    this.dateRangePickerIns = $(`#${this.id}`);
-    this.makeDateTimePicker();
-    this.bindEvents();
-  },
-  created() {
     this.id = this.$Utils.getRandomId();
     this.copyOption = Object.assign(this.copyOption, this.options);
     this.selectedDateTime = this.value;
+    this.dateRangePickerIns = $(`#${this.id}`);
+    this.makeDateTimePicker();
+    this.bindEvents();
   },
   methods: {
     makeDateTimePicker() {

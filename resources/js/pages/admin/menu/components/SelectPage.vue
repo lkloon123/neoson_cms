@@ -49,7 +49,7 @@ export default {
       return this.isLoading || this.$store.state.menu.coreLoading;
     },
   },
-  created() {
+  mounted() {
     this.searchPage();
   },
   methods: {

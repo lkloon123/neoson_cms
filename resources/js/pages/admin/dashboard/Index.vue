@@ -32,7 +32,7 @@ export default {
     TotalPages, TotalPosts, TotalUsers,
   },
   mixins: [PermissionMixin],
-  created() {
+  mounted() {
     this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.dashboard');
   },
 };

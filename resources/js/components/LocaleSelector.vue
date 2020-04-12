@@ -50,7 +50,7 @@ export default {
       return `/images/flags/${this.displayFlagIso}.svg`;
     },
   },
-  created() {
+  mounted() {
     this.loadLanguages();
   },
   methods: {

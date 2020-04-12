@@ -147,7 +147,7 @@ export default {
       return '<i class="fas fa-trash fa-fw"/>';
     },
   },
-  created() {
+  mounted() {
     this.loadForms();
     this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.forms');
   },

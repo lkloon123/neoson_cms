@@ -214,7 +214,7 @@ export default {
       this.slug = sluggable(newValue, { lower: true });
     },
   },
-  async created() {
+  async mounted() {
     if (this.mode === 'edit') {
       this.$store.commit('SET_CURRENT_PAGE_TITLE', 'post.edit_post');
 

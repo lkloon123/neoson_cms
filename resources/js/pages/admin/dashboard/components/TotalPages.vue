@@ -31,7 +31,7 @@ export default {
     amount: 0,
     isLoading: false,
   }),
-  created() {
+  mounted() {
     this.loadPagesCount();
   },
   methods: {

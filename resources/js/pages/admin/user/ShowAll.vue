@@ -154,7 +154,7 @@ export default {
       return '<i class="fas fa-trash fa-fw"/>';
     },
   },
-  created() {
+  mounted() {
     this.loadUsers();
     this.loadOptions();
     this.$store.commit('SET_CURRENT_PAGE_TITLE', 'setting.users');

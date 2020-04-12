@@ -43,7 +43,7 @@ export default {
     isLoading: true,
     isSearching: false,
   }),
-  created() {
+  mounted() {
     this.searchLanguage();
   },
   methods: {

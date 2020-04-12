@@ -119,7 +119,7 @@ export default {
       ];
     },
   },
-  created() {
+  mounted() {
     if (this.mode === 'edit') {
       this.$store.commit('SET_CURRENT_PAGE_TITLE', 'role.edit_role');
     } else {

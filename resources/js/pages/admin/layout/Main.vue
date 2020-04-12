@@ -72,12 +72,11 @@ export default {
     },
   },
   mounted() {
+    this.getCurrentUserInfo();
+
     // eslint-disable-next-line global-require
     require('@stisla/scripts');
     this.updateBreadcrumbList();
-  },
-  created() {
-    this.getCurrentUserInfo();
   },
   methods: {
     ...mapActions(['getCurrentUserInfo']),
