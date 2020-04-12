@@ -15,27 +15,39 @@ const routes = [
       },
       {
         path: 'dashboard',
-        component: () => import('./pages/admin/dashboard/Index.vue'),
+        component: () => import('./components/Index.vue'),
         name: 'dashboard',
-        meta: {
-          breadcrumb: [
-            { name: 'menu.dashboard' },
-          ],
-        },
+        children: [
+          {
+            path: '/',
+            component: () => import('./pages/admin/dashboard/Dashboard.vue'),
+            meta: {
+              breadcrumb: [
+                { name: 'menu.dashboard' },
+              ],
+            },
+          },
+        ],
       },
       {
         path: 'file-manager',
-        component: () => import('./pages/admin/file_manager/Index.vue'),
-        meta: {
-          breadcrumb: [
-            { name: 'menu.dashboard', link: '/dashboard' },
-            { name: 'menu.file_manager' },
-          ],
-        },
+        component: () => import('./components/Index.vue'),
+        children: [
+          {
+            path: '/',
+            component: () => import('./pages/admin/file_manager/FileManager.vue'),
+            meta: {
+              breadcrumb: [
+                { name: 'menu.dashboard', link: '/dashboard' },
+                { name: 'menu.file_manager' },
+              ],
+            },
+          },
+        ],
       },
       {
         path: 'forms',
-        component: () => import('./pages/admin/form/Index.vue'),
+        component: () => import('./components/Index.vue'),
         children: [
           {
             path: '/',
@@ -97,7 +109,7 @@ const routes = [
       },
       {
         path: 'pages',
-        component: () => import('./pages/admin/page/Index.vue'),
+        component: () => import('./components/Index.vue'),
         children: [
           {
             path: '/',
@@ -145,7 +157,7 @@ const routes = [
       },
       {
         path: 'posts',
-        component: () => import('./pages/admin/post/Index.vue'),
+        component: () => import('./components/Index.vue'),
         children: [
           {
             path: '/',
@@ -193,7 +205,7 @@ const routes = [
       },
       {
         path: 'tags',
-        component: () => import('./pages/admin/tag/Index.vue'),
+        component: () => import('./components/Index.vue'),
         children: [
           {
             path: '/',
@@ -212,7 +224,7 @@ const routes = [
       },
       {
         path: 'menu',
-        component: () => import('./pages/admin/menu/Index.vue'),
+        component: () => import('./components/Index.vue'),
         children: [
           {
             path: '/',
@@ -260,7 +272,7 @@ const routes = [
       },
       {
         path: 'plugins',
-        component: () => import('./pages/admin/plugin/Index.vue'),
+        component: () => import('./components/Index.vue'),
         children: [
           {
             path: '/',
@@ -293,7 +305,7 @@ const routes = [
       },
       {
         path: 'settings',
-        component: () => import('./pages/admin/setting/Index.vue'),
+        component: () => import('./components/Index.vue'),
         children: [
           {
             path: '/',
@@ -336,7 +348,7 @@ const routes = [
           },
           {
             path: 'roles',
-            component: () => import('./pages/admin/role/Index.vue'),
+            component: () => import('./components/Index.vue'),
             children: [
               {
                 path: '/',
@@ -387,7 +399,7 @@ const routes = [
           },
           {
             path: 'users',
-            component: () => import('./pages/admin/user/Index.vue'),
+            component: () => import('./components/Index.vue'),
             children: [
               {
                 path: '/',
@@ -422,7 +434,7 @@ const routes = [
           },
           {
             path: 'translations',
-            component: () => import('./pages/admin/translation/Index.vue'),
+            component: () => import('./components/Index.vue'),
             children: [
               {
                 path: '/',
