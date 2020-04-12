@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  created() {
+  mounted() {
     this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Not Found');
   },
 };

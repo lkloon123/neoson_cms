@@ -155,7 +155,7 @@ export default {
       return this.menuItems.length <= 0;
     },
   },
-  async created() {
+  async mounted() {
     this.$store.commit('menu/RESET_STATE');
 
     if (this.mode === 'edit') {

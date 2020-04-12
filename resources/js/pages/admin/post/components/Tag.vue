@@ -61,7 +61,7 @@ export default {
       this.$emit('input', newValue);
     },
   },
-  created() {
+  mounted() {
     this.searchTag();
   },
   methods: {

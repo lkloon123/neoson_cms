@@ -104,7 +104,7 @@ export default {
       return '<i class="fas fa-trash fa-fw"/>';
     },
   },
-  created() {
+  mounted() {
     this.loadLanguages();
     this.$store.commit('SET_CURRENT_PAGE_TITLE', 'setting.translation');
     this.$store.commit('SET_PAGE_BACK_LINK', '/settings');

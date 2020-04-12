@@ -129,7 +129,7 @@ export default {
       };
     },
   },
-  created() {
+  mounted() {
     this.$store.commit('SET_PAGE_BACK_LINK', '/plugins');
     this.$store.commit('SET_CURRENT_PAGE_TITLE', 'plugin.install_plugin');
   },

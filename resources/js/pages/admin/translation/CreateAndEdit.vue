@@ -111,7 +111,7 @@ export default {
       return this.expanded ? 'common.collapse_all' : 'common.expand_all';
     },
   },
-  async created() {
+  async mounted() {
     if (this.mode === 'edit') {
       this.$store.commit('SET_CURRENT_PAGE_TITLE', 'translation.edit_translation');
 

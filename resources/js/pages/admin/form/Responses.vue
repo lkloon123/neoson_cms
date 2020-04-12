@@ -55,7 +55,7 @@ export default {
     formName: '',
     isLoading: true,
   }),
-  created() {
+  mounted() {
     this.loadFormResponse();
     this.$store.commit('SET_CURRENT_PAGE_TITLE', 'form.form_responses');
     this.$store.commit('SET_PAGE_BACK_LINK', '/forms');

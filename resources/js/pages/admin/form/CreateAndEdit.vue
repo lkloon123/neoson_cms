@@ -148,7 +148,7 @@ export default {
       this.itemsEntering = false;
     },
   },
-  async created() {
+  async mounted() {
     this.isLoading = true;
     this.$store.commit('form/RESET_STATE');
 

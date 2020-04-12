@@ -108,7 +108,7 @@ import PermissionMixin from '@mixins/permission_mixin';
 
 export default {
   mixins: [PermissionMixin],
-  created() {
+  mounted() {
     this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.settings');
   },
   methods: {

@@ -49,7 +49,7 @@ export default {
   data: () => ({
     group: 'integration',
   }),
-  created() {
+  mounted() {
     this.loadSetting(this.group);
     this.$store.commit('SET_CURRENT_PAGE_TITLE', 'setting.integration_settings');
     this.$store.commit('SET_PAGE_BACK_LINK', '/settings');

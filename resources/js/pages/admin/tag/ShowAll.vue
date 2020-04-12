@@ -117,7 +117,7 @@ export default {
       return '<i class="fas fa-trash fa-fw"/>';
     },
   },
-  created() {
+  mounted() {
     this.loadTags();
     this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.tags');
   },
