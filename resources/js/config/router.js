@@ -1,6 +1,18 @@
-import Vue from 'vue';
 import router from '../routes';
 import store from '../store';
+
+const checkPermission = async (meta) => {
+  // dispatch if not role not loaded
+  if (store.state.currentUserRole === null) {
+    await store.dispatch('getRbac');
+  }
+
+  if (meta?.module && meta?.permission) {
+    return store.getters.hasPermission(meta.permission, meta.module);
+  }
+
+  return true;
+};
 
 router.beforeEach(async (to, from, next) => {
   store.commit('UPDATE_LOADER', true);
@@ -10,17 +22,7 @@ router.beforeEach(async (to, from, next) => {
     await store.dispatch('loadAppLocale');
   }
 
-  const hasPermission = async () => {
-    if (store.state.currentUserRole === null) {
-      await store.dispatch('getRbac');
-    }
-    if (to.meta.module && to.meta.permission) {
-      return Vue.prototype.$rbac.can(to.meta.permission, to.meta.module);
-    }
-    return true;
-  };
-
-  if (await hasPermission()) {
+  if (await checkPermission(to.meta)) {
     next();
   } else {
     next('unauthorized');

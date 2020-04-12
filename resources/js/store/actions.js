@@ -7,12 +7,10 @@ const getCurrentUserInfo = async ({ commit }) => {
     const currentUserInfo = await axios.get('/api/me');
     commit('SET_CURRENT_USER_INFO', currentUserInfo.data);
   } catch (err) {
-    if (err.response) {
-      if (err.response.status === 401) {
-        commit('SET_CURRENT_USER_INFO', null);
-        // redirect to login
-        window.location = '/login';
-      }
+    if (err.response?.status === 401) {
+      commit('SET_CURRENT_USER_INFO', null);
+      // redirect to login
+      window.location = '/login';
     }
   }
 };
@@ -23,12 +21,10 @@ const getRbac = async ({ commit }) => {
     commit('SET_CURRENT_USER_ROLE', rbacResponse.data.role);
     commit('SET_CURRENT_USER_PERMISSION', rbacResponse.data.permissions);
   } catch (err) {
-    if (err.response) {
-      if (err.response.status === 401) {
-        commit('SET_CURRENT_USER_INFO', null);
-        // redirect to login
-        window.location = '/login';
-      }
+    if (err.response?.status === 401) {
+      commit('SET_CURRENT_USER_INFO', null);
+      // redirect to login
+      window.location = '/login';
     }
   }
 };

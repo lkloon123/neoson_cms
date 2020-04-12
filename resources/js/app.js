@@ -12,14 +12,12 @@ import store from './store';
 import AppInit from './pages/AppInit';
 import Utils from './plugins/utils';
 import Toast from './plugins/toast';
-import Rbac from './plugins/rbac';
 import FormatSizeFilter from './filters/format_size';
 import i18n from './i18n';
 
 Vue.use(VeeValidate, { events: '' });
 Vue.use(Toast);
 Vue.use(Utils);
-Vue.use(Rbac);
 Vue.use(FileManager, { store });
 Vue.use(VueLazyLoad);
 Vue.use(VueCookies);
