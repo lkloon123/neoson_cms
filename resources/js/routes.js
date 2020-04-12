@@ -16,7 +16,6 @@ const routes = [
       {
         path: 'dashboard',
         component: () => import('./components/Index.vue'),
-        name: 'dashboard',
         children: [
           {
             path: '/',

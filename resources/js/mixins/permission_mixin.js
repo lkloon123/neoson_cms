@@ -1,7 +1,7 @@
+import { mapGetters } from 'vuex';
+
 export default {
   methods: {
-    hasPermission(permission, module) {
-      return this.$rbac.can(permission, module);
-    },
+    ...mapGetters(['hasPermission', 'isA']),
   },
 };
