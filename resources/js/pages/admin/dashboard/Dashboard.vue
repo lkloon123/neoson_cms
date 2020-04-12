@@ -22,18 +22,18 @@
 </template>
 
 <script>
-import PermissionMixin from '@mixins/permission_mixin';
-import TotalPages from './components/TotalPages';
-import TotalPosts from './components/TotalPosts';
-import TotalUsers from './components/TotalUsers';
+  import PermissionMixin from '@mixins/permission_mixin';
+  import TotalPages from './components/TotalPages';
+  import TotalPosts from './components/TotalPosts';
+  import TotalUsers from './components/TotalUsers';
 
-export default {
-  components: {
-    TotalPages, TotalPosts, TotalUsers,
-  },
-  mixins: [PermissionMixin],
-  mounted() {
-    this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.dashboard');
-  },
-};
+  export default {
+    components: {
+      TotalPages, TotalPosts, TotalUsers,
+    },
+    mixins: [PermissionMixin],
+    mounted() {
+      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'menu.dashboard');
+    },
+  };
 </script>
