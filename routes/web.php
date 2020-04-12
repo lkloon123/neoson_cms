@@ -18,6 +18,7 @@ Route::get('/admin/{any}', 'AdminController@index')->where('any', '.*');
 
 Route::prefix('api')->group(function () {
     Route::get('translation/{language}', 'TranslationController@formattedTranslation');
+    Route::get('language/search', 'LanguageController@search');
     Route::get('language', 'LanguageController@index');
     Route::put('locale/{lang}', 'LanguageController@setLocale');
 

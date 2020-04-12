@@ -784,6 +784,20 @@ class ENTranslationSeeder extends Seeder
             'text' => 'Home',
             'language_id' => $language->id
         ]);
+
+        \App\Model\Translation::forceCreate([
+            'group' => 'menu',
+            'key' => 'language',
+            'text' => 'Language',
+            'language_id' => $language->id
+        ]);
+
+        \App\Model\Translation::forceCreate([
+            'group' => 'menu',
+            'key' => 'available_languages',
+            'text' => 'Available Languages',
+            'language_id' => $language->id
+        ]);
     }
 
     protected function pluginGroup($language)
@@ -1067,6 +1081,20 @@ class ENTranslationSeeder extends Seeder
             'group' => 'translation',
             'key' => 'text',
             'text' => 'Text',
+            'language_id' => $language->id
+        ]);
+
+        \App\Model\Translation::forceCreate([
+            'group' => 'translation',
+            'key' => 'all_languages',
+            'text' => 'All Languages',
+            'language_id' => $language->id
+        ]);
+
+        \App\Model\Translation::forceCreate([
+            'group' => 'translation',
+            'key' => 'select_language',
+            'text' => 'Select Language',
             'language_id' => $language->id
         ]);
     }

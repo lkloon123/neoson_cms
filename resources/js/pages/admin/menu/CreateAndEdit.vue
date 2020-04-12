@@ -89,6 +89,10 @@
       <available-item-wrapper :title="$t('menu.auth')">
         <auth />
       </available-item-wrapper>
+
+      <available-item-wrapper :title="$t('menu.language')">
+        <language />
+      </available-item-wrapper>
     </div>
   </div>
 </template>
@@ -105,9 +109,11 @@ import CustomLink from './components/CustomLink';
 import SelectPage from './components/SelectPage';
 import Auth from './components/Auth';
 import UpdateWrapper from './components/form/UpdateWrapper';
+import Language from './components/Language';
 
 export default {
   components: {
+    Language,
     AvailableItemWrapper,
     Card,
     CustomLink,

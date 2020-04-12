@@ -784,6 +784,20 @@ class ZHCNTranslationSeeder extends Seeder
             'text' => '主页',
             'language_id' => $language->id
         ]);
+
+        \App\Model\Translation::forceCreate([
+            'group' => 'menu',
+            'key' => 'language',
+            'text' => '语言',
+            'language_id' => $language->id
+        ]);
+
+        \App\Model\Translation::forceCreate([
+            'group' => 'menu',
+            'key' => 'available_languages',
+            'text' => '语言选择',
+            'language_id' => $language->id
+        ]);
     }
 
     protected function pluginGroup($language)
@@ -1067,6 +1081,20 @@ class ZHCNTranslationSeeder extends Seeder
             'group' => 'translation',
             'key' => 'text',
             'text' => '内容',
+            'language_id' => $language->id
+        ]);
+
+        \App\Model\Translation::forceCreate([
+            'group' => 'translation',
+            'key' => 'all_languages',
+            'text' => '所有语言',
+            'language_id' => $language->id
+        ]);
+
+        \App\Model\Translation::forceCreate([
+            'group' => 'translation',
+            'key' => 'select_language',
+            'text' => '选择语言',
             'language_id' => $language->id
         ]);
     }

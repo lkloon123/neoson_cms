@@ -23,3 +23,12 @@ header.masthead {
 .post-tag-item:hover {
     color: #0085a1 !important;
 }
+
+.custom-flag-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.dropdown-toggle {
+    text-decoration: none !important;
+}
