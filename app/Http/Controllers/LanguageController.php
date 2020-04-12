@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Language\SearchRequest;
 use App\Http\Requests\Translation\UpdateRequest;
 use App\Http\Resources\LanguageResource;
 use App\Model\Language;
 use Illuminate\Database\Eloquent\Builder;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class LanguageController extends Controller
 {
@@ -38,5 +40,20 @@ class LanguageController extends Controller
                 );
             }
         );
+    }
+
+    public function search(SearchRequest $request)
+    {
+        $languages = Language::query()
+            ->when($request->get('title'), function (\Illuminate\Database\Eloquent\Builder $query, $searchTitle) {
+                $query->where('title', 'like', "%{$searchTitle}%");
+            })
+            ->get();
+
+        if ($languages->isEmpty()) {
+            throw new NotFoundHttpException('no result found');
+        }
+
+        return LanguageResource::collection($languages);
     }
 }

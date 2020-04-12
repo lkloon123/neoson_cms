@@ -21,6 +21,11 @@
           mode="update"
           :item-data="item"
         />
+        <update-language
+          v-else-if="item.type === 'language'"
+          mode="update"
+          :item-data="item"
+        />
       </div>
     </div>
   </collapse-transition>
@@ -28,12 +33,14 @@
 
 <script>
 import { CollapseTransition } from 'vue2-transitions';
+import UpdateLanguage from './UpdateLanguage';
 import CustomLink from '../CustomLink';
 import UpdatePage from './UpdatePage';
 import Auth from '../Auth';
 
 export default {
   components: {
+    UpdateLanguage,
     CustomLink,
     CollapseTransition,
     UpdatePage,

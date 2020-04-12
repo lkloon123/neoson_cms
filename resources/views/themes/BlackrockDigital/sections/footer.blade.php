@@ -37,6 +37,7 @@
 <script src="{{ PageContent::js('jquery') }}"></script>
 <script src="{{ PageContent::js('bootstrap') }}"></script>
 <script src="{{ PageContent::js('clean-blog') }}"></script>
+<script src="{{ PageContent::js('custom', false) }}"></script>
 
 </body>
 </html>

@@ -9,6 +9,7 @@
 namespace App\Views;
 
 
+use App\Model\Language;
 use App\Model\Menu;
 use App\Model\MenuItem;
 use App\Model\Page;
@@ -66,26 +67,45 @@ class MenuBuilder extends AbstractBuilder
 
     protected function getMetaData(MenuItem $item)
     {
+        $metaData = [
+            'meta' => $item->meta
+        ];
+
         if ($item->meta['type'] === 'page') {
             $page = Page::find($item->meta['pageId']);
-            return [
+            $metaData = array_merge($metaData, [
                 'title' => __($item->meta['menuLabel']),
-                'url' => '/' . $page->slug
-            ];
+                'url' => '/' . $page->slug,
+            ]);
         }
 
         if ($item->meta['type'] === 'custom_link') {
-            return [
+            $metaData = array_merge($metaData, [
                 'title' => __($item->meta['menuLabel']),
                 'url' => $item->meta['url']
-            ];
+            ]);
         }
 
         if ($item->meta['type'] === 'auth') {
-            return [
+            $metaData = array_merge($metaData, [
                 'title' => \Auth::check() ? __($item->meta['menuLabel']) : __($item->meta['guestLabel']),
                 'url' => \Auth::check() ? '/login' : '/admin',
-            ];
+            ]);
         }
+
+        if ($item->meta['type'] === 'language') {
+            $languages = Language::whereIn('id',
+                collect($item->meta['languageIds'])->map(function ($language) {
+                    return $language['id'];
+                })
+            )->get();
+
+            $metaData = array_merge($metaData, [
+                'title' => $languages->where('code', \App::getLocale())->first()->country_iso,
+                'languages' => $languages
+            ]);
+        }
+
+        return $metaData;
     }
 }
