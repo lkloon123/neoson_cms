@@ -16,9 +16,11 @@ export default {
   props: {
     options: {
       type: Object,
+      required: true,
     },
     value: {
       type: String,
+      required: true,
     },
     disabled: {
       type: Boolean,

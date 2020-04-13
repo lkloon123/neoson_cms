@@ -97,7 +97,7 @@ export default {
       },
       immediate: true,
     },
-    'clonedValue.name': function (newValue) {
+    'clonedValue.name': function clonedValueName(newValue) {
       this.clonedValue.slug = sluggable(newValue, { lower: true });
     },
   },

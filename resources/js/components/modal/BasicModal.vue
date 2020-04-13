@@ -15,6 +15,7 @@ export default {
   props: {
     title: {
       type: String,
+      default: '',
     },
     body: {
       type: String,

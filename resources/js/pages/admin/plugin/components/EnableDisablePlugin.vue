@@ -18,7 +18,16 @@ export default {
   components: {
     ToggleButton,
   },
-  props: ['plugin', 'disabled'],
+  props: {
+    plugin: {
+      type: Object,
+      required: true,
+    },
+    disabled: {
+      type: Boolean,
+      required: true,
+    },
+  },
   data: () => ({
     updating: false,
   }),
