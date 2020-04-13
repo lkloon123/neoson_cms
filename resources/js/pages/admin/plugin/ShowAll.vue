@@ -2,7 +2,7 @@
   <card>
     <template v-slot:header>
       <h4>
-        {{ $t('menu.plugins')}}&nbsp;
+        {{ $t('menu.plugins') }}&nbsp;
         <router-link
           v-if="hasPermission('create', 'plugin')"
           to="/plugins/installer"

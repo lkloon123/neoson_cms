@@ -10,6 +10,7 @@
       {{ triggerBtnText }}
     </button>
 
+    <!-- eslint-disable vue/no-v-html -->
     <button
       v-if="showBtn && isBtnHtml"
       type="button"
@@ -18,6 +19,7 @@
       @click="copyCurrentState = 'show'"
       v-html="triggerBtnText"
     />
+    <!-- eslint-enable vue/no-v-html -->
 
     <BaseModal
       :current-state="copyCurrentState"
@@ -58,6 +60,7 @@ export default {
   props: {
     title: {
       type: String,
+      default: '',
     },
     body: {
       type: String,

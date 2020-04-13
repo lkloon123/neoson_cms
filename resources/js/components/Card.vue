@@ -14,6 +14,7 @@
         class="card-header-action"
       >
         <slot name="header-action" />
+        <!-- eslint-disable vue/no-v-html -->
         <button
           v-if="isCollapsible"
           :data-collapse="collapsibleId"
@@ -21,6 +22,7 @@
           @click="collapsibleClick"
           v-html="collapsibleIcon"
         />
+        <!-- eslint-enable vue/no-v-html -->
       </div>
       <!-- #header action -->
     </div>

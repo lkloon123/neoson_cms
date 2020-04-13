@@ -42,7 +42,12 @@ export default {
   components: {
     Card, Multiselect, FormContentLoading,
   },
-  props: ['value'],
+  props: {
+    value: {
+      type: Array,
+      required: true,
+    },
+  },
   data: () => ({
     selectedTags: [],
     tags: [],

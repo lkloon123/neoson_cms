@@ -58,7 +58,12 @@ export default {
   components: {
     Card, HtmlModal, LightBox,
   },
-  props: ['value'],
+  props: {
+    value: {
+      type: String,
+      required: true,
+    },
+  },
   data: () => ({
     modalState: 'hide',
     selectedImg: '',

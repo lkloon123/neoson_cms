@@ -51,7 +51,7 @@ export default {
   data: () => ({
     group: 'general',
   }),
-   mounted() {
+  mounted() {
     this.loadSetting(this.group);
     this.$store.commit('SET_CURRENT_PAGE_TITLE', 'setting.general_settings');
     this.$store.commit('SET_PAGE_BACK_LINK', '/settings');
