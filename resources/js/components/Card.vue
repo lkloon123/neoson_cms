@@ -113,7 +113,7 @@ export default {
       return !!this.$slots.footer;
     },
   },
-  mounted() {
+  beforeMount() {
     if (this.isCollapsible) {
       this.collapsibleId = this.$Utils.getRandomId();
 

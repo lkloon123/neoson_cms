@@ -51,10 +51,12 @@ export default {
       this.$emit('input', newValue);
     },
   },
-  mounted() {
+  beforeMount() {
     this.id = this.$Utils.getRandomId();
     this.copyOption = Object.assign(this.copyOption, this.options);
     this.selectedDateTime = this.value;
+  },
+  mounted() {
     this.dateRangePickerIns = $(`#${this.id}`);
     this.makeDateTimePicker();
     this.bindEvents();

@@ -125,7 +125,7 @@ export default {
       this.copyCurrentState = newValue;
     },
   },
-  mounted() {
+  beforeMount() {
     this.copyCurrentState = this.currentState;
   },
   methods: {
