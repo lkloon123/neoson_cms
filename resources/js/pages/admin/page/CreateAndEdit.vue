@@ -25,7 +25,7 @@
         </template>
 
         <tiny-mce-editor
-          v-model="content"
+          v-model="formValues.content"
           v-validate="'required'"
           name="Content"
           :is-content-loading="isLoading"
@@ -57,7 +57,7 @@
           <div class="form-group">
             <label>{{ $t('page.publish_from') }}</label>
             <date-range-picker
-              v-model="publishFromDate"
+              v-model="formValues.publish_from_date"
               v-validate="'required'"
               name="Publish From"
               :class="{'is-invalid': errors.first('Publish From')}"
@@ -71,7 +71,7 @@
           <div class="form-group mb-2">
             <label>{{ $t('page.publish_to') }}</label>
             <date-range-picker
-              v-model="publishToDate"
+              v-model="formValues.publish_to_date"
               v-validate="'required'"
               name="Publish To"
               :class="{'is-invalid': errors.first('Publish To')}"
@@ -102,7 +102,7 @@
             <label for="title">{{ $t('common.title') }} <span class="text-danger">*</span></label>
             <input
               id="title"
-              v-model="title"
+              v-model="formValues.title"
               v-validate="'required'"
               name="Title"
               class="form-control"
@@ -120,7 +120,7 @@
             <label for="slug">{{ $t('page.slug') }} <span class="text-danger">*</span></label>
             <input
               id="slug"
-              v-model="slug"
+              v-model="formValues.slug"
               v-validate="'required'"
               name="Slug/Permalink"
               class="form-control"
@@ -138,7 +138,7 @@
             <label for="description">{{ $t('common.description') }}</label>
             <textarea
               id="description"
-              v-model="description"
+              v-model="formValues.description"
               class="form-control"
               :placeholder="$t('page.enter_description')"
             />
@@ -146,7 +146,7 @@
         </div>
       </card>
 
-      <featured-image v-model="featuredImg" />
+      <featured-image v-model="formValues.featuredImg" />
     </div>
   </div>
 </template>
@@ -159,12 +159,24 @@ import Card from '@components/Card';
 import FormContentLoading from '@components/content_loading/FormContentLoading';
 import axios from 'axios';
 import moment from 'moment';
+import DirtyFormMixin from '@mixins/dirty_form_mixin';
 import FeaturedImage from './components/FeaturedImage';
+
+const defaultValues = {
+  content: '',
+  title: '',
+  slug: '',
+  description: '',
+  featuredImg: '',
+  publish_from_date: moment().format('YYYY-MM-DD hh:mm:ss a'),
+  publish_to_date: moment().add(1, 'week').format('YYYY-MM-DD hh:mm:ss a'),
+};
 
 export default {
   components: {
     TinyMceEditor, DateRangePicker, Card, FormContentLoading, FeaturedImage,
   },
+  mixins: [DirtyFormMixin],
   props: {
     mode: {
       type: String,
@@ -178,13 +190,8 @@ export default {
     publishToDatePickerOptions: {
       singleDatePicker: true,
     },
-    content: '',
-    title: '',
-    slug: '',
-    description: '',
-    featuredImg: '',
-    publishFromDate: moment().format('YYYY-MM-DD hh:mm:ss a'),
-    publishToDate: moment().add(1, 'week').format('YYYY-MM-DD hh:mm:ss a'),
+    formValues: { ...defaultValues },
+    defaultFormValues: { ...defaultValues },
     isLoading: true,
   }),
   computed: {
@@ -204,8 +211,8 @@ export default {
     },
   },
   watch: {
-    title(newValue) {
-      this.slug = sluggable(newValue, { lower: true });
+    'formValues.title': function formValuesTitle(newValue) {
+      this.formValues.slug = sluggable(newValue, { lower: true });
     },
   },
   async mounted() {
@@ -213,14 +220,15 @@ export default {
       this.$store.commit('SET_CURRENT_PAGE_TITLE', 'page.edit_page');
       // fetch data from server
       try {
-        const pageResponse = await axios.get(`/api/page/${this.$route.params.id}`);
-        this.title = pageResponse.data.title;
-        this.slug = pageResponse.data.slug;
-        this.description = pageResponse.data.description;
-        this.publishFromDate = moment(pageResponse.data.publish_from_date).format('YYYY-MM-DD hh:mm:ss a');
-        this.publishToDate = moment(pageResponse.data.publish_to_date).format('YYYY-MM-DD hh:mm:ss a');
-        this.content = pageResponse.data.content;
-        this.featuredImg = pageResponse.data.featuredImg;
+        const { data } = await axios.get(`/api/page/${this.$route.params.id}`);
+        const {
+          id, author, created_at, updated_at, ...transformedData
+        } = data;
+        transformedData.publish_from_date = moment(transformedData.publish_from_date).format('YYYY-MM-DD hh:mm:ss a');
+        transformedData.publish_to_date = moment(transformedData.publish_to_date).format('YYYY-MM-DD hh:mm:ss a');
+
+        this.defaultFormValues = { ...transformedData };
+        this.formValues = { ...transformedData };
       } catch (err) {
         this.$Toast.show({
           type: 'error',
@@ -237,23 +245,20 @@ export default {
   },
   methods: {
     validateAndSave(status) {
-      this.$validator.validateAll().then((valid) => {
+      this.$validator.validateAll().then(async (valid) => {
         if (valid) {
-          this.save(status);
+          await this.save(status);
+          this.defaultFormValues = { ...this.formValues };
+          this.updateIsDirty(false);
         }
       });
     },
     async save(status) {
-      const params = {
-        status,
-        content: this.content,
-        title: this.title,
-        slug: this.slug,
-        description: this.description,
-        featuredImg: this.featuredImg,
-        publish_from_date: moment(this.publishFromDate, 'YYYY-MM-DD hh:mm:ss a').format('YYYY-MM-DD HH:mm:ss'),
-        publish_to_date: moment(this.publishToDate, 'YYYY-MM-DD hh:mm:ss a').format('YYYY-MM-DD HH:mm:ss'),
-      };
+      const { ...transformedFormValues } = this.formValues;
+      transformedFormValues.publish_from_date = moment(transformedFormValues.publish_from_date, 'YYYY-MM-DD hh:mm:ss a').format('YYYY-MM-DD HH:mm:ss');
+      transformedFormValues.publish_to_date = moment(transformedFormValues.publish_to_date, 'YYYY-MM-DD hh:mm:ss a').format('YYYY-MM-DD HH:mm:ss');
+
+      const params = { status, ...transformedFormValues };
 
       if (this.mode === 'create') {
         this.isLoading = true;
