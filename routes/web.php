@@ -38,7 +38,7 @@ Route::prefix('api')->group(function () {
 
         Route::resource('language', 'LanguageController')->only(['show']);
 
-        Route::resource('translation', 'TranslationController')->only(['update']);
+        Route::resource('translation', 'TranslationController')->except(['index', 'show', 'create', 'edit', 'destroy']);
 
         Route::get('form/response/{form}', 'FormController@formResponse');
         Route::resource('form/component', 'FormComponentController')->except(['create', 'edit']);

@@ -1,4 +1,4 @@
-<?php
+'<?php
 
 use Illuminate\Database\Seeder;
 
@@ -1095,6 +1095,27 @@ class ZHCNTranslationSeeder extends Seeder
             'group' => 'translation',
             'key' => 'select_language',
             'text' => '选择语言',
+            'language_id' => $language->id
+        ]);
+
+        \App\Model\Translation::forceCreate([
+            'group' => 'translation',
+            'key' => 'create_translation',
+            'text' => '新建翻译',
+            'language_id' => $language->id
+        ]);
+
+        \App\Model\Translation::forceCreate([
+            'group' => 'translation',
+            'key' => 'group',
+            'text' => '分组',
+            'language_id' => $language->id
+        ]);
+
+        \App\Model\Translation::forceCreate([
+            'group' => 'translation',
+            'key' => 'create_translation_description',
+            'text' => '新建翻译将创建于所有语言',
             'language_id' => $language->id
         ]);
     }
