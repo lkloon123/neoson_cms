@@ -1097,6 +1097,27 @@ class ENTranslationSeeder extends Seeder
             'text' => 'Select Language',
             'language_id' => $language->id
         ]);
+
+        \App\Model\Translation::forceCreate([
+            'group' => 'translation',
+            'key' => 'create_translation',
+            'text' => 'Create Translation',
+            'language_id' => $language->id
+        ]);
+
+        \App\Model\Translation::forceCreate([
+            'group' => 'translation',
+            'key' => 'group',
+            'text' => 'group',
+            'language_id' => $language->id
+        ]);
+
+        \App\Model\Translation::forceCreate([
+            'group' => 'translation',
+            'key' => 'create_translation_description',
+            'text' => 'Create translation will create empty translation for all language',
+            'language_id' => $language->id
+        ]);
     }
 
     public function userGroup($language)

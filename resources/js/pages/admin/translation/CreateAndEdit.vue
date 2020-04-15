@@ -1,7 +1,13 @@
 <template>
   <card>
     <template v-slot:header>
-      <h4>{{ $t('translation.edit_translation') }}</h4>
+      <h4>
+        {{ languageData.title }}&nbsp;
+        <create-form
+          v-if="hasPermission('create', 'translation')"
+          @input="loadTranslation"
+        />
+      </h4>
     </template>
 
     <vue-good-table
@@ -71,12 +77,14 @@ import axios from 'axios';
 import Card from '@components/Card';
 import Xeditable from '@components/Xeditable';
 import DateFormattingMixin from '@mixins/date_formatting_mixin';
+import PermissionMixin from '@mixins/permission_mixin';
+import CreateForm from './components/CreateForm';
 
 export default {
   components: {
-    VueGoodTable, Card, Xeditable,
+    VueGoodTable, Card, Xeditable, CreateForm,
   },
-  mixins: [DateFormattingMixin],
+  mixins: [DateFormattingMixin, PermissionMixin],
   props: {
     mode: {
       type: String,
@@ -116,6 +124,15 @@ export default {
       this.$store.commit('SET_CURRENT_PAGE_TITLE', 'translation.edit_translation');
 
       // fetch data from server
+      await this.loadTranslation();
+    } else {
+      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Create Translation');
+    }
+
+    this.$store.commit('SET_PAGE_BACK_LINK', '/settings/translations');
+  },
+  methods: {
+    async loadTranslation() {
       const transformedResponse = [];
       try {
         const translationResponse = await axios.get(`/api/language/${this.$route.params.id}`);
@@ -139,13 +156,7 @@ export default {
           message: err.response.data.message,
         });
       }
-    } else {
-      this.$store.commit('SET_CURRENT_PAGE_TITLE', 'Create Translation');
-    }
-
-    this.$store.commit('SET_PAGE_BACK_LINK', '/settings/translations');
-  },
-  methods: {
+    },
     async updateTranslation(text, row) {
       if (row.text === text) {
         return;

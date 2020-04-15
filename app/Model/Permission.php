@@ -118,6 +118,7 @@ class Permission extends LaratrustPermission
             [
                 'module' => 'setting.translation',
                 'abilities' => [
+                    'create' => ['state' => PermissionType::Disallow, 'has_own' => false],
                     'update' => ['state' => PermissionType::Disallow, 'has_own' => false]
                 ]
             ],
