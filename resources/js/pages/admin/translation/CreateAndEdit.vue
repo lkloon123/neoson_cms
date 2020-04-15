@@ -55,14 +55,13 @@
         <span v-if="props.column.field === 'updated_at' || props.column.field === 'created_at'">
           {{ formatToAgoDate(props.formattedRow[props.column.field]) }}
         </span>
-        <div v-else-if="props.column.field === 'text'">
+        <template v-else-if="props.column.field === 'text'">
           <xeditable
             v-if="!props.row.isSubmmiting"
             :value="props.formattedRow[props.column.field]"
-            width="90%"
             @input="updateTranslation($event, props.row)"
           />
-        </div>
+        </template>
         <span v-else>
           {{ props.formattedRow[props.column.field] }}
         </span>
