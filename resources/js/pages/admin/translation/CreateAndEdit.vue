@@ -2,7 +2,7 @@
   <card>
     <template v-slot:header>
       <h4>
-        {{ languageData.title }}&nbsp;
+        {{ languageTitle }}&nbsp;
         <create-form
           v-if="hasPermission('create', 'translation')"
           @input="loadTranslation"
@@ -116,6 +116,9 @@ export default {
   computed: {
     collapseExpandLabel() {
       return this.expanded ? 'common.collapse_all' : 'common.expand_all';
+    },
+    languageTitle() {
+      return this.languageData?.title;
     },
   },
   async mounted() {
