@@ -5,7 +5,9 @@
       class="editable"
       :title="$t('common.click_to_edit')"
       @click="show"
-    >{{ $t(placeholder) }}</span>
+    >
+      {{ $t(placeholder) }}
+    </span>
 
     <div
       v-if="isEditing"
@@ -15,38 +17,40 @@
         v-if="inputType === 'select'"
         v-model="inputValue"
         class="form-control mr-1 input-field"
-        :style="{'width': width}"
       >
         <option
           v-for="option in selectOptions"
-          :key="option.id"
-          :value="option.name"
+          :key="option[selectOptionsUniqueKey]"
+          :value="option[selectOptionsValueKey]"
         >
-          {{ option.name }}
+          {{ option[selectOptionsValueKey] }}
         </option>
       </select>
+
       <input
         v-if="inputType === 'text'"
         ref="textfield"
         v-model="inputValue"
         type="text"
         class="form-control mr-1 input-field"
-        :style="{'width': width}"
         @keyup.enter="onEnter"
         @keyup.esc="cancel"
       >
-      <button
-        class="btn btn-sm btn-icon btn-success mr-1 btn-save"
-        @click="save"
-      >
-        <i class="fas fa-check fa-fw" />
-      </button>
-      <button
-        class="btn btn-sm btn-icon btn-danger btn-cancel"
-        @click="cancel"
-      >
-        <i class="fas fa-times fa-fw" />
-      </button>
+
+      <div class="ml-auto mb-1">
+        <button
+          class="btn btn-sm btn-icon btn-success"
+          @click="save"
+        >
+          <i class="fas fa-check fa-fw" />
+        </button>
+        <button
+          class="btn btn-sm btn-icon btn-danger"
+          @click="cancel"
+        >
+          <i class="fas fa-times fa-fw" />
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -61,18 +65,23 @@ export default {
     inputType: {
       type: String,
       default: 'text',
+      validator: (value) => ['text', 'select'].indexOf(value) !== -1,
     },
     selectOptions: {
       type: Array,
       default: () => [],
     },
+    selectOptionsUniqueKey: {
+      type: String,
+      default: 'id',
+    },
+    selectOptionsValueKey: {
+      type: String,
+      default: 'name',
+    },
     submitOnEnter: {
       type: Boolean,
       default: true,
-    },
-    width: {
-      type: String,
-      default: '70%',
     },
   },
   data: () => ({
@@ -133,6 +142,7 @@ export default {
 
     .input-field {
         height: 35px !important;
+        flex-grow: 1;
     }
 
     select.input-field {
