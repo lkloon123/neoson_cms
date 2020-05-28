@@ -109,6 +109,7 @@
               :class="{'is-invalid': errors.first('Title')}"
               type="text"
               :placeholder="$t('page.enter_title')"
+              @input="titleEdited = true"
             >
 
             <div class="invalid-feedback">
@@ -193,6 +194,7 @@ export default {
     formValues: { ...defaultValues },
     defaultFormValues: { ...defaultValues },
     isLoading: true,
+    titleEdited: false,
   }),
   computed: {
     showContentErrorFeedback() {
@@ -212,7 +214,9 @@ export default {
   },
   watch: {
     'formValues.title': function formValuesTitle(newValue) {
-      this.formValues.slug = sluggable(newValue, { lower: true });
+      if (this.titleEdited) {
+        this.formValues.slug = sluggable(newValue, { lower: true });
+      }
     },
   },
   async mounted() {
