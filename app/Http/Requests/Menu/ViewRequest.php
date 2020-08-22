@@ -26,10 +26,10 @@ class ViewRequest extends BaseRequest
                 'menu' => $menu
             ]);
 
-            return $this->user()->canAndOwns('menu-view-own', $menu, ['requireAll' => true]) || $this->user()->ability('superadmin', 'menu-view');
+            return $this->user()->isAbleToAndOwns('menu-view-own', $menu, ['requireAll' => true]) || $this->user()->ability('superadmin', 'menu-view');
         }
 
-        if ($this->user()->can('menu-view-own')) {
+        if ($this->user()->isAbleTo('menu-view-own')) {
             $this->attributes->add([
                 'only_own' => true
             ]);

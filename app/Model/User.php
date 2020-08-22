@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
 
@@ -69,7 +70,7 @@ use Laratrust\Traits\LaratrustUserTrait;
  */
 class User extends BaseModel implements MustVerifyEmail, AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-    use Notifiable, Authenticatable, CanResetPassword, MustVerifyEmailTrait, LaratrustUserTrait;
+    use Notifiable, Authenticatable, Authorizable, CanResetPassword, MustVerifyEmailTrait, LaratrustUserTrait;
 
     /**
      * The attributes that should be hidden for arrays.

@@ -26,10 +26,10 @@ class ViewRequest extends BaseRequest
                 'form' => $form
             ]);
 
-            return $this->user()->canAndOwns('form-view-own', $form, ['requireAll' => true]) || $this->user()->ability('superadmin', 'form-view');
+            return $this->user()->isAbleToAndOwns('form-view-own', $form, ['requireAll' => true]) || $this->user()->ability('superadmin', 'form-view');
         }
 
-        if ($this->user()->can('form-view-own')) {
+        if ($this->user()->isAbleTo('form-view-own')) {
             $this->attributes->add([
                 'only_own' => true
             ]);

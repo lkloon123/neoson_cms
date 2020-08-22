@@ -25,7 +25,7 @@ class UpdateRequest extends BaseRequest
             'menu' => $menu
         ]);
 
-        return $this->user()->canAndOwns('menu-update-own', $menu, ['requireAll' => true]) || $this->user()->ability('superadmin', 'menu-update');
+        return $this->user()->isAbleToAndOwns('menu-update-own', $menu, ['requireAll' => true]) || $this->user()->ability('superadmin', 'menu-update');
     }
 
     /**

@@ -25,7 +25,7 @@ class DeleteRequest extends BaseRequest
             'page' => $page
         ]);
 
-        return $this->user()->canAndOwns('page-delete-own', $page, ['requireAll' => true, 'foreignKeyName' => 'author_id']) || $this->user()->ability('superadmin', 'page-delete');
+        return $this->user()->isAbleToAndOwns('page-delete-own', $page, ['requireAll' => true, 'foreignKeyName' => 'author_id']) || $this->user()->ability('superadmin', 'page-delete');
     }
 
     /**
