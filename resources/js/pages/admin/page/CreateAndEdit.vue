@@ -215,7 +215,7 @@ export default {
   watch: {
     'formValues.title': function formValuesTitle(newValue) {
       if (this.titleEdited) {
-        this.formValues.slug = sluggable(newValue, { lower: true });
+        this.formValues.slug = sluggable(newValue);
       }
     },
   },

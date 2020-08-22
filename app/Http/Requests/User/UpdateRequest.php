@@ -25,7 +25,7 @@ class UpdateRequest extends BaseRequest
             'user' => $user
         ]);
 
-        return $this->user()->canAndOwns('user_manage-update-own', $user, ['requireAll' => true, 'foreignKeyName' => 'id']) || $this->user()->ability('superadmin', 'user_manage-update');
+        return $this->user()->isAbleToAndOwns('user_manage-update-own', $user, ['requireAll' => true, 'foreignKeyName' => 'id']) || $this->user()->ability('superadmin', 'user_manage-update');
     }
 
     /**

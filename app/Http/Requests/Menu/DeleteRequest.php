@@ -25,7 +25,7 @@ class DeleteRequest extends BaseRequest
             'menu' => $menu
         ]);
 
-        return $this->user()->canAndOwns('menu-delete-own', $menu, ['requireAll' => true]) || $this->user()->ability('superadmin', 'menu-delete');
+        return $this->user()->isAbleToAndOwns('menu-delete-own', $menu, ['requireAll' => true]) || $this->user()->ability('superadmin', 'menu-delete');
     }
 
     /**

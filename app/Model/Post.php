@@ -4,7 +4,6 @@ namespace App\Model;
 
 use App\Enums\PostStatus;
 use App\Traits\PageScopes;
-use BenSampo\Enum\Traits\CastsEnums;
 use Spatie\Tags\HasTags;
 
 /**
@@ -55,9 +54,9 @@ use Spatie\Tags\HasTags;
  */
 class Post extends BaseModel
 {
-    use HasTags, PageScopes, CastsEnums;
+    use HasTags, PageScopes;
 
-    public $enumCasts = [
+    public $casts = [
         'status' => PostStatus::class,
     ];
 

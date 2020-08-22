@@ -4,7 +4,6 @@ namespace App\Model;
 
 use App\Enums\PageStatus;
 use App\Traits\PageScopes;
-use BenSampo\Enum\Traits\CastsEnums;
 
 /**
  * App\Model\Page
@@ -50,9 +49,9 @@ use BenSampo\Enum\Traits\CastsEnums;
  */
 class Page extends BaseModel
 {
-    use PageScopes, CastsEnums;
+    use PageScopes;
 
-    public $enumCasts = [
+    public $casts = [
         'status' => PageStatus::class,
     ];
 
