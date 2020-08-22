@@ -26,10 +26,10 @@ class ViewRequest extends BaseRequest
                 'post' => $post
             ]);
 
-            return $this->user()->canAndOwns('post-view-own', $post, ['requireAll' => true, 'foreignKeyName' => 'author_id']) || $this->user()->ability('superadmin', 'post-view');
+            return $this->user()->isAbleToAndOwns('post-view-own', $post, ['requireAll' => true, 'foreignKeyName' => 'author_id']) || $this->user()->ability('superadmin', 'post-view');
         }
 
-        if ($this->user()->can('post-view-own')) {
+        if ($this->user()->isAbleTo('post-view-own')) {
             $this->attributes->add([
                 'only_own' => true
             ]);

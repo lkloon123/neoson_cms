@@ -25,7 +25,7 @@ class DeleteRequest extends BaseRequest
             'form' => $form
         ]);
 
-        return $this->user()->canAndOwns('form-delete-own', $form, ['requireAll' => true]) || $this->user()->ability('superadmin', 'form-delete');
+        return $this->user()->isAbleToAndOwns('form-delete-own', $form, ['requireAll' => true]) || $this->user()->ability('superadmin', 'form-delete');
     }
 
     /**
