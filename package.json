@@ -39,7 +39,7 @@
     "laravel-file-manager": "^2.5.0",
     "laravel-mix": "^3.0.0",
     "lodash": "^4.17.20",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "please-wait": "0.0.5",
     "popper.js": "^1.16.1",
     "resolve-url-loader": "^2.3.1",
